@@ -1,6 +1,6 @@
 # Target health - does this repo actually merge?
 
-Generated 2026-09-19 20:46 UTC by `scripts/target_merge_rate.py` from each target's own closed-PR history.
+Generated 2026-09-19 21:37 UTC by `scripts/target_merge_rate.py` from each target's own closed-PR history.
 A prepared branch is worth a click only where the second column says MERGES.
 
 | target | verdict | merged/closed (3 months) | per month | stars | last push | branches |
@@ -11,7 +11,7 @@ A prepared branch is worth a click only where the second column says MERGES.
 | `aiagenta2z/ai-agent-marketplace` | MERGES - worth a click | 11/12 | 2026-09 4/4, 2026-08 3/3, 2026-07 4/5 | 55 | 2026-09-14 | 1 |
 | `michielpost/x402-dev` | MERGES - worth a click | 42/49 | 2026-09 10/15, 2026-08 21/22, 2026-07 11/12 | 5 | 2026-09-15 | 1 |
 | `chgaowei/ai-agent-infra-list` | MERGES - worth a click | 5/6 | 2026-09 4/4, 2026-06 0/1, 2025-05 1/1 | 50 | 2026-09-08 | 1 |
-| `Haustorium12/gold-402` | MERGES - worth a click | 142/173 | 2026-09 44/50, 2026-08 64/78, 2026-07 34/45 | 11 | 2026-09-19 | 1 |
+| `Haustorium12/gold-402` | MERGES - worth a click | 143/174 | 2026-09 45/51, 2026-08 64/78, 2026-07 34/45 | 11 | 2026-09-19 | 1 |
 | `AiFinPay/sdk` | MERGES - worth a click | 55/70 | 2026-09 45/59, 2026-08 6/7, 2026-07 4/4 | 3 | 2026-09-19 | 1 |
 | `xpaysh/awesome-x402` | MERGES - worth a click | 232/300 | 2026-09 1/25, 2026-08 3/23, 2026-07 228/252 | 290 | 2026-07-28 | 1 |
 | `frankxai/awesome-payment-agent-skills` | MERGES - worth a click | 10/13 | 2026-09 7/10, 2026-08 1/1, 2026-06 2/2 | 2 | 2026-09-15 | 1 |
