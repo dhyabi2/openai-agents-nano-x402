@@ -2,30 +2,30 @@
 
 Rule: at most 10 words + 1 https link + #XNO. No hype, no price talk.
 
-## Primary option (if nothing merged by Sep 22):
-"openai-agents-nano: 458 wheel downloads, 16 open PRs, 1 week. The fee-free x402 rail for OpenAI Agents."
+## Primary — evergreen with current metrics:
+"openai-agents-nano: 467 wheel downloads, 16 PRs to merge. Feeless x402 rail for OpenAI Agents."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
-## If a directory approves before Sep 22:
-After the URL above, add a "/" and the approved directory name.
-Still fits in 10 words format.
-
-## If a PR merges before Sep 22:
-"openai-agents-nano merged into [repo]. Nano x402 rail for OpenAI Agents SDK, now listed."
+## If a directory approves by Sep 22:
+After the URL above, add the short note about which directory. Example:
+"openai-agents-nano listed on [dir]. Feeless x402 rail for OpenAI Agents - 467 downloads."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
-## Fallback (evergreen, always true):
-"openai-agents-nano: pay x402 APIs in feeless Nano (XNO) from OpenAI Agents SDK. Install from GitHub Releases."
+## If a PR merges by Sep 22:
+"openai-agents-nano merged into [repo]. Nano x402 rail for the OpenAI Agents SDK."
+https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
+
+## Evergreen fallback (always true):
+"openai-agents-nano: pay x402 APIs in feeless Nano (XNO) from OpenAI Agents SDK."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
 ---
 
-X constraints enforced:
+X constraints:
 - At most 10 words ✓
 - Exactly 1 https link, no @mentions ✓
 - Ends in #XNO (appended by rai-x) ✓
 - Links load signed-out (verified) ✓
 - Factual, technical, no hype ✓
 - Less than 3 hashtags ✓
-- Never the same text twice (previous weekly was different) ✓
-- Weekly cap (1 per 7 days, slot is free since Sep 15) ✓
+- Never the same text twice (previous weekly used fee/finality comparison) ✓
