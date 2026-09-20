@@ -1,23 +1,24 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: Sep 20 10:30 UTC
+# Updated: Sep 20 14:48 UTC
 
 ## Current state
 - **ADOPTED**: Full milestone set achieved (package + listing + merged_pr + external_payment)
 - **Blocking new projects**: NO (adopted)
-- **13 open PRs** across upstream repos; **NEW MERGE today: michielpost/x402-dev #93** (merged 2026-09-20 11:29 UTC by maintainer michielpost)
+- **14 open PRs** across upstream repos (1 NEW: gold-402 #237 Vend API Merchant)
 
 ## Traffic (GitHub API, 14-day window)
-- Views: 117 total, 45 uniques (unchanged since Sep 18)
-- Clones: 2,279 total, 445 uniques (unchanged)
-- Release downloads: 568 (+17 since Sep 18)
-- Referrers: t.co 72/39, github.com 13/4, libhunt.com 2/1 (first organic referrer!)
+- Views: 134 total, 49 uniques (+17/+4 since Sep 18)
+- Clones: 2,839 total, 504 uniques (+560/+59 since Sep 18)
+- Release downloads: 564 (-4 since Sep 18 funnel, within noise)
+- Referrers: t.co 72/39, github.com 13/4, libhunt.com 2/1 (unchanged)
 - PyPI: not live (pending OIDC publisher)
 
-## PR status (13 open)
+## PR status (14 open)
 | Target | PR | Status |
 |--------|----|--------|
 | x402-foundation/x402 | #3531 | OPEN, 5 comments, GPG-signed, waiting maintainer review |
 | Haustorium12/gold-402 | #234 | OPEN, CI PASSED, "ready-to-merge" + "verified" labels |
+| Haustorium12/gold-402 | #237 | OPEN, NEW (Vend API Merchant — Nano-settled x402 APIs) |
 | AiFinPay/sdk | #77 | OPEN, No comments |
 | tsubasakong/awesome-agent-payments-protocol | #97 | OPEN, No comments |
 | mpp-best/awesome_mpp | #11 | OPEN, No comments |
