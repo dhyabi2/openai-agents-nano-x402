@@ -1,2 +1,1 @@
-529 downloads, 15 upstream PRs open -- feeless Nano x402
-https://github.com/PANDeveloper001/openai-agents-nano-x402
+545 downloads, 14 upstream PRs open -- feeless Nano x402 for AI agents
