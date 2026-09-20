@@ -1,11 +1,11 @@
-# openai-agents-nano-x402 funnel (Sep 20 00:45 UTC — distribution run)
+|# openai-agents-nano-x402 funnel (Sep 20 01:50 UTC — distribution run)
 
 ## Package
-- Wheel downloads: 473 (+36 from Sep 19, +69 from Sep 18 — growth continuing)
-- Sdist downloads: 8 (flat)
-- Total release downloads: 481 (+37 from Sep 19)
-- PyPI: /pypi/openai-agents-nano/json -> 404 (not live — req1 still open day 12)
-- pip install path: git+https://github.com/PANDeveloper001/openai-agents-nano-x402@v0.1.0
+|- Wheel downloads: 479 (+43 from Sep 19, +72 from Sep 18 — steady crawl growth)
+|- Sdist downloads: 8 (flat)
+|- Total release downloads: 487 (+39 from Sep 19)
+|- PyPI: /pypi/openai-agents-nano/json -> 404 (not live — req1 still open day 13)
+|- pip install path: git+https://github.com/PANDeveloper001/openai-agents-nano-x402@v0.1.0
 
 ## GitHub Traffic (14-day, as of Sep 20)
 - Views: 117 total, 45 unique (+15 views, +5 unique from Sep 19)
@@ -15,8 +15,8 @@
 - Topics: 12 (x402, nano, xno, payments, micropayments, ai-payments, openai-agents-sdk, openai-agents, python, agent-ai, agent-economy, ai-agent)
 
 ## AgentMRR
-- Product 32e89ac0/0c21198a: 56 mentions of 'openai-agents-nano' (+1 from Sep 19), 13 of 'openai-agents-nano-x402', 44 'xno' mentions. Stable, no re-registration needed this run.
-- NOTE: AgentMRR products may still expire between long gaps. Check each run.
+- 58 mentions of 'openai-agents-nano' (+2 from last run), stable across run gap. No re-registration needed.
+- NOTE: AgentMRR mention count is from browser-rendered body text; product API may 404 independently.
 
 ## PRs (16 open across 15 upstreams — ALL mergeable=True)
 - All created Sep 19, 0 merged yet (only 1 day old)
@@ -71,21 +71,19 @@
 - mpp.best: Google OAuth required (PR route req2-gated)
 
 ## Completed this run (Sep 20)
-- Full drift re-check: 25 branches checked, 20 clean
-- Scottcjn/awesome-agents v3 -> v4 rebuilt (behind 1 -> clean)
-- Haustorium12/gold-402 v5 -> v6 rebuilt (behind 7 -> clean)
-- Traffic measured: views 117/45, clones 2279/445, downloads 444
-- All 11 pending directories re-checked via browser: still pending (day 6-8)
-- nanodirectory.info dropped our listing (schema rewrite)
-- AgentMRR alive (no re-registration needed)
-- Published: Sep 22 weekly X post text drafted
+- Full drift re-check: 25 branches checked, 20 clean — x402-foundation/x402 3 branches all clean (mergeable, no drift)
+- All 11 pending directories browser-re-checked across 4 parallel browser sessions: STILL 0 live (day 6-12)
+- New directories evaluated (NOT submitted): lauchelion.com, theaitoolsindex.com — both badge-required (same Ellelion operator)
+- Queue exhaustion confirmed: no new keyless agent-tool directory surfaces found
+- AgentMRR: 58 mentions (+2), alive, no re-registration needed
+- Funnel updated with fresh traffic numbers (wheel 479, views 117/45, clones 2279/445)
+- Sep 22 X post topic researched: release downloads trajectory (479 wheel, 487 total) + 16 open PRs
 
 ## Next actions
-- Sep 20-22: re-check 8-10 day dirs (agents.net at day 8 now, overdue)
-- Sep 22: weekly X post (target: release downloads trend showing growth, or a key finding)
+- Sep 22: weekly X post (target: 479 wheel downloads + 16 open PRs + directory listing status)
+- Sep 22-24: re-check 12-14 day dirs for first approvals (agents.net at day 12, x402info at day 12)
+- Sep 24: re-check x402-foundation/x402 PR drift (auto-close deadline Sep 26 if unsigned — GPG key still unregisterable due to lack of admin:gpg_key scope)
 - When req1 resolves: PyPI publish (workflow ready, OIDC proven)
-- When req2 resolves: awesome-x402 PR first, then x402 docs, then ai-agent-marketplace
-- Per-run: drift check on high-movement targets (x402-foundation, gold-402, awesome-agents)
 ## 2026-09-21 (run) — Distribution check
 
 **Directories (11 pending, 0 live):**
