@@ -47,3 +47,23 @@
 2. Verified all 11 directories still pending
 3. Downloads growing: 529 (+84 since Sep 19)
 4. Sep 22 weekly X post slot opens tomorrow
+## Nightly crawler — 2026-09-20 08:04 UTC
+
+### (a) Pending listings went live?
+- **STILL 0 LIVE.** Re-checked agents.net/directory, bestaiagents.org, x402info.com/ecosystem, swarmbazaar.com, theagentrank.com, meshkore.com/submit, aiagents.directory. openai-agents-nano absent from all rendered pages. Earliest submissions (Sep 15 agents.net/theagentrank) are at day 5 — review cycles remain 5-7+ days. No listing has published yet.
+
+### (b) NEW keyless on-topic targets found
+- **devpages.io/submit-a-tool** — keyless free form (name/desc/URL/category/pricing/email, manual human review). Category includes "AI Agents & Assistants" and "APIs". Perfect fit: developer-tool directory that accepts AI agent tooling. NOT yet submitted.
+- **devstack.directory/submit** — keyless free form, review in ~7 days. Categories include "AI & Machine Learning" AND "Payments & Billing". Strong fit for an agent-payments SDK (both attributes). Has optional paid "featured" tier — free listing path is still keyless. NOT yet submitted.
+
+### (c) Candidates ruled out (not-keyless / off-topic)
+- agentbets.ai/submit: keyless + AI-agent-welcome, but strictly the "agent betting stack" (prediction markets/sports/odds); explicitly auto-declines "general AI tools" + requires reciprocal followed backlink. OFF-TOPIC.
+- mcpagents.ai/submit: keyless but MCP-server-specific; our primary artifact is an OpenAI Agents SDK payer, not an MCP server. MARGINAL only.
+- bloomprotocol.ai/submit: keyless/MCP self-enroll but human-centric consumer indie-AI shelf (wellness/creative/money) — SDK is dev tooling. OFF-TOPIC.
+- cogdepot.com: listing requires x-api-key (account-walled). NOT-KEYLESS.
+- NoCost.dev / devbin.io / developertoolkit.dev: free-tool directories for hosted tools/utilities, not libraries/SDKs. NOT ON-TOPIC.
+- fushu.dev/register: currently 500 error on load. DEFER.
+- sigrix.io / meetmyagent.io / agpt.co: paid-purchase marketplaces, not free listing shelves for a payments SDK. NOT APPLICABLE.
+
+### Action for next full run
+Submit to **devpages.io** and **devstack.directory** (both keyless, on-topic, no submission made in this cron as instructed). These are the first new keyless dev-tool targets logged since 4agent.dev.
