@@ -72,3 +72,12 @@ Just awaiting a human maintainer to click merge.
 ## Weekly X post draft (ready for Sep 22; slot opens 2026-09-22 10:39 UTC)
 See x-thread-sep22.md. Strongest hook: michielpost/x402-dev #93 MERGED (maintainer, Sep 20).
 Evergreen: "openai-agents-nano merged into x402 dev portal. Feeless Nano x402." + #93 URL.
+
+## Block 150 — 2026-09-20 DISTRIBUTION FIRST run
+- VERIFIED ADOPTION MILESTONE: michielpost/x402-dev PR #93 MERGED 2026-09-20 11:29 UTC —
+  openai-agents-nano entry live upstream, published on x402dev.com.
+- VERIFIED ADOPTION MILESTONE: nanodirectory.info now lists openai-agents-nano-x402 (upstream
+  Corican/nanodir main llms.txt + directory.json AND rendered live on the site).
+- NEW SUBMISSION: devpages.io/submit-a-tool (AI Agents & Assistants + Free; confirmed).
+- NEW SUBMISSION: devstack.directory/submit (Payments & Billing + Open Source; accepted).
+- agentpay-desk.vercel.app lead excluded honestly (autonomous test failed: card, no runtime).
