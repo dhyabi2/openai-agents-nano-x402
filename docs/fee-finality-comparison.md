@@ -94,6 +94,42 @@ not a USD-pegged asset. For an agent paying sub-cent-micro fees with its own
 holdings the trade-off is usually worth it; for a merchant who needs euros in
 a bank account, a stablecoin rail is currently the closer fit.
 
+## Evidence record: how finality model shapes post-settlement audit
+
+Beyond cost and speed, the choice of rail changes what the **evidence record**
+for a completed x402 payment looks like — which is the open question in the
+x402 TSC's post-settlement accountability / evidence-record item (TSC #4) and
+its two-tier requirements structure (TSC #9).
+
+- **Nano.** Settlement evidence *is* the block. A Nano payment is a single
+  self-verifying block in a per-account block lattice — no mempool, no reorgs,
+  no irreversible-reverting dispute window. `confirmation_height = 1` is
+  final; there is nothing to wait out and nothing an attacker can roll back.
+  Any nano node verifies the block from bytes alone with a standard library
+  (a POV block hash + signature check) — no hosted call, no API key, no
+  account. That matches the recomputability bar the working group already
+  set for cross-project evidence. Live example: block
+  `66b5e8c352e10d6d7078cd9562f7501f41e318e3d4ac3c12b00511b1f96cd4cf`
+  (0.0001 XNO x402 redeem, `docs/live-proof.md`) was confirmed on two
+  independent public nodes; an auditor re-derives the same verdict from the
+  block bytes on any nano node. Verified `count`/`cemented` = 224,490,367
+  blocks on `rpc.nano.to` (2026-09-20) — every one of them is a settled,
+  conflict-free final record.
+
+- **USDC on Base.** The evidence record must prove more. A Base ERC-20
+  transfer is an L2 event under an Ethereum optimistic rollup: to be safe
+  from challenge it must reference the L2 block *and* the eventual L1 state,
+  and track the 7-day dispute window. Two working systems (e.g. Tersign's
+  evidence-record-conformance vectors, the AXES Golden Trace corpus) already
+  model this richer shape — it is workable, but it is strictly more state to
+  carry and verify than Nano's single self-verifying block.
+
+This is not an argument that Nano replaces USDC — a merchant needing EUR in a
+bank account should still pick the stablecoin rail. It is a concrete,
+verifiable way the rail choice lowers the cost of the evidence layer, which
+is exactly the "one substrate, many profiles" / "no hidden role transitions"
+direction the two-tier structure the TSC is weighing (TSC #9) points at.
+
 ## Sources
 
 - Nano fee + speed: Coins Wiki — "zero-fee, instant", "0.3 seconds", "17Mx
