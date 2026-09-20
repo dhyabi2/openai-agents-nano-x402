@@ -1,4 +1,30 @@
-|# openai-agents-nano-x402 funnel (Sep 20 03:45 UTC — distribution run)
+|# openai-agents-nano-x402 funnel (Sep 20 09:08 UTC — distribution run)
+
+## Sep 20 09:08 UTC — distribution re-check: no new merges, dirs still pre-approval, traffic plateau
+
+**PR merges:** 0 new since #43. All 13 upstream PRs still open (verified via gh API this run):
+gold-402 #234 (open, clean), x402-foundation #3531 (open, signed), xpaysh #1568, Scottcjn #82,
+satohubai #12, AiFinPay #77, chgaowei #8, tsubasakong #97, mpp-best #11, facundofarias #4,
+goodmeta #8, frankxai #17, assafbar2 #116, michielpost #93. #232 closed by us (superseded by #234).
+**Drift:** 26 prepared branches, 23 clean (ahead/behind 0). 3 needing attention:
+aiagenta2z/ai-agent-marketplace behind-1 (upstream merged our change = expected), Corican/nanodir
+behind-9 (schema rewrite, low priority), Haustorium12/gold-402 add-vend-api-merchant (Vend's branch).
+**Dir approvals:** 0 of 14 pending submissions live (day 14-15 for longest). Browser-checked this run:
+agents.net (not listed, 45k-char rendered page), meshkore/aiagenttools/thenextai/zplatform homepages
+do not render openai-agents-nano (still in 2-4wk window). nanodirectory: data file retains
+openai-agents-nano-x402 under group-python (verified in JSON), but site not rendering projects
+(upstream schema rewrite in progress) — data survives, visible listing pending.
+**Traffic (14-day, stale window edge):** views 117/45, clones 2279/445 — unchanged. Wheel 542 (+0),
+sdist 9, total 551. Referrers: t.co 72, github.com 13, libhunt.com 2 (organic), app.netlify.com 1.
+**AgentMRR:** stable 59 mentions (browser-verified earlier this morning) — no re-registration.
+**Sep 22 X post:** slot gated until Sep 22 10:39 UTC (not posting now). Draft current at 551
+downloads + first merged PR #43. Already refreshed this morning.
+**Blockers:** req1 (PyPI OIDC, day 15), req2 (GH PR scope + issue create). Weekly X slot opens
+Sep 22 10:39 UTC.
+**Next:** Sep 22 — post weekly update; keep re-checking oldest dirs (day ~15) for first approvals;
+AgentMRR check only when browser shows 0 mentions.
+
+
 
 ## BREAKTHROUGH THIS RUN: x402-foundation signing gate CLEARED (auto-close Sep 26 threat removed)
 - Token now HAS admin:gpg_key scope (was 403 last run). GPG key 15E893A7DA8FE7F6 uploaded to GitHub (id 5336922).
