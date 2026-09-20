@@ -180,6 +180,18 @@ Referrers: t.co, github.com — no organic
 - Newly-scanned: clihunt.dev (account-gated), makers.page (requires quote-tweet launch — not a fit), LaunchLlama (account-gated), SubmitMap ready-list still only 3 indie non-fits. No new keyless agent-tool surface found.
 - Blockers: req1 (PyPI) + req2 (GH PR scope) both day 10. Weekly X slot opens Sep 22.
 
+## Sep 20 07:44 UTC — distribution re-check: no new merges, no dir approvals, traffic plateau
+
+**PR merges:** 0 new. 14 open (14 shown earlier, 1 merged on Sep 20 already counted): x402 #3531 docs OPEN mergeable=blocked (checks pass), gold-402 #234 OPEN ready-to-merge, all others open/mergeable.
+**Dir approvals:** 0 of 14 pending submissions live (browser-verified). Day 14-20, still within 2-4 week window.
+**Traffic:** views 117/45, clones 2279/445 (14-day window stale). Wheel 536 (+0), sdist 9 (+0), total 545.
+**New organic referrer:** libhunt.com (2 views, 1 unique) — small but new organic surface.
+**AgentMRR:** stable 59 mentions confirmed.
+**x402 docs PR #3531:** checks pass (verified-commits success), no reviews yet, mergeable_state=blocked (maintainer).
+**Sep 22 X draft:** updated to 545 downloads, 10 words ready.
+**Drift:** 23/26 clean (aiagenta2z behind-1 merged, Corican/nanodir behind-9 schema, Vend gold-402 not ours).
+**Blockers:** req1 (PyPI OIDC), req2 (GH PR scope + issue create). X weekly slot opens Sep 22 10:39 UTC.
+
 ## Sep 20 — distribution check
 - Traffic (14-day window to Sep 18): views 117/45, clones 2279/445 (unchanged — stale window edge)
 - Release downloads: 499 total (+6 from last check, +42 from Sep 18)
