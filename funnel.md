@@ -1,4 +1,49 @@
-|# openai-agents-nano-x402 funnel (Sep 20 01:50 UTC — distribution run)
+|# openai-agents-nano-x402 funnel (Sep 20 03:45 UTC — distribution run)
+
+## BREAKTHROUGH THIS RUN: x402-foundation signing gate CLEARED (auto-close Sep 26 threat removed)
+- Token now HAS admin:gpg_key scope (was 403 last run). GPG key 15E893A7DA8FE7F6 uploaded to GitHub (id 5336922).
+- Re-signed both x402 PR commit branches with GPG and force-pushed:
+  - PR #3531 (Third-Party SDKs) docs/list-openai-agents-nano-v10 -> e695ba49 signed (check-verified-commits: SUCCESS)
+  - PR #3532 (Nano scheme spec) specs/exact-nano-mainnet-v3 -> 4cc70644 signed (check-verified-commits: SUCCESS)
+- Both PRs OPEN, mergeable=True, no auto-close/stale labels. Only human review remains.
+
+## Package (Sep 20 03:45)
+|- Wheel downloads: 508 (+12 from Sep 20 01:50 496)
+|- Sdist downloads: 8 (flat)
+|- Total release downloads: 516
+|- PyPI: /pypi/openai-agents-nano/json -> 404 (still not live, req1 day 14)
+|- pip install path: git+https://github.com/PANDeveloper001/openai-agents-nano-x402@v0.1.0
+
+## GitHub Traffic (14-day window, stale edge)
+- Views: 117 total, 45 unique (unchanged — window edge)
+- Clones: 2279 total, 445 unique (unchanged)
+- Stars: 0, Forks: 0, License: MIT, Topics: 12
+
+## AgentMRR
+- 59 mentions of 'openai-agents-nano' (+1 from 58), alive, no re-registration needed
+
+## Directories re-checked (Sep 20 03:45 — all 13 still 0 mentions)
+- agents.net, theagentrank, bestaiagents, x402info/ecosystem, 4agent.dev, aiagentcensus,
+  aiagentslist, aiagents.directory, meshkore, swarmbazaar, aikendra, thenextai, freeaiagents — all HTTP 200, 0 mentions.
+- Longest-pending (agents.net, theagentrank) now day 14-15. Confirms 2-4wk review cycle. No rejections.
+
+## PR drift (Sep 20 03:40)
+- 26 prepared branches, 24 clean (ahead/behind 0), 2 diverged:
+  - Corican/nanodir add-openai-agents-nano-clean (behind 9 — schema rewrite, wait)
+  - Haustorium12/gold-402 add-vend-api-merchant (Vend's branch, not ours)
+- All 7 CORE PRs OPEN + MERGEABLE (verified via gh): gold-402 #234, x402-foundation #3531/#3532, AiFinPay #77, xpaysh #1568, Scottcjn #82, onchain-agents #12
+
+## Blockers (unchanged)
+- req1 (PyPI OIDC, day 14) — customer action needed
+- req2 (GH PR scope public_repo, day 14) — still open but admin:gpg_key NOW granted (used this run)
+- Weekly X post slot: opens Sep 22 10:39 UTC — draft exists (update number to 516)
+
+## Completed this run (Sep 20 03:45)
+- CLEARED the x402-foundation signing gate (uploaded GPG key + re-signed both PR commits) — biggest win
+- Re-verified all 7 core PRs open+mergeable
+- Re-checked all 13 pending dirs (still 0 mentions)
+- Traffic + downloads measured (516 total)
+- AgentMRR 59 mentions, alive
 
 ## Package
 |- Wheel downloads: 479 (+43 from Sep 19, +72 from Sep 18 — steady crawl growth)

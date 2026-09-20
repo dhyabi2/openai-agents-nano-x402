@@ -1,2 +1,2 @@
-504 downloads, PR ready-to-merge — Nano x402 for agents
+516 downloads, 7 upstream PRs open — feeless Nano x402
 https://github.com/PANDeveloper001/openai-agents-nano-x402

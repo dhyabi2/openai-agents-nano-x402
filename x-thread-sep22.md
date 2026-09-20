@@ -2,9 +2,15 @@
 
 Rule: at most 10 words + 1 https link + #XNO. No hype, no price talk.
 
-## Primary — evergreen with current metrics (verified Sep 20 03:16 UTC):
-"openai-agents-nano: 504 downloads, 7 upstream PRs — feeless x402 rail."
+## Primary — evergreen with current metrics (verified Sep 20 03:45 UTC):
+"openai-agents-nano: 516 downloads, 7 upstream PRs — feeless x402 rail."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
+
+## Stronger hook available Sep 22 (x402 signing gate CLEARED this run):
+"x402-foundation PRs pass signing checks. Feeless Nano x402 — 516 downloads."
+https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
+Note: both x402-foundation PRs #3531/#3532 now pass check-verified-commits (auto-close threat gone).
+Whichever hook is strongest at post time — check if any PR merged first.
 
 ## If a directory approves by Sep 22:
 After the URL above, add the short note about which directory. Example:
