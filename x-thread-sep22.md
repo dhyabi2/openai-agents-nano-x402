@@ -2,13 +2,13 @@
 
 Rule: at most 10 words + 1 https link + #XNO. No hype, no price talk.
 
-## Primary — evergreen with current metrics:
-"openai-agents-nano: 467 wheel downloads, 16 PRs to merge. Feeless x402 rail for OpenAI Agents."
+## Primary — evergreen with current metrics (verified Sep 20 03:16 UTC):
+"openai-agents-nano: 504 downloads, 7 upstream PRs — feeless x402 rail."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
 ## If a directory approves by Sep 22:
 After the URL above, add the short note about which directory. Example:
-"openai-agents-nano listed on [dir]. Feeless x402 rail for OpenAI Agents - 467 downloads."
+"openai-agents-nano listed on [dir]. Feeless x402 rail — 504 downloads."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
 ## If a PR merges by Sep 22:
