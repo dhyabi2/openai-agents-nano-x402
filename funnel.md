@@ -1,10 +1,10 @@
-# openai-agents-nano-x402 funnel (Sep 20 16:10 UTC — distribution run)
+# openai-agents-nano-x402 funnel (Sep 20 00:45 UTC — distribution run)
 
 ## Package
-- Wheel downloads: 437 (+68 from Sep 19 — growth accelerating)
-- Sdist downloads: 7 (unchanged)
-- Total release downloads: 444 (+68 from Sep 19)
-- PyPI: /pypi/openai-agents-nano/json -> 404 (not live — req1 still open day 8)
+- Wheel downloads: 473 (+36 from Sep 19, +69 from Sep 18 — growth continuing)
+- Sdist downloads: 8 (flat)
+- Total release downloads: 481 (+37 from Sep 19)
+- PyPI: /pypi/openai-agents-nano/json -> 404 (not live — req1 still open day 12)
 - pip install path: git+https://github.com/PANDeveloper001/openai-agents-nano-x402@v0.1.0
 
 ## GitHub Traffic (14-day, as of Sep 20)
@@ -15,10 +15,17 @@
 - Topics: 12 (x402, nano, xno, payments, micropayments, ai-payments, openai-agents-sdk, openai-agents, python, agent-ai, agent-economy, ai-agent)
 
 ## AgentMRR
-- Product was REMOVED between sessions (id 32e89ac0 -> "Product not found"). Re-REGISTERED this run (new id 0c21198a, 53 mentions on homepage).
-- NOTE: AgentMRR continues to expire products between runs. MUST re-check and re-register each run.
+- Product 32e89ac0/0c21198a: 56 mentions of 'openai-agents-nano' (+1 from Sep 19), 13 of 'openai-agents-nano-x402', 44 'xno' mentions. Stable, no re-registration needed this run.
+- NOTE: AgentMRR products may still expire between long gaps. Check each run.
 
-## Directories re-checked (Sep 19 16:4x, all 11 still pending — day 4-8)
+## PRs (16 open across 15 upstreams — ALL mergeable=True)
+- All created Sep 19, 0 merged yet (only 1 day old)
+- x402-foundation/x402#3531 (Third-Party SDKs) and #3532 (Nano scheme spec): require GPG-signed commits. Bot said "will be closed after 1 week of inactivity" (deadline ~Sep 26). GPG key generated locally but can't register on GitHub (token lacks admin:gpg_key scope, open request #2 blocks second same-service request)
+- agentswitchboard.dev#116: Vercel deploy authorization needed (not actionable)
+- Other 13 PRs: mergeable, 0 comments, waiting for human review
+- Drift: all 16 confirmed mergeable this run
+
+## Directories re-checked (Sep 20 00:15, all 11 still pending — day 6-12)
 - [LIVE] GitHub topics — 12 topics, repo on /topics/xno page 3
 - [LIVE] agents-launch.lovable.app, libhunt.com — auto-indexed
 - [LOST] nanodirectory.info — directory.json STILL contains our entry (verified in full JSON), but the site no longer renders individual projects (schema rewrite in progress — item arrays empty, no card on homepage, no per-project page). Effectively not live as a visible listing this run.
