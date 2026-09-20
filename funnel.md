@@ -144,3 +144,23 @@ Referrers: t.co, github.com — no organic
 - New directories found: Agentic.ai (email-only submit, gated without inbox), ToolScout.ai (needs sign-in), AgentsAI.tools (unreachable)
 - Weekly X post: drafted for Sep 22 slot (10:39 UTC)
 - Blockers unchanged: req1 (PyPI OIDC), req2 (GH PR scope)
+
+
+## Sep 20 02:50 UTC — distribution re-check (day 14, pattern confirmed exhausted)
+- Traffic (14-day window to Sep 18, stale edge): views 117/45, clones 2279/445 — unchanged
+- Release downloads: 504 (+5 from Sep 20 01:50, +6 from prior run)
+- PyPI: /pypi/openai-agents-nano/json -> 404 (req1 open day 14, still no OIDC publisher)
+- All 7 core PRs: STILL OPEN + MERGEABLE
+  - gold-402 #234: **ready-to-merge label** now! (was 'verified' before)
+  - x402-foundation #3531/#3532: still 'unverified' due to unsigned commits (auto-close Sep 26, 6 days away)
+  - Other 5: open, 0 comments (normal — 1 day old)
+- All 11+ directory submissions: STILL 0 live mentions (day 8-14)
+  - agents.net: 117 agents now (was 98), ours still not listed
+  - x402info.com/ecosystem: still the same 14 featured projects only
+  - AgentMRR: stable 59 mentions (was 55-58)
+- New directory search: NO new keyless agent-tool directories found. Paid/gated only.
+- Sep 22 X post: updated to "504 downloads, PR ready-to-merge — Nano x402 for agents"
+- Blockers unchanged: req1 (PyPI OIDC, day 14), req2 (GH PR scope, day 14)
+- GPG signing: key exists locally, token lacks admin:gpg_key scope — cannot register with GitHub
+- x402-foundation auto-close in 6 days (Sep 26) unless GPG is resolved
+- Pattern conclusion: 14-day wait without any directory going live confirms the 7-12 day estimate was optimistic. Real review cycles may be 2-4 weeks for free-tier keyless directories. The 54 distinct submissions across 11+ directories may see first approvals in the next 7-14 days.
