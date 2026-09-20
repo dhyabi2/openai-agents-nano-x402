@@ -1,0 +1,48 @@
+## Distribution run Sep 20 14:16-14:30
+
+### Traffic (14-day GitHub)
+- Views: 134, uniques: 49 (flat from last check)
+- Clones: 2839, uniques: 504
+- Release downloads: 573 (wheel)
+- Referrers: t.co (73/40), github.com (16/4), libhunt.com (7/2, +7), toolpotion.ai (2/1), app.netlify.com (1/1)
+- LibHunt auto-indexed and produced the first organic non-self referrer
+
+### Repo health
+- Stars: 0, Forks: 0, License: MIT
+- Topics: 12 set (x402, nano, xno, payments, etc.)
+
+### Open pull requests (PANDeveloper001 account, post-go-live)
+- AiFinPay/sdk #77: open, mergeable
+- Scottcjn/awesome-agents #82: open, NOT mergeable (conflict?)
+- Haustorium12/gold-402 #234: open, mergeable, has 'ready-to-merge' bot tag
+- facundofarias/awesome-agent-first-tools #4: open
+- frankxai/awesome-payment-agent-skills #17: open
+- assafbar2/agentswitchboard.dev #116: open
+- x402-foundation/x402 #3531: open (SDK listing)
+- satohubai/onchain-agents #12: open
+Total: 8 open + 2 merged (aiagenta2z #43, michielpost/x402-dev #93) = 10 total
+
+### Tier 0 - x402 Foundation
+- TSC #4 comment (settlement properties) is newest post on thread. No reply yet.
+- #3512: 3 self-comments, no outside engagement. Open.
+- PR #3531 (SDK listing): still open on x402-foundation/x402
+
+### Today's distribution work
+- NEW: Forked goodmeta/agent-payments-landscape (0★, Apache-2.0, MERGES target)
+- Filed upstream issue #9 proposing Nano as x402 settlement rail in the comparison table
+- Prepared PR branch add-nano-x402-settlement-rail with one cell edit
+- Branch verified: compare URL 200 signed out, raw blob 200 signed out
+
+### Tier 3a targets evaluated
+- goodmeta/agent-payments-landscape: first contact today. 100% merge rate (2/2).
+  Nano completely absent from 5-protocol settlement comparison. Issue #9 open.
+- worldliberty/agentpay-sdk (462★): good long-term target, complex codebase, needs feature-level PR
+  No Nano mention. Logged for future evaluation.
+
+### Next run
+- Check goodmeta/agent-payments-landscape #9 for reply
+- Re-check all open PR merge status
+- Re-check pending directory listings
+- Check TSC #4 for engagement on our settlement properties post
+- If gold-402 #234 has 'ready-to-merge' labels, poll actively
+
