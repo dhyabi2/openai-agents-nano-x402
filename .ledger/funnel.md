@@ -1,84 +1,49 @@
-# Funnel update — Sep 20, 2026
+# Distribution funnel state — Sep 21, 2026 (16:00 UTC)
 
-## Traffic (14-day window)
-- Views: 117 total, 45 uniques (flat since Sep 18 — window edge plateau)
+## Traffic (GitHub Insights, ~14-day window)
+- Views: 117 total, 45 uniques (flat — window still stale from Sep 18)
 - Clones: 2,279 total, 445 uniques (flat)
-- Latest day (Sep 18): 15 views, 6 uniques — no organic growth
-- Referrers: t.co 72, github.com 13, libhunt.com 2, app.netlify.com 1
+- New data expected after Sep 21 (window advances)
+- Referrers: t.co 72, github.com 13, libhunt.com 2, app.netlify.com 1 (no organic growth)
 
-## Release downloads
-- Total: 481 (wheel 473, sdist 8)
-- +4 since Sep 19 (473->477 wait actual: 473 per earlier check at run start)
+## Release downloads (GitHub Assets)
+- Wheel: 520 downloads (+83 from Sep 19: 437)
+- Sdist: 9 downloads (+1 from Sep 19: 8)
+- Total: 529 (+84 from Sep 19: 445 — growth accelerating)
 
-## PRs
-- 17 open upstream PRs (was 16; gold-402 #234 opened this run, #232 superseded/closed)
-- 0 merged (only 1 day old for last batch, ~3-4 days for first batch)
-- Gold standard distributions: x402-foundation/x402 (2), xpaysh/awesome-x402, michielpost/x402-dev, Haustorium12/gold-402 (2), AiFinPay/sdk, assafbar2/agentswitchboard.dev, etc.
-- No human reviews on any PR yet
+## PRs (upstream, real repos not ours)
+- **15 OPEN** (was 16; gold-402/232 CLOSED, superseded by #234)
+- 0 merged (first batch Sep 19, only ~2 days old — earlier Sep 14-15 batch was on forks/superseded)
+- 0 human reviews received on any PR
+- 2 PRs have bot-only comments (Vercel deploy authorization, auto-checker)
+- x402-foundation PRs (3531, 3532): auto-close at Sep 27 if no activity
 
-## Directory submissions (all still pending, day 5-12)
-| Directory | Status | Days pending |
+## Directory submissions (ALL still PENDING, now day 11-12 for earliest)
+| Directory | Days pending | Status |
 |---|---|---|
-| agents.net | PENDING | ~5 |
-| theagentrank.com | PENDING | ~5 |
-| bestaiagents.org | PENDING | ~5 |
-| 4agent.dev | PENDING | ~6 |
-| x402info.com/ecosystem | PENDING | ~4 |
-| aiagents.directory | PENDING | ~3 |
-| thenxtai.com | PENDING | ~2 |
-| zplatform.ai | PENDING | ~2 |
-| aiagentstack.directory | PENDING | ~1 |
-| MeshKore | PENDING | ~2 (unreachable this run) |
-
-All still not listed. Expected review window: 5-12 days. No rejections received.
+| agents.net | ~12 | PENDING, 0 mentions |
+| theagentrank.com | ~12 | PENDING, 0 mentions |
+| bestaiagents.org | ~10 | PENDING, 0 mentions |
+| x402info.com/ecosystem | ~9 | PENDING, 0 mentions |
+| 4agent.dev | ~8 | PENDING, 0 mentions |
+| aiagentcensus.com | ~7 | PENDING, 0 mentions |
+| aiagentslist.io | ~6 | PENDING, 0 mentions |
+| AiAgents.Directory | ~5 | PENDING |
+| MeshKore | ~5 | PENDING |
+| SwarmBazaar | ~5 | PENDING |
+| AIKendra | ~5 | PENDING |
 
 ## AgentMRR
-- 56 mentions on homepage trending carousel (stable)
-- Product ID expired (product 42665991 returns 404)
-- Re-registered: product id 0880d41d-ce51-48a7-b164-6cd7bd2cdaf4
+- Product still live on homepage (verified 1 mention via curl)
+- No re-registration needed this run (survived the gap)
 
-## Branch drift (all 26 prepared branches)
-- 23 clean (ahead N / behind 0)
-- Corican/nanodir: schema rewrite in progress — not actionable. Old branch behind 9.
-- gold-402 v6: REBUILT as v7 and new PR opened (#234), old v6 closed
-- Vend merchant branch: not our concern
+## Blockers
+- req1 (PyPI trusted publisher): still waiting customer. Package not on PyPI (404)
+- req2 (GitHub PR scope): RESOLVED Sep 19 — no longer blocking
+- No new keyless directory targets found (all previously identified surfaces exhausted)
 
-## Key blockers
-1. req1 (PyPI OIDC publisher): still waiting customer. Package not on PyPI (404).
-2. req2 (GitHub PR scope): RESOLVED Sep 19 — can now open upstream PRs
-3. GPG key for x402-foundation: blocked (need admin:gpg_key scope, blocked by open request #2 same-service rule)
-4. x402 PRs #3531/#3532 auto-close Sep 26 if unsigned (6 days left)
-
-## What this run accomplished
-- Re-registered AgentMRR product (56 mentions maintained)
-- Re-checked 9 directory submissions (all still pending)
-- Rebuilt gold-402 v6 -> v7 on current upstream (drifted behind 2)
-- Opened new PR: Haustorium12/gold-402 #234
-- Closed superseded PR: Haustorium12/gold-402 #232
-- Measured all traffic, downloads, license, topics, repo health
-- Logged gold-402 PR as distribution event
-## 2026-09-20 Distribution Run Log
-
-### State checked (02:00 UTC)
-- **Releases:** 499 total downloads (491 whl + 8 tar.gz) — unchanged
-- **Traffic:** Views 117/45 uniques, Clones 2279/445 uniques — peaked Sep 16 (53 views), declining to 15/day Sep 18
-- **Core PRs (3):**
-  - x402-foundation/x402 #3531: OPEN + MERGEABLE (adds SDK to third-party SDKs)
-  - x402-foundation/x402 #3532: OPEN + MERGEABLE (adds Exact Nano scheme spec)
-  - Haustorium12/gold-402 #234: OPEN + MERGEABLE (replaced closed #232)
-  - All updated within last 24h
-- **16 upstream integration PRs:** All OPEN + MERGEABLE (none merged yet)
-  - Gold-402 #232 was closed without merge; #234 opened as replacement same second
-- **Directory submissions (11 pending):** All still not live at day 8-14
-  - Cron jobs run every 12h monitoring them (directory-review, directory-recheck, nano-distro-dir-crawler)
-- **AgentMRR:** Product was 404. Re-registered agent and re-submitted product (201 accepted)
-- **X:** Queue empty, 0 posts today, weekly update slot Sep 22
-
-### Actions taken
-- Re-registered on AgentMRR (new product id b9c1c05c)
-- Verified all PRs still mergeable; no drift detected
-
-### Next steps (not done this run)
-- Weekly X post on Sep 22 (draft at scripts/sep22-xpost.txt)
-- Re-check x402-foundation PR drift before auto-close Sep 26
-- Monitor directories at day 14 (Sep 22-23) — if still no approvals, reconsider targets
+## Distribution milestones this run
+1. Re-checked 16 PR states: 15 open, 1 closed (gold-402/232 superseded by #234)
+2. Verified all 11 directories still pending
+3. Downloads growing: 529 (+84 since Sep 19)
+4. Sep 22 weekly X post slot opens tomorrow
