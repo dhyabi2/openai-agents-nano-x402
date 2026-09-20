@@ -1,1 +1,1 @@
-545 downloads, 14 upstream PRs open -- feeless Nano x402 for AI agents
+551 downloads, 1 merged PR -- feeless Nano x402 for AI agents
