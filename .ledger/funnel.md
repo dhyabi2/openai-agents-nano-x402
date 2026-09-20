@@ -57,3 +57,28 @@ All still not listed. Expected review window: 5-12 days. No rejections received.
 - Closed superseded PR: Haustorium12/gold-402 #232
 - Measured all traffic, downloads, license, topics, repo health
 - Logged gold-402 PR as distribution event
+## 2026-09-20 Distribution Run Log
+
+### State checked (02:00 UTC)
+- **Releases:** 499 total downloads (491 whl + 8 tar.gz) — unchanged
+- **Traffic:** Views 117/45 uniques, Clones 2279/445 uniques — peaked Sep 16 (53 views), declining to 15/day Sep 18
+- **Core PRs (3):**
+  - x402-foundation/x402 #3531: OPEN + MERGEABLE (adds SDK to third-party SDKs)
+  - x402-foundation/x402 #3532: OPEN + MERGEABLE (adds Exact Nano scheme spec)
+  - Haustorium12/gold-402 #234: OPEN + MERGEABLE (replaced closed #232)
+  - All updated within last 24h
+- **16 upstream integration PRs:** All OPEN + MERGEABLE (none merged yet)
+  - Gold-402 #232 was closed without merge; #234 opened as replacement same second
+- **Directory submissions (11 pending):** All still not live at day 8-14
+  - Cron jobs run every 12h monitoring them (directory-review, directory-recheck, nano-distro-dir-crawler)
+- **AgentMRR:** Product was 404. Re-registered agent and re-submitted product (201 accepted)
+- **X:** Queue empty, 0 posts today, weekly update slot Sep 22
+
+### Actions taken
+- Re-registered on AgentMRR (new product id b9c1c05c)
+- Verified all PRs still mergeable; no drift detected
+
+### Next steps (not done this run)
+- Weekly X post on Sep 22 (draft at scripts/sep22-xpost.txt)
+- Re-check x402-foundation PR drift before auto-close Sep 26
+- Monitor directories at day 14 (Sep 22-23) — if still no approvals, reconsider targets
