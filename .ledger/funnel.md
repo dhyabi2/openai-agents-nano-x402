@@ -1,10 +1,17 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: Sep 20 14:48 UTC
+# Updated: Sep 20 16:20 UTC
 
 ## Current state
 - **ADOPTED**: Full milestone set achieved (package + listing + merged_pr + external_payment)
 - **Blocking new projects**: NO (adopted)
 - **14 open PRs** across upstream repos (1 NEW: gold-402 #237 Vend API Merchant)
+- **FIRST CONTACT (tier 3b)**: PayAINetwork/agentic-payments — dual x402+MPP middleware, USDC-only, no Nano. Fork issue #1 + prepared branch `add-nano-x402-adapter` (ahead 1/behind 0) proposing Nano as a third ProtocolAdapter rail.
+
+## Drift check (2026-09-20 16:15)
+- 9/17 prepared branches CLEAN (ahead 1/behind 0 vs correct default_branch)
+- 1 DIVERGED: assafbar2/agentswitchboard.dev `add-openai-agents-nano` (behind 21 — needs rebuild on current upstream before PR)
+- 7 compare-404s in the naive check were actually clean (wrong default_branch in the loop — use master for x402-dev/awesome-agentic-commerce etc.)
+- michielpost/x402-dev `add-openai-agents-nano` is behind 1 vs master because #93 already MERGED (expected, already adopted)
 
 ## Traffic (GitHub API, 14-day window)
 - Views: 134 total, 49 uniques (+17/+4 since Sep 18)
