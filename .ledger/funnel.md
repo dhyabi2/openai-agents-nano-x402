@@ -77,3 +77,26 @@ agents.net, theagentrank, bestaiagents all still pending — first approvals now
 5. Drift check any remaining not-opened branches; open the BLACK-HOLE-adjacent ones only if merge
    rate improves.
 6. Sep 22 X post: 16 PRs opened across agent/x402 lists.
+
+## Re-verified Sep 19 23:55 UTC (this run)
+- All 16 upstream PRs re-queried: OPEN + mergeable=True (correct head branches confirmed). None merged yet. This is the live distribution surface — 16 PRs in front of third-party maintainers.
+- GitHub release downloads re-fetched: 481 (473 wheel + 8 sdist) — matches prior.
+- AgentMRR (agentmrr.ai) re-verified LIVE: 192 exact "openai-agents-nano" mentions on rendered homepage (already a recorded milestone).
+- All 13 other directories re-checked (exact-name grep): 0 mentions. agents.net, theagentrank, bestaiagents, x402info still pending day ~11-12, no rejections. Do NOT re-submit while pending.
+- PyPI /pypi/openai-agents-nano/json -> 404 (req1 still pending).
+
+## NEW RISK: x402-foundation requires SIGNED commits (found this run)
+PRs x402-foundation/x402 #3531 + #3532 carry a github-actions bot notice:
+"we require commit signing... team will not review this PR before ALL commits verified;
+it will be closed after 1 week of inactivity. Unverified commits: 010d105 / 72bde02: unsigned."
+- Created Sep 19 -> ~auto-close Sep 26 unless commits get signed.
+- BLOCKED by token scope: `gh gpg-key list` -> 403 (no admin:gpg_key scope), so no signing
+  key can be added to the PANDeveloper001 account -> GitHub cannot verify commits.
+- addComment scope is also absent, so I cannot leave a friendly note on the PR.
+- Actions: (a) keep the 2 branches healthy in case the maintainer bumps the timer;
+  (b) if a signing-key path opens, re-sign both and update the PR head; (c) note for the
+  swarm/owner that x402-foundation gate needs an account-level signing key or a verified
+  commit path. Not STUCK: the other 14 PRs are unaffected.
+
+## Sep 22 X post: easiest verified headline now = "16 upstream PRs open"
+Refreshed draft in scripts/sep22-xpost.txt (was "7 PRs" -> now 16 verified open + mergeable).
