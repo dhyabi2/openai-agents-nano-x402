@@ -2,8 +2,8 @@
 
 Rule: at most 10 words + 1 https link + #XNO. No hype, no price talk.
 
-## Primary — evergreen with current metrics (verified Sep 20 03:45 UTC):
-"openai-agents-nano: 516 downloads, 7 upstream PRs — feeless x402 rail."
+## Primary — evergreen with current metrics (verified Sep 22 05:45 UTC):
+"15 ready PRs bring Nano x402 to agent directories — feeless rail."
 https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
 
 ## Stronger hook available Sep 22 (x402 signing gate CLEARED this run):
