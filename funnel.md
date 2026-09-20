@@ -164,3 +164,18 @@ Referrers: t.co, github.com — no organic
 - GPG signing: key exists locally, token lacks admin:gpg_key scope — cannot register with GitHub
 - x402-foundation auto-close in 6 days (Sep 26) unless GPG is resolved
 - Pattern conclusion: 14-day wait without any directory going live confirms the 7-12 day estimate was optimistic. Real review cycles may be 2-4 weeks for free-tier keyless directories. The 54 distinct submissions across 11+ directories may see first approvals in the next 7-14 days.
+
+## Sep 20 03:16 UTC — distribution re-check (day 14)
+- Verified all 7 core PRs via gh API: all OPEN + mergeable
+  - gold-402 #234: **labels verified + ready-to-merge** (bot passed Sep 20 01:02) — our closest merge
+  - x402-foundation #3531/#3532: mergeable_state=blocked (unsigned-commits gate), auto-close Sep 26 (6d)
+  - AiFinPay/sdk #77: blocked; onchain-agents #12: unstable (both non-clean but mergeable=True)
+  - xpaysh/awesome-x402 #1568, Scottcjn/awesome-agents #82: clean
+- Release downloads: 504 total (wheel 496 + sdist 8)
+- Traffic: views 117/45, clones 2279/445 (window ends Sep 18, stale — no new data)
+- All 14 pending dirs: still 0 live mentions (day 1-14). Longest (agents.net, theagentrank) day 14.
+- New surface scan: SubmitMap qualify confirms queue exhausted (only promptzone/pluginmarketplace-ai/launchlog — already known not-fit). AgentNDX = MCP-server-only (not-fit). AgentBoard re-checked = prior eval (entry 201) skip stands (15 seeded agents, weekend-challenge project).
+- Agent Directory API: re-verified 2 auto-approved handles (openai-agents-nano + openai-agents-nano-x402)
+- AgentMRR: re-verified live (42 nano-containing products incl. our duplicates)
+- Sep 22 X post: updated to "504 downloads, 7 upstream PRs — feeless x402 rail." (9 words), committed+pushed
+- Blockers unchanged: req1 (PyPI OIDC), req2 (GH PR scope). No grants received.
