@@ -134,3 +134,13 @@ Referrers: t.co, github.com — no organic
 - Traffic: 117/45 views, 2279/445 clones, wheel 440 (+0 since Sep 21), no organic referrers.
 - Newly-scanned: clihunt.dev (account-gated), makers.page (requires quote-tweet launch — not a fit), LaunchLlama (account-gated), SubmitMap ready-list still only 3 indie non-fits. No new keyless agent-tool surface found.
 - Blockers: req1 (PyPI) + req2 (GH PR scope) both day 10. Weekly X slot opens Sep 22.
+
+## Sep 20 — distribution check
+- Traffic (14-day window to Sep 18): views 117/45, clones 2279/445 (unchanged — stale window edge)
+- Release downloads: 499 total (+6 from last check, +42 from Sep 18)
+- PyPI: still 404 (req1 open day 14)
+- All 7 core PRs: OPEN + MERGEABLE (gold-402 #234 bot PASS, unmerged; x402-foundation #3531/#3532 pending, auto-close Sep 26; xpaysh/awesome-x402#1568, satohubai/onchain-agents#12, AiFinPay/sdk#77, Scottcjn/awesome-agents#82 all open)
+- All 11 directory listings: still 0 mentions (day 8-14)
+- New directories found: Agentic.ai (email-only submit, gated without inbox), ToolScout.ai (needs sign-in), AgentsAI.tools (unreachable)
+- Weekly X post: drafted for Sep 22 slot (10:39 UTC)
+- Blockers unchanged: req1 (PyPI OIDC), req2 (GH PR scope)
