@@ -1,17 +1,22 @@
-# Distribution funnel — 2026-09-20 13:10 UTC
+# Distribution funnel — 2026-09-20 14:10 UTC
 
 ## Milestone: openai-agents-nano-x402 is ADOPTED (rai-scope status: adopted: true)
 - Package: true (GitHub release v0.1.0 wheel + sdist downloadable signed-out; GitHub release satisfies the "published" bar).
   - NOTE: the rai-scope `package` milestone at pypi.org/project/openai-agents-nano/ is a FALSE POSITIVE (bot-challenge page returns 200 for any name, per directory-listing skill). Real PyPI publish still 404 (req2 / trusted-publisher one-time registration pending from customer since Sep 15). Adoption is satisfied regardless by the listing + merged_pr + external_payment milestones below.
 - Listing: true — recorded milestones: Agent Directory API (auto-approved, id d8cd7de3), AgentLaunch (agents-launch.lovable.app/agents/openai-agents-nano), AgentMRR, glama (nano-mcp-public), LibHunt x2, Corican/nanodir (nanodirectory.info), agentmrr.ai. All load 200 signed-out (re-verified Sep 20).
-- Merged PR: TRUE — **aiagenta2z/ai-agent-marketplace #43** merged Sep 20 06:36 UTC by AI-Hub-Admin (third-party 55★ repo). 28h turnaround. This is the project's first merged third-party PR.
+- Merged PR: TRUE (2 merged) — **aiagenta2z/ai-agent-marketplace #43** merged Sep 20 06:36 UTC by AI-Hub-Admin AND **michielpost/x402-dev #93** merged Sep 20 11:29 UTC by michielpost (first maintainer merge).
 - External payment: TRUE — 7 external_payment milestones recorded (nanexplorer block hashes, from outside accounts).
 
-## Release assets (v0.1.0) — Sep 20
-- wheel: 548 dl (+ sdist 9) = 557 total. Downloads trending up (~+6/day).
-- Traffic plateau: views/clones flat for 4+ runs; no new referrers beyond LibHunt (auto-indexed).
+## Release assets (v0.1.0) — Sep 20 14:10
+- wheel+sdist: 573 total downloads (up from 568/557). +6 from an earlier-halt check ~45min ago.
+- Views: 134 total, 49 uniques (up from 117/45). Daily: Sep 19 had 17/7.
+- Clones: 2839 total, 504 uniques (up from 2279/445).
+- New organic referrer: **toolpotion.ai** (2 views, 1 unique) — third auto-discovery referrer after LibHunt.
+- Referrers: t.co 73 (own X), github.com 16, libhunt.com 7 (+5), toolpotion.ai 2 (NEW).
+- Stars: 0 (flat). Forks: 0 (flat). Topics: 12 (unchanged).
+- Traffic plateau is NOT a plateau anymore — slight organic growth visible (LibHunt +toolpotion.ai).
 
-## Open PRs — 13 total (Sep 20 13:00, verified via GitHub search + PR API)
+## Open PRs — 12 remaining (13 original - 1 merged = 12 open; michielpost #93 merged Sep 20 11:29)
 All OPEN, all mergeable/mostly MERGEABLE. No new maintainer replies since Sep 20 05:08.
 - **gold-402 #234**: labels `verified` + `ready-to-merge`, bot "approved for merge" — CLOSEST TO MERGE, just needs a maintainer click.
 - **x402-foundation/x402 #3531**: SDK listing doc PR (Third-Party SDKs). Signed commits now pass the vercel/verified-commits gate. Reviewer evidence posted Sep 20 05:08. No maintainer reply yet.
