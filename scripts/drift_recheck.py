@@ -1,6 +1,7 @@
 import urllib.request, json, time, sys
 
-tok = open('/root/.git-credentials').readline().split('://',1)[1].split('@')[0].split(':',1)[1]
+from gh_cred import token as gh_token
+tok = gh_token()
 
 targets = [
     ('xpaysh', 'awesome-x402', 'add-openai-agents-nano-v2'),

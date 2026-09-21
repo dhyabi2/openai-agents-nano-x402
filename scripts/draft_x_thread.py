@@ -15,7 +15,8 @@ import json
 import sys
 import urllib.request
 
-TOKEN = open("/root/.git-credentials").readline().split("://", 1)[1].split("@")[0].split(":", 1)[1]
+from gh_cred import token as gh_token
+TOKEN = gh_token()
 API = "https://api.github.com"
 FORK_OWNER = "PANDeveloper001"
 

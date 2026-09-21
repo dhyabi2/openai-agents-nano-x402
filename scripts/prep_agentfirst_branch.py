@@ -17,9 +17,7 @@ UPSTREAM = "facundofarias/awesome-agent-first-tools"
 BRANCH = "add-openai-agents-nano"
 WORK = "/tmp/agentfirst"
 
-def token():
-    line = open("/root/.git-credentials").readline()
-    return line.split("://", 1)[1].split("@")[0].split(":", 1)[1]
+from gh_cred import token
 
 
 def run(cmd, **kw):

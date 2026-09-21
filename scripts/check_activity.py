@@ -4,9 +4,7 @@ import json
 import os
 import urllib.request
 
-def token():
-    line = open("/root/.git-credentials").readline()
-    return line.split("://", 1)[1].split("@")[0].split(":", 1)[1]
+from gh_cred import token
 
 def api(url, tok):
     req = urllib.request.Request(url)

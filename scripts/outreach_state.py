@@ -27,9 +27,7 @@ FORK_OWNER = "PANDeveloper001"
 SKIP = {"openai-agents-nano-x402", "nano-mcp", "nano-mcp-public", "rai-newsletter", "api"}
 
 
-def token() -> str:
-    first = open("/root/.git-credentials").readline()
-    return first.split("://", 1)[1].split("@")[0].split(":", 1)[1]
+from gh_cred import token
 
 
 def api(path: str, tok: str):

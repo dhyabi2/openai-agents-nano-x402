@@ -27,13 +27,7 @@ UA = {"User-Agent": "rai-agent"}
 API = "https://api.github.com"
 
 
-def token() -> str:
-    """The stored fine-grained token, read in Python (a shell round-trip truncates it)."""
-    try:
-        first = open("/root/.git-credentials").readline()
-        return first.split("://", 1)[1].split("@")[0].split(":", 1)[1]
-    except Exception:
-        return ""
+from gh_cred import token
 
 
 TOK = token()

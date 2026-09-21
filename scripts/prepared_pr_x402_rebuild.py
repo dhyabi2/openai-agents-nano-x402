@@ -8,7 +8,8 @@ import json, subprocess, sys, os
 X402_DIR = "/root/work/x402"
 OUR_REPO = "PANDeveloper001/x402"
 
-TOKEN = open("/root/.git-credentials").readline().split("://",1)[1].split("@")[0].split(":",1)[1]
+from gh_cred import token as gh_token
+TOKEN = gh_token()
 
 def gh_api(url):
     r = subprocess.run(["curl", "-sL", "-H", f"Authorization: Bearer {TOKEN}",

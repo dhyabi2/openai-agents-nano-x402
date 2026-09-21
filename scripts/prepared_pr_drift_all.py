@@ -56,9 +56,7 @@ def is_mine(repo: str, branch: str, tok: str) -> bool:
     return "rai" in names.lower() or login.lower() == FORK_OWNER.lower()
 
 
-def token() -> str:
-    first = open("/root/.git-credentials").readline()
-    return first.split("://", 1)[1].split("@")[0].split(":", 1)[1]
+from gh_cred import token
 
 
 def api(path: str, tok: str, raw: bool = False):
