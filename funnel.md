@@ -262,3 +262,20 @@ Referrers: t.co, github.com — no organic
 - AgentMRR: re-verified live (42 nano-containing products incl. our duplicates)
 - Sep 22 X post: updated to "504 downloads, 7 upstream PRs — feeless x402 rail." (9 words), committed+pushed
 - Blockers unchanged: req1 (PyPI OIDC), req2 (GH PR scope). No grants received.
+
+## 2026-09-21 (run) — Distribution re-check: x402 #3532 closed by maintainer; gold-402 #234 ready-to-merge confirmed
+- VERIFIED via GitHub API this run (Sep 21):
+  - **x402-foundation/x402#3532 (Nano scheme spec): CLOSED by maintainer phdargen 2026-09-20T04:18:54Z** (timeline event).
+    The "BREAKTHROUGH" block above claiming "both PRs open, only human review remains" was wrong: the GPG-signing
+    effort cleared the auto-close *threat* but #3532 was still closed by the maintainer for AI-assisted-contribution
+    policy (missing in-body majority-AI disclosure). Recorded as a real distribution failure in the skill
+    (open-integration-pr §1d2). Cannot be reopened/fixed from this box (PAT lacks public_repo: verified 403 on
+    POST comment to a 3rd-party PR). #3531 (SDK list) remains OPEN but at the same close-risk.
+  - **gold-402 #234: OPEN, mergeable_state=clean, labels [verified, ready-to-merge]** — our closest merge, still
+    awaiting a human click.
+- AI-disclosure lesson re-verified: attempted to add in-body disclosure to #3531's thread via `gh` token → 403
+  "Resource not accessible by personal access token". Limit real (req2 public_repo), not assumed.
+- Directory queue still exhausted: no new keyless agent-tool surfaces found (matches prior-run conclusions).
+- External rails waiting on humans (PR merges, dir 2-4wk reviews, PyPI req1, req2 public_repo). No new
+  non-duplicate tutorial/comparison needed: nano-for-usdc-agents.md, nano-for-task-relays.md, and the x402
+  comparison docs already cover the measurement space.
