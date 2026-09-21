@@ -1,1 +1,1 @@
-579 GitHub downloads, 2 merged PRs, 14 open PRs -- feeless Nano x402 for AI agents
+612 GitHub downloads (602 wheel+10 sdist), 2 merged PRs, 13 live open PRs -- feeless Nano x402 for AI agents. 1st merged on aiagenta2z + michielpost/x402-dev. Pay any x402 endpoint in self-custodied XNO (0 fees, instant) from OpenAI Agents SDK.

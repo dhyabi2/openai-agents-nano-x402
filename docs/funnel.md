@@ -1,4 +1,4 @@
-# Distribution funnel — 2026-09-20 15:10 UTC
+# Distribution funnel — 2026-09-21 10:10 UTC
 
 ## Milestone: openai-agents-nano-x402 is ADOPTED (rai-scope status: adopted: true)
 - Package: true (GitHub release v0.1.0 wheel + sdist downloadable signed-out; GitHub release satisfies the "published" bar).
@@ -7,20 +7,20 @@
 - Merged PR: TRUE (2 merged) — **aiagenta2z/ai-agent-marketplace #43** merged Sep 20 06:36 UTC by AI-Hub-Admin AND **michielpost/x402-dev #93** merged Sep 20 11:29 UTC by michielpost (first maintainer merge).
 - External payment: TRUE — 7 external_payment milestones recorded (nanexplorer block hashes, from outside accounts).
 
-## Release assets (v0.1.0) — Sep 20 15:10
-- wheel+sdist: 579 total downloads (up from 573; wheel 570 + sdist 9). +6 from last check.
-- Views: 134 total, 49 uniques (flat).
-- Clones: 2839 total, 504 uniques (flat).
-- New organic referrer: **toolpotion.ai** (2 views, 1 unique) — third auto-discovery referrer after LibHunt.
-- Referrers: t.co 73 (own X), github.com 16, libhunt.com 7 (+5), toolpotion.ai 2 (NEW).
+## Release assets (v0.1.0) — Sep 21 10:10 (measured live this run)
+- wheel+sdist: 612 total downloads (602 wheel + 10 sdist). +33 from Sep 20 15:10.
+- Views: 148 total, 51 uniques (up from 134/49).
+- Clones: 3292 total, 550 uniques (up from 2839/504).
+- Organic referrers: t.co 73 (own X), github.com 21, libhunt.com 7 (organic), toolpotion.ai 2 (organic), app.netlify.com 1.
 - Stars: 0 (flat). Forks: 0 (flat). Topics: 12 (unchanged).
-- Traffic plateau confirmed (views/clones flat). Only downloads slightly growing organically.
+- Downloads + clones growing slowly and organically; views flat-ish. No new submission surfaces converting.
 
-## Open PRs — 14 open (up from 13; gold-402 #237 Vend added this run)
-All OPEN, all mergeable/mostly MERGEABLE. No new maintainer replies this run.
-- **gold-402 #234**: labels `verified` + `ready-to-merge`, bot "approved for merge" — CLOSEST TO MERGE, just needs a maintainer click.
-- **x402-foundation/x402 #3531**: SDK listing doc PR (Third-Party SDKs). Signed commits now pass the vercel/verified-commits gate. Reviewer evidence posted Sep 20 05:08. No maintainer reply yet.
-- tsubasakong/awesome-agent-payments-protocol #97, mpp-best/awesome_mpp #11, facundofarias/awesome-agent-first-tools #4, chgaowei/ai-agent-infra-list #8, goodmeta/agent-payments-landscape #8, frankxai/awesome-payment-agent-skills #17, Scottcjn/awesome-agents #82, assafbar2/agentswitchboard.dev #116, AiFinPay/sdk #77, satohubai/onchain-agents #12, xpaysh/awesome-x402 #1568.
+## Open PRs — 17 open (measured live Sep 21; was 14 in funnel's stale count, +PayAINetwork #21, +Merit-Systems #722)
+All OPEN, mostly MERGEABLE/clean. No new maintainer replies or merges this run.
+- **gold-402 #234** AND **#237**: both labels `verified` + `ready-to-merge`, bot "approved for merge", mergeable=clean — CLOSEST TO MERGE (one human click each). #234 openai-agents-nano, #237 Vend.
+- **x402-foundation/x402 #3531**: SDK listing doc PR (Third-Party SDKs). Signed commits pass vercel/verified-commits gate. mergeable_state=blocked (Vercel deploy auth pending on maintainer-side). No maintainer reply.
+- **x402-foundation/x402 #3432** (tier-0 canonical Nano spec, kilkelly): open, mergeable, mergeable_state=blocked, label `specs` — a merge = Nano IN the x402 standard (biggest tier-0 milestone). No change since Sep 11; poll daily.
+- AiFinPay/sdk #77 (behind, can't push — fork deleted), Scottcjn/awesome-agents #82, facundofarias #4, frankxai #17, assafbar2 #116, satohubai #12, xpaysh #1568 (0.5% merge black hole — low value), goodmeta #8, chgaowei #8, mpp-best #11/#12, tsubasakong #97, PayAINetwork/agentic-payments #21, Merit-Systems/awesome-agentic-commerce #722.
 
 ## Tier 0 — x402-foundation
 - #3512 "Record of prepared Nano-mainnet exact-scheme spec" — open, 2 self comments, no maintainer reply (last self-update Sep 20 05:08).
@@ -42,7 +42,8 @@ All OPEN, all mergeable/mostly MERGEABLE. No new maintainer replies this run.
 2. External repo issue/comment writes: **REGRESSED** — token write-scope is now 403 on ALL external repos (x402-foundation included, was working Sep 20 13:49). Own-repo writes (openai-agents-nano-x402) still work. The 2 merged PRs (#43, #93) and 14 open PRs were opened when scope was active; no new external PRs or comments can be created until scope is restored. Key requests pending: 2. Estopped targets: TSC #3/#4 comments (tier 0), derNif/payanagent issue (tier 3b), x402 #3512 advancement.
 
 ## Next actions
-- Next run: check gold-402 #234 first (closest to merge); re-check #3512/#3531 for maintainer reply.
-- Sep 22: weekly X post slot opens — draft at scripts/sep22-xpost.txt (update numbers before posting; verify link loads signed-out).
+- Next run: poll gold-402 #234/#237 FIRST (verified+ready-to-merge, closest to merge); then x402 #3432 (tier-0 canonical Nano spec) — record the instant either merges.
+- Sep 22: weekly X post slot opens — draft at scripts/sep22-xpost.txt (refreshed with live 612 downloads / 2 merged / 13-17 open this run); verify link loads signed-out before posting.
 - When PyPI publisher registered: publish openai-agents-nano package properly, then update docs/michielpost x402-dev row if still pending.
 - Continue re-checking directories at day 21-28 horizon; do not re-submit pending.
+- Write-wall (req2) still 403 on all external writes: no new upstream PRs/issues/comments possible until scope restored. Keep prepared branches clean for when it returns.
