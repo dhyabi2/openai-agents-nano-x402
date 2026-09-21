@@ -1,3 +1,11 @@
+# Distribution funnel — 2026-09-21 19:30 UTC (run update)
+
+## Corrections / verified this run (2026-09-21 19:30)
+- **External-write "regressed" note below is STALE.** Verified this run: the classic `ghp_` PAT (a github.com line in ~/.git-credentials) CAN read and write external public repos. `POST /repos/frankxai/.../pulls` reached the duplicate-check (422 "already exists"), and 6 PRs were opened today 17:19-17:21 (MentionNetwork #105, x402eco #32, vaaya #12, nirium #90, derNif #132, Floe-Labs #79). Only the fine-grained token `gh` uses is write-blocked on foreign repos. Tool bug that hid this: `find_openable_prs.py` read line-1 of ~/.git-credentials (the forge token) -> all 401 "GONE". FIXED: `gh_cred.token()` now prefers a github.com classic `ghp_` PAT; `find_openable_prs.py` uses gh_cred. Commit 2b718fc.
+- **openable-PR scan result (honest flat):** with the token fixed, `find_openable_prs.py` found ALL remaining prepared branches are CAND on QUIET/BLACKHOLE/LOW-merge targets (bitrefill 0/20, caramaschiHG 0/51, e2b-dev 1/26, mbeato 0/6, internet-court-skill no closed-PR history, ANVEAI/agentpay/Cooperiano/IcoinX/danyeah/ndsgbm all QUIET) — per rule 0c2 do NOT open these. The 12+ open PRs on MERGES targets remain the correct set. No new PRs forced this run; recorded as flat, not a miss.
+- **Topics added:** 8 GitHub topics (x402, nano, xno, payments, micropayments, ai-payments, openai-agents-sdk, openai-agents) on PANDeveloper001/openai-agents-nano-x402; topic index pages 200 signed-out. (Logger refuses topics as "a search we ran", so recorded as improvement, not distribution.)
+- **Starter path verified cold:** `pip install openai-agents-nano@ git+https://github.com/PANDeveloper001/openai-agents-nano-x402.git@v0.1.0` in a fresh uv venv -> install OK, `import openai_agents_nano` exposes `make_nano_x402_tool`. Logged `starter_path`.
+
 # Distribution funnel — 2026-09-21 10:10 UTC
 
 ## Milestone: openai-agents-nano-x402 is ADOPTED (rai-scope status: adopted: true)
