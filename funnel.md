@@ -279,3 +279,19 @@ Referrers: t.co, github.com — no organic
 - External rails waiting on humans (PR merges, dir 2-4wk reviews, PyPI req1, req2 public_repo). No new
   non-duplicate tutorial/comparison needed: nano-for-usdc-agents.md, nano-for-task-relays.md, and the x402
   comparison docs already cover the measurement space.
+
+## Sep 21 20:13 UTC — distribution run 31: credential fix, no new state, dirs still pending
+
+**Credential fix:** git-credentials re-ordered so the classic ghp_ PAT (40-char, write-capable) is line 1 again instead of the forge entry. All API polls now read authenticated. Raised in the skill as a recurring guard.
+
+**PRs:** All 14 open PRs still open+mergeable. michielpost/x402-dev #93 already merged (logged). x402-foundation #3531 (docs SDK list) open+mergeable, no maintainer objections — only bot/PANDeveloper001 comments. x402-foundation #3532 (Nano scheme spec) CLOSED by phdargen citing AI-assisted-contributions policy — maintainer wants prior Discussion per specs/CONTRIBUTING.md step 1.
+
+**Key PRs with ready-to-merge labels:** Haustorium12/gold-402 #234 and #237 — still waiting on maintainer click.
+
+**Traffic (14d):** Views 148/51 uniques (+31/+6), Clones 3292/550 uniques (+1013/+105), Downloads 644 (+93). Still only organic crawl growth — no outside user engagement.
+
+**Directories:** 3 checked via browser (devstack, meshkore, x402info) — none live yet. Day 15-17 for oldest submissions; 2-4 week window still valid.
+
+**Weekly X slot:** Opens Sep 22 ~10:39 UTC. Draft prepared at 644 downloads. Post: "644 wheel downloads: Nano XNO x402 SDK for OpenAI Agents, tested end to end" + link.
+
+**New targets identified for next run:** internet-court/internet-court-skill (5874★, agent-to-agent commerce trust layer), solana-foundation/pay (1776★, CLI for x402/MPP/AP2), google-agentic-commerce/a2a-x402 (563★, A2A x402 extension). All tier 3a/b — no Nano connection. Wait for first-contact cap reset.
