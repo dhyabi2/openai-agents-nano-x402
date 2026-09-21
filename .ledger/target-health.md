@@ -1,6 +1,6 @@
 # Target health - does this repo actually merge?
 
-Generated 2026-09-21 18:13 UTC by `scripts/target_merge_rate.py` from each target's own closed-PR history.
+Generated 2026-09-21 19:15 UTC by `scripts/target_merge_rate.py` from each target's own closed-PR history.
 A prepared branch is worth a click only where the second column says MERGES.
 
 | target | verdict | merged/closed (3 months) | per month | stars | last push | branches |
@@ -14,7 +14,7 @@ A prepared branch is worth a click only where the second column says MERGES.
 | `xpaysh/awesome-x402` | MERGES - worth a click | 230/300 | 2026-09 1/29, 2026-08 3/23, 2026-07 226/248 | 291 | 2026-07-28 | 1 |
 | `Scottcjn/awesome-agents` | MERGES - worth a click | 23/31 | 2026-09 13/18, 2026-08 6/7, 2026-07 4/6 | 103 | 2026-09-19 | 1 |
 | `MCPFind/mcp-find` | MERGES - worth a click | 74/100 | 2026-09 21/22, 2026-08 9/15, 2026-07 44/63 | 6 | 2026-09-21 | 1 |
-| `x402-foundation/x402` | MERGES - worth a click | 189/300 | 2026-09 75/119, 2026-08 112/167, 2026-07 2/14 | 6631 | 2026-09-21 | 3 |
+| `x402-foundation/x402` | MERGES - worth a click | 190/300 | 2026-09 76/120, 2026-08 112/167, 2026-07 2/13 | 6631 | 2026-09-21 | 3 |
 | `assafbar2/agentswitchboard.dev` | MERGES - worth a click | 15/30 | 2026-09 9/22, 2026-08 4/6, 2026-07 2/2 | 0 | 2026-09-19 | 1 |
 | `tsubasakong/awesome-agent-payments-protocol` | SOMETIMES - keep if the fit is exact | 1/6 | 2026-09 0/2, 2026-08 1/2, 2026-07 0/2 | 16 | 2026-09-15 | 1 |
 | `e2b-dev/awesome-ai-sdks` | DEAD - no push in 74 days and merges stopped | 1/26 | 2026-09 0/4, 2026-08 0/13, 2026-07 1/9 | 1224 | 2026-07-09 | 1 |
