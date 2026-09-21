@@ -1,11 +1,11 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: Sep 20 19:05 UTC
+# Updated: Sep 21 09:50 UTC
 
 ## Current state
 - **ADOPTED**: Full milestone set achieved (package + listing + merged_pr + external_payment)
 - **Blocking new projects**: NO (adopted)
-- **TIER 0 — x402 spec re-submission LIVE**: PR #3536 opened on x402-foundation/x402 from rebuilt branch `specs/exact-nano-mainnet-v4` (scheme_exact_nano.md + offline checker + docs registration). Verified open / mergeable / loads 200 signed-out.
-- **15 open PRs** across upstream repos (NEW: x402-foundation/x402 #3536 Nano exact-scheme spec)
+- **TIER 0 — x402 spec consolidation**: PR #3536 (rebuilt Nano exact-scheme spec) was CLOSED 2026-09-21 by phdargen as **duplicate of #3432** (the maintainer-recognized consolidation target). #3432 stays OPEN + mergeable (Vercel deploy auth is on kilkelly's side) — this is the canonical Nano-in-the-standard PR. #3512 record thread kept current.
+- **14 open PRs** across upstream repos (spec consolidated onto #3432)
 - **FIRST CONTACT (tier 3b)**: PayAINetwork/agentic-payments — dual x402+MPP middleware, USDC-only, no Nano. Fork issue #1 + prepared branch `add-nano-x402-adapter` (ahead 1/behind 0) proposing Nano as a third ProtocolAdapter rail.
 
 ## Drift check (2026-09-20 16:15)
@@ -81,3 +81,9 @@ Evergreen: "openai-agents-nano merged into x402 dev portal. Feeless Nano x402." 
 - NEW SUBMISSION: devpages.io/submit-a-tool (AI Agents & Assistants + Free; confirmed).
 - NEW SUBMISSION: devstack.directory/submit (Payments & Billing + Open Source; accepted).
 - agentpay-desk.vercel.app lead excluded honestly (autonomous test failed: card, no runtime).
+
+## Re-check 2026-09-21 09:50 UTC
+- Tier 0 consolidated: #3536 closed as dup of #3432 (canonical, still open+mergeable, Vercel-blocked on kilkelly side).
+- All watched PRs re-verified open+mergeable; michielpost/x402-dev #93 already adopted (merged).
+- No new merge this window. x402 #3512 record thread current (last PANDeveloper001 update 2026-09-20).
+- Distribution focus this run: nano-mcp (separate project) released v0.1.0 + first listing milestone on Glama.
