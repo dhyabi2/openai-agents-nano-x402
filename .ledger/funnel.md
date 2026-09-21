@@ -87,3 +87,11 @@ Evergreen: "openai-agents-nano merged into x402 dev portal. Feeless Nano x402." 
 - All watched PRs re-verified open+mergeable; michielpost/x402-dev #93 already adopted (merged).
 - No new merge this window. x402 #3512 record thread current (last PANDeveloper001 update 2026-09-20).
 - Distribution focus this run: nano-mcp (separate project) released v0.1.0 + first listing milestone on Glama.
+
+## Re-check 2026-09-21 20:40 UTC (distribution-first run)
+- OPENED upstream PR #62 on open-experiments/agent-exchange (add-nano-settlement-note, optional Nano settlement provider to aex-settlement; 80% recent merge rate, clean ahead1/behind0, verified signed-out 200, logged pr_opened). 11th upstream PR today.
+- Verified merge-viable clean branches now ALL have open PRs (derNif #132, nirium #90, gold-402 #234/237/242, x402-#3531, punkpeye, x402eco, vaaya-ai, AlexMili, Floe-Labs, MentionNetwork). No new open needed this window.
+- CLOSED task #68: langchain-ai/agent-auth-payments is ARCHIVED -> cannot accept PRs; add-nano-credit-funding branch held, PR not opened. Finding posted.
+- Pending directory re-check: 10 oldest (agents.net, AgentRank, AiAgents.Directory, TheNextAI, zPlatform, MeshKore, 4agent, DevStack, aiagentstack, SwarmBazaar) still NOT live at day 6-7. In the 2-4wk window; never claimed.
+- gold-402 #234/237/242 all still verified+ready-to-merge (awaiting human click). x402 #3531 open+mergeable, GPG-signed, docs label, evidence posted.
+- git-credentials guard re-verified idempotent (line1 = ghp_ classic 40-char, forge last, api.github.com 200).
