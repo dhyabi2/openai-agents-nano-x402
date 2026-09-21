@@ -10,7 +10,9 @@ so existing built-and-verified listing branches stop sitting as un-closable draf
 Read-only list mode by default; --open actually creates PRs (dry run: POST -> verify -> log).
 """
 from __future__ import annotations
-import argparse, json, re, sys, time, urllib.error, urllib.request
+import argparse, json, os, re, sys, time, urllib.error, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import gh_cred
 
 API = "https://api.github.com"
 FORK_OWNER = "PANDeveloper001"
@@ -100,7 +102,7 @@ def main():
     ap.add_argument("--only", help="only these upstreams (comma list), other targets skipped")
     args = ap.parse_args()
 
-    tok = open("/root/.git-credentials").readline().split("://", 1)[1].split("@")[0].split(":", 1)[1]
+    tok = gh_cred.token()
     only = set(args.only.split(",")) if args.only else None
 
     for entry in MY_BRANCHES:

@@ -11,10 +11,17 @@ GH_HOST = "github.com"
 
 def token() -> str:
     """Return a GitHub API token from ~/.git-credentials, preferring a
-    github.com entry.  If only the forge (127.0.0.1) entry exists, return
-    it anyway so pushes during prep work still function."""
+    github.com classic 'ghp_' PAT over any other entry.  Classic PATs
+    authenticate to third-party public repos (reads and PR create),
+    which a fine-grained token scoped to our own repos cannot.  If only
+    the forge (127.0.0.1) entry exists, return it anyway so pushes during
+    prep work still function."""
     lines = open(CRED_PATH).read().strip().split("\n")
-    # Prefer GitHub entries
+    # Prefer a github.com classic 'ghp_' PAT (works for third-party repos)
+    for line in lines:
+        if GH_HOST in line and "ghp_" in line:
+            return _extract(line)
+    # Then any github.com entry
     for line in lines:
         if GH_HOST in line:
             return _extract(line)
