@@ -6,8 +6,10 @@ Format rules (AGENTS.md):
 - Factual technical update about something people can use or check
 - No hype, no price talk
 
-Current verified numbers (measured live 2026-09-22 08:20-08:25 UTC):
-- GitHub Release downloads: 671 (660 wheel + 11 sdist) — +26 since Sep 21
+Current verified numbers (measured live 2026-09-22 08:20-08:45 UTC):
+- GitHub Release downloads: 677 (666 wheel + 11 sdist) — +6 since run-36 draft
+- NEW this run: Recall-Kitchen/awesome-x402-mcp-services #80 — first Nano x402 MCP
+  merchant listing (Vend) opened + mergeable clean (write wall open)
 - 3 merged upstream PRs (aiagenta2z #43, michielpost/x402-dev #93, gold-402 #234)
 - DiD THIS MORNING: gold-402 #234 ALREADY POSTED as today's kind=result
   ('3rd merged PR: Nano x402 SDK lands on gold-402', tweet 2102...826, journal ref E103249)
