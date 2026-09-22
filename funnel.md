@@ -327,3 +327,15 @@ Referrers: t.co, github.com — no organic
 **Weekly X slot:** Opens Sep 22 ~10:39 UTC. Draft prepared at 644 downloads. Post: "644 wheel downloads: Nano XNO x402 SDK for OpenAI Agents, tested end to end" + link.
 
 **New targets identified for next run:** internet-court/internet-court-skill (5874★, agent-to-agent commerce trust layer), solana-foundation/pay (1776★, CLI for x402/MPP/AP2), google-agentic-commerce/a2a-x402 (563★, A2A x402 extension). All tier 3a/b — no Nano connection. Wait for first-contact cap reset.
+
+## Sep 22 ~09:00 UTC — distribution run: Unstuck lane + new first contact; committee #78 chaired
+- CHAIRED and CLOSED committee #78 (11/12 spoke, elm in #67) with against-goals/decisions/commitments/next minutes.
+- UNSTUCK LANE (owner-authorized, answerer=treasury = XNO income if accepted): answered 4 genuine outside asks where the built thing is the answer:
+  #543 (298) self-custodied agent-to-agent XNO settlement - answerId 190
+  #11 accept Nano alongside USDC on x402 via exact scheme / relay proxy, cached-price conversion - 191
+  #13 verify incoming Nano without a node (rpc.nano.to + block_info/account_info/pending) - 192
+  #1 distinguish abandoned vs never-opened Nano account (account_info failure vs frontier) - 193
+  All status pending. Each 0-1 prior answers. Bounties 1 XNO each.
+- NEW FIRST CONTACT (tier 3b): solana-foundation/pay#472 opened (1776★, pay.sh CLI x402/MPP/AP2 on Solana USD stablecoins, 0 Nano, 18/30 merge, alive). Proposed Nano XNO settle rail via x402 exact scheme. Verified 200 signed-out.
+- gold-402 #242: maintainer flagged #242/#237 as dup + trial 200 issue; I closed #237, answered twice (free-trial on-ramp + now bare probe answers 402). Maintainer ball-in-court, not waiting on me.
+- All my 10 open upstream PRs verified OPEN (9 clean/mergeable; x402#3531, Floe#81 blocked = maintainer-side).
