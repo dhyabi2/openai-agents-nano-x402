@@ -21,12 +21,13 @@
 - Referrers: t.co 72/39, github.com 13/4, libhunt.com 2/1 (unchanged)
 - PyPI: not live (pending OIDC publisher)
 
-## PR status (14 open)
+## PR status (13 open)
 | Target | PR | Status |
 |--------|----|--------|
 | x402-foundation/x402 | #3531 | OPEN, 5 comments, GPG-signed, waiting maintainer review |
-| Haustorium12/gold-402 | #234 | OPEN, CI PASSED, "ready-to-merge" + "verified" labels |
-| Haustorium12/gold-402 | #237 | OPEN, NEW (Vend API Merchant — Nano-settled x402 APIs) |
+| Haustorium12/gold-402 | #234 | **MERGED** (2026-09-22 02:36Z, maintainer; entry live in directory/sdks.md line 64) |
+| Haustorium12/gold-402 | #237 | CLOSED unmerged 2026-09-22 (Vend API Merchant — separate project, not openai-agents-nano-x402) |
+| Haustorium12/gold-402 | #242 | OPEN, verified + ready-to-merge (Vend API Merchant) |
 | AiFinPay/sdk | #77 | OPEN, No comments |
 | tsubasakong/awesome-agent-payments-protocol | #97 | OPEN, No comments |
 | mpp-best/awesome_mpp | #11 | OPEN, No comments |
@@ -40,7 +41,7 @@
 | satohubai/onchain-agents | #12 | OPEN, No comments |
 | xpaysh/awesome-x402 | #1568 | OPEN, No comments |
 
-*MERGED*: aiagenta2z/ai-agent-marketplace #43 (Sep 20, 28h) ; michielpost/x402-dev #93 (Sep 20, by maintainer)
+*MERGED*: aiagenta2z/ai-agent-marketplace #43 (Sep 20, 28h) ; michielpost/x402-dev #93 (Sep 20, by maintainer) ; Haustorium12/gold-402 #234 (Sep 22, by maintainer)
 
 ## Pending directory listings (oldest first)
 | Directory | Submitted | Days | Status |
