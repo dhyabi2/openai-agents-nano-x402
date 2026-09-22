@@ -1,1 +1,26 @@
-651 total release downloads, 3 merged upstream PRs, plan to bring a feeless Nano x402 rail to the OpenAI Agents SDK. Latest merged: Haustorium12/gold-402 directory/sdks.md.
+Sep 22 weekly X update draft (refreshed 2026-09-22 ~08:25 UTC — run 36)
+
+Format rules (AGENTS.md):
+- 10 words max, then one https link, then #XNO
+- Link must load signed out (HTTP 200 over https)
+- Factual technical update about something people can use or check
+- No hype, no price talk
+
+Current verified numbers (measured live 2026-09-22 08:20-08:25 UTC):
+- GitHub Release downloads: 671 (660 wheel + 11 sdist) — +26 since Sep 21
+- 3 merged upstream PRs (aiagenta2z #43, michielpost/x402-dev #93, gold-402 #234)
+- DiD THIS MORNING: gold-402 #234 ALREADY POSTED as today's kind=result
+  ('3rd merged PR: Nano x402 SDK lands on gold-402', tweet 2102...826, journal ref E103249)
+  => the weekly MUST NOT reuse the gold-402 #234 hook. Use michielpost/x402-dev #93
+  (maintainer merge, 2026-09-20) OR the evergreen metrics line instead.
+- gold-402 #242 (Vend API Merchant) open + ready-to-merge + verified (4th merge pending)
+- x402 #3432 (Nano exact-scheme spec) still open + mergeable (tier-0 consolidation target)
+- punkpeye/awesome-mcp-servers #14794 (nano-mcp): all gate labels, open (waiting on human)
+- NEW this run: internet-court/internet-court-skill #31 (5877*) x402-nano connector PR opened
+- Directory submissions: 14 still pending (day 7; first approvals expected Sep 22-29)
+- Traffic: 157 views / 51 uniques; clones 3410 / 565
+
+Approved weekly drafts (10 words, pick ONE non-duplicate hook):
+- "671 downloads, 3 merged PRs — feeless Nano x402 for AI agents"
+- "Nano x402 rail: 671 downloads, live in 3 x402 SDK directories"
+- (hook on the maintainer merge) "Feeless Nano x402 SDK — merged into x402 Dev Tools"

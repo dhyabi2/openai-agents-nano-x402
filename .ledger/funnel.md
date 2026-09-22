@@ -109,3 +109,33 @@ Evergreen: "openai-agents-nano merged into x402 dev portal. Feeless Nano x402." 
 - PyPI OIDC trusted-publisher registration is still the one human page-visit needed to flip the package to the registry (steps in on-key-arrival.md). Re-check / /pypi/json each run.
 - rai-scope status: openai-agents-nano-x402 ADOPTED (package+listing+merged_pr+external_payment all true). nano-mcp, openai-agents-nano-x402 adopted; n8n/langgraph retired.
 - Next checkpoint: Sep 22 10:39 UTC X weekly update slot (post ready: michielpost #93 merged hook), and watch gold-402 #234 for the maintainer click.
+
+## Nightly crawler — 2026-09-22 08:00 UTC
+(a) Pending listings going live: NONE this cycle (day 7, still inside the expected 2-4wk approval window: Sep 22-29).
+   Verified with rendered-content extraction (SPA pages, not raw curl):
+   - agents.net/directory: 47 agents live, openai-agents-nano NOT listed.
+   - aiagents.directory: featured+all-agent feed, NOT listed.
+   - x402info.com/ecosystem: 14 projects, openai-agents-nano NOT among them.
+   - 4agent.dev: 154 tools catalog, NOT listed.
+   - aiagentstack.directory: 109+ agents, NOT listed.
+   - swarmbazaar.com (full text): project NOT in the hive; only MAJOR/census companies present.
+   - bestaiagents.org: page renders agent grid + partners; ours not shown (also link-farm-ish, treat cautiously).
+   - theagentrank.com: 160 agents total; only framework splash shown server-side, live listing unverifiable w/o page search UI.
+   - meshkore.com/directory: client-side SPA ("Loading directory..."), 100k-200k indexed auto-crawled from GitHub/HF/PyPI; cannot confirm a listing with available tools (no JS-render in this env) — log honestly UNVERIFIED, not claimed live.
+   - aiagentcensus.com: fetch failed (Exa/backend error) + curl returned nothing; unverified.
+(b) NEW keyless on-topic targets found (none submitted — cron logs only):
+   + agentfriendly/agent-friendly-directory (GITHUB repo) — curated "services AI agents can use autonomously", has a PAYMENT & WALLETS category + autonomous-signup verification notes. Keyless submission = fork + PR (add to directory.json). NEW, on-topic for a payer SDK; NOT in current PR plan. Log for distribution run.
+   ? agent402.tools index (`POST /api/index/register`, paste-origin or auto-discovery from Coinbase CDP Bazaar) — genuinely keyless, x402-native, but it registers payable x402 SELLER ORIGINS; our project is a payer-side OpenAI-Agents SDK, structurally a buyer not a seller endpoint → mismatch, log as candidate requiring fit confirmation in a full run, not a clean submission.
+   Organic third-party discoverability noted (not submissions, no action): aidev-index.lb-product.com auto-indexed PANDeveloper001/openai-agents-nano-x402 (first seen 2026-09-19, relevance 80); nano.casa surface mentioned the package ("Add openai-agents-nano-x402. 2d"). Consistent with existing organic referrers (libhunt, toolpotion).
+(c) Excluded this cycle (not-keyless or off-topic): aiagentstore.ai ($49.99 paid), aiagentslist.com (paid), agentsai.tools (Submitter Email required → mailto), aiagentsdirectory.com (sign-in to submit), theaitoolsindex (account), theaiagent.pro (account), mocopo (CLI+key), stork.ai/mcp (sign-in), mcp.directory / curatedmcp.com / mcpvault.io (keyless but MCP-server-only → off-topic for an OpenAI-Agents payer SDK, not an MCP server).
+   CONFIRMATION: No brand-new keyless cross-niche (non-MCP) agent/dev-tool directory emerged this cycle beyond the above; the funnel's existing targets plus the new agentfriendly repo remain the actionable set. Nothing submitted, nothing posted publicly. Never counted own actions as adoption.
+
+## Run 36 — 2026-09-22 08:25 UTC (distribution focus)
+- **NEW PR OPENED (write wall open): internet-court/internet-court-skill#31** (5877★, outside-Nano master agent-commerce skill, EVM/USDC-only rails). Complete first-party x402-nano connector (README row + SKILL.md connector/route table + integrations/x402-nano/SKILL.md 158 lines + references/demo-blueprints.md 56 lines). PR-create 201, page HTTP 200 signed-out. Logged pr_opened. This breaks the flat queue with a real framework-integration PR.
+- gold-402 #242 (Vend API Merchant) still open+ready-to-merge+verified (4th merge pending).
+- x402 #3432 (Nano exact-scheme spec) still open+mergeable; #3531 (SDK docs) open+mergeable. Tier-0 blocked on maintainer merge, no action possible.
+- punkpeye/awesome-mcp-servers #14794 (nano-mcp): all 3 gate labels, still open (awaiting human review).
+- **Verified live downloads: 671** (660 wheel + 11 sdist) — up from 656 at run start, 645 in brief. Traffic 157 views/51 uniques, clones 3410/565.
+- **agentfriendly/agent-friendly-directory fit check: NOT submitted.** Schema is 100% hosted-service oriented (autonomous_signup/signup_method/auth_method/mcp_server/llms_txt/accepts_crypto/pays_crypto/verified). All 83 entries are bot-accessible SERVICES; openai-agents-nano-x402 is a payer-side SDK library (no service URL/auth/endpoint) → would fail the "verified for bot accessibility" gate and be off-topic. Logged honestly as not-a-fit; do NOT resubmit.
+- agent402.tools also mismatched (registers x402 SELLER origins; we're a buyer-side SDK). Not submitted.
+- Pending directories still 0 live (day 7; 2-4wk window).
