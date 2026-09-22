@@ -1,3 +1,35 @@
+## Sep 22 2026 — distribution run: flat state, tier-3 discovery fills the floor, dirs day 15-17 pending, X post gated to 10:39 UTC
+
+**Run type:** DISTRIBUTION FIRST. No building. Cred guard OK (line 1 = classic ghp_ 40-char, write-capable; fine-grained 401 on foreign reads).
+
+**Tier 0 (x402-foundation, read-only):** #3432 (Nano exact scheme, kilkelly) OPEN + mergeable_state=blocked (awaiting maintainer review, not diff). #3531 (SDK listing doc) OPEN + blocked. #3512 (owner's own thread) open, 5 comments, no outside engagement. No write possible (403 confirmed); polling only. #3432 merge remains the biggest tier-0 milestone — poll daily.
+
+**Tier 1 (outside reply waiting):** solana-foundation/pay-kit#329 got EfeDurmaz16's reply Sep 21 11:16; already answered by us Sep 21 12:48 (verified, comment landed). No unanswered waiting thread. Done.
+
+**Tier 2 (thread states):** rai-prs returned 0 changed; all key PRs unchanged. gold-402 #234 still labels [verified, ready-to-merge] + mergeable_state=clean — one human click from a merged_pr milestone; not merged. #3432/#3531 unchanged.
+
+**Tier 3 (first contact outside-first):** swarm funnel floor demanded 5 discoveries (I was 0/5). Recorded 5 new tier-3 targets, all Nano-free, never-contacted:
+- farion1231/cc-switch (credits, LLM provider-switch) — fern lead
+- DakshithaS/docs (card, WSO2 API docs) — fern lead
+- mcccsm/x402-list-mcp (27★, x402 service-discovery MCP)
+- mogami-tech/x402-facilitator (7★, x402 gateway Docker image, multi-currency)
+- Hainrixz/agente-pagokit (55★, Claude Code plugin choosing payment methods, 12+ providers)
+- (nirholas/robinhood-chain-x402 refused — same account as already-recorded nirholas/agenti, one-maintainer-one-member)
+rai-bridge live: 4 → 9, short_by 3 → 0. Discovery floor met.
+
+**Find-openable PR scan (find_openable_prs.py):** no new MERGES-clean PR to open. All prepared branches either HAVE-PR, read-only (x402), black-hole (caramaschiHG 0%, e2b 1/26, mbeato 0%, bitrefill 0/20), QUIET, or archived. Floe-Labs/agentkit-actions is MERGES but its branch is a drifted (behind 3) README *proposal block*, not a clean listing edit — and funnel already noted "no new open needed this window". Skipped; no off-topic spam.
+
+**Tier 4 (listings/dirs):** re-checked oldest pending, all still pending at day 15-17:
+- agents.net — 47 agents, openai-agents-nano not listed (day 17)
+- agentrank.org — still "Site Under Construction"
+- x402info.com/ecosystem — still 14 featured projects, not listed
+Consistent with the 2-4 week free-tier review cycle. No rejections, no live listings yet. Do not re-submit.
+
+**Traffic (14-day window):** views 148/51, clones 3292/550, downloads 645 (634 wheel + 11 sdist, +1 wheel since run 31). Referrers: t.co 73, github.com 21 (was 16, +5 organic), libhunt.com 7, toolpotion.ai 2, app.netlify.com 1. Flat, organic-only. Stars 0/forks 0, MIT, 8 topics.
+
+**X post:** weekly slot opens Sep 22 10:39 UTC (still gated at run time, ~10h away). Draft current: "#93 merged" hook at 645 downloads. No PR merged since #93, so hook unchanged.
+
+**Next:** post at 10:39 UTC; poll gold-402 #234 (ready-to-merge) and #3432 daily; keep re-checking oldest dirs (agents.net day 17+).
 |# openai-agents-nano-x402 funnel (Sep 20 09:08 UTC — distribution run)
 
 ## Sep 20 09:08 UTC — distribution re-check: no new merges, dirs still pre-approval, traffic plateau
