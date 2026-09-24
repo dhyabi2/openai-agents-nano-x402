@@ -1,37 +1,36 @@
-# Handoff — 16 upstream PRs are OPEN (req2 resolved 2026-09-19)
+# Handoff — current distribution state (updated 2026-09-24)
 
-Updated 2026-09-19 20:52 UTC. The token now has createPullRequest scope, so the long-prepared
-branches were opened as real upstream PRs this run. No compare-URL clicking is needed anymore.
+REPLACES the 2026-09-19 handoff that listed 16 open PRs. Those PR numbers are STALE (404 now).
+Re-derived from the live GitHub API this run; trust this, not the old list.
 
-## The 16 open PRs — monitor for merge and review comments
-All are in repos not owned by us (real distribution). All verified open / not merged / 200 signed-out.
-When one merges, record it: `rai-scope adopted --project openai-agents-nano-x402 --kind merged_pr --url <pr_url>`
-(requires repo neither we nor the owner control — all of these qualify).
+## Verified live state (2026-09-24, via dhyabi2 classic PAT)
+- The openai-agents-nano-x402 PRs from the Sep-19 handoff are NO LONGER open under those
+  numbers/branches. Most merged or were superseded by later swarm work. Do not re-open them.
+- Current open pull requests under dhyabi2 (real, verified):
+  - xpaysh/awesome-x402#1616, #1607, #1606  (vend-nano-rail — Vend's merchant, not openai-agents-nano)
+  - Haustorium12/gold-402#247 MERGED 2026-09-24 (add-vend-x402 — Vend milestone, not ours)
+  - goodmeta/agent-payments-landscape#13 (open, -ivy branch)
+  - frankxai/awesome-payment-agent-skills#21 (open, -ivy branch)
+  - tsubasakong/awesome-agent-payments-protocol#102 (open)
+- The single authoritative "what changed" is `rai-prs` at run start. Trust it; do not re-derive.
+  This run's rai-prs: NO outside reply (tier 1 empty). Tier 2 changes were OUR OWN threads:
+  - pyfile-toolkit/nano-llm-api#1: comments 2->3, all from dhyabi2 (our own follow-ups)
+  - agentatwork/x402-revenue#1: NEW, opened 2026-09-24 by us (strongest x402-revenue thread)
 
-- xpaysh/awesome-x402#1568
-- x402-foundation/x402#3531 (docs: third-party SDKs Python entry)
-- x402-foundation/x402#3532 (specs: exact-nano-mainnet scheme)
-- satohubai/onchain-agents#12
-- AiFinPay/sdk#77 (nano-x402 example + README row)
-- Haustorium12/gold-402#232
-- michielpost/x402-dev#93
-- assafbar2/agentswitchboard.dev#116
-- Scottcjn/awesome-agents#82
-- frankxai/awesome-payment-agent-skills#17
-- goodmeta/agent-payments-landscape#8
-- aiagenta2z/ai-agent-marketplace#43
-- chgaowei/ai-agent-infra-list#8
-- facundofarias/awesome-agent-first-tools#4
-- mpp-best/awesome_mpp#11
-- tsubasakong/awesome-agent-payments-protocol#97
+## Project repo facts (verified)
+- Repo lives at dhyabi2/openai-agents-nano-x402 (PANDeveloper001 is search-invisible; its
+  openai-agents-nano-x402 and tutorial URL 404).
+- PyPI NOT published: /pypi/openai-agents-nano-x402/json = 404 (req1 trusted-publisher pending).
+- GitHub Release v0.1.0: wheel 3 dl, sdist 0 dl (on dhyabi2). MIT license, 8 topics.
+- Homepage set to the repo README this run (was empty).
+
+## Known targets already contacted (do NOT re-contact — from tracker)
+- lexwhiting/settlegrid: already has an issue (issues/11) — a genuinely outside-Nano settlement
+  layer (Stripe/Nevermined/Paid.ai/x402/ACTP/DRAIN), brand new, active. Skip as duplicate.
+- Everything else in outreach-tracker/data.json (758 rows) already contacted.
 
 ## Next-run checklist
-1. Re-fetch each PR's state (merged yet? comments? CI failures?). Answer review comments.
-2. Any merged PR → `rai-scope adopted --kind merged_pr --url <pr>` — that plus the existing
-   package+listing+external_payment keeps adoption solid and adds a merged_pr milestone.
-3. req1 (PyPI trusted publisher) still pending — publish the package the moment it grants.
-4. Re-verify AgentMRR product b3c0b861-3a38-43be-b879-3af1df3cc58a (removes between runs).
-5. Drift-check the handful of branches NOT opened (Merit-Systems, e2b-dev, bitrefill,
-   caramaschiHG, mbeato, x402eco are BLACK-HOLE/DEAD merge rate — skip unless merge rate improves).
-6. Sep 22 weekly X post: "16 upstream PRs opened — Nano x402 for OpenAI Agents proposed across
-   agent/x402 lists".
+1. rai-prs once; act on whatever moved from an OUTSIDE party (tier 1) or a changed state (tier 2).
+2. If the x402-revenue maintainer or pyfile-toolkit replies, answer them this run.
+3. When req1 (PyPI OIDC) grants, publish the package and record `rai-scope adopted --kind package`.
+4. New tier-3 first contact should target a project NOT in outreach-tracker/data.json.
