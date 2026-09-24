@@ -32,8 +32,7 @@ agent that buys a completion. A fresh Nano seed with ~0.00005 XNO is enough for
 dozens of calls.
 
 ```bash
-pip install openai-agents-nano \
-  --extra-index-url https://pandeveloper001.github.io/openai-agents-nano-x402/simple/
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 # then follow docs/pay-x402-from-openai-agent.md step by step
 ```
 
@@ -44,15 +43,12 @@ gets real buyers that USDC-only rails cannot reach.
 
 ## Install
 
-The v0.1.0 GitHub release is the immutable, public install path (works today). Three equivalent ways,
+The v0.1.0 GitHub release is the immutable, public install path (works today). Two equivalent ways,
 all verified from a clean venv with no credentials:
 
 ```bash
-# PEP 503 simple index on GitHub Pages (standard pip install form):
-pip install openai-agents-nano --extra-index-url https://pandeveloper001.github.io/openai-agents-nano-x402/simple/
-
 # single-file wheel from the release (no git, no build, cacheable):
-pip install https://github.com/PANDeveloper001/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 
 # or straight from the tagged source:
 pip install "git+https://github.com/PANDeveloper001/openai-agents-nano-x402.git@v0.1.0"
