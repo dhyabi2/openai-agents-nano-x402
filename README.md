@@ -51,7 +51,7 @@ all verified from a clean venv with no credentials:
 pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 
 # or straight from the tagged source:
-pip install "git+https://github.com/PANDeveloper001/openai-agents-nano-x402.git@v0.1.0"
+pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
 ```
 
 The release also carries the sdist (`.../releases/download/v0.1.0/openai_agents_nano-0.1.0.tar.gz`).
