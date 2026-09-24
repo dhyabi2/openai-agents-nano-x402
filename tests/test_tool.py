@@ -64,3 +64,29 @@ def test_cap_validation_returns_refusal_string():
             invoke(tool, json.dumps({"url": "https://example.invalid/x", "max_xno": "-5", "dry_run": True}))
         )
         assert out.startswith("REFUSED")
+
+
+def test_non_finite_cap_is_refused_as_text_not_raised():
+    # max_xno is model-supplied, and a model asking for "no limit" may well say
+    # "nan" or "Infinity". Decimal() accepts both; comparing a Decimal NaN raises
+    # InvalidOperation, which is an ArithmeticError and so escapes the caller's
+    # `except ValueError` -- breaking the module's contract that the tool always
+    # returns agent-readable text.
+    from openai_agents_nano.tool import _apply_cap
+
+    for bad in ("nan", "NaN", "snan", "Infinity", "-Infinity"):
+        try:
+            _apply_cap(bad, "0.01")
+        except ValueError:
+            pass  # refused the way a bad number is refused
+        except Exception as exc:  # pragma: no cover - the defect this pins
+            raise AssertionError(f"max_xno={bad!r} raised {type(exc).__name__}, not ValueError") from exc
+        else:
+            raise AssertionError(f"max_xno={bad!r} was accepted as a cap")
+
+    with tempfile.TemporaryDirectory() as td:
+        tool = _make(str(Path(td) / "w.json"))
+        out = asyncio.run(
+            invoke(tool, json.dumps({"url": "https://example.invalid/x", "max_xno": "nan", "dry_run": True}))
+        )
+        assert isinstance(out, str) and out.startswith("REFUSED"), out
