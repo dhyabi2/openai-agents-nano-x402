@@ -378,9 +378,9 @@
   },
   {
    "id": "L23",
-   "block": 10.0,
+   "block": 10.1,
    "statement": "The scan lists every prepared branch, including specs/exact-nano-mainnet, and reports any that is missing.",
-   "test": "python3 scripts/prepared_pr_drift_all.py --json .ledger/tmp/drift_all.json; python3 tests/prepared_pr_doc_offline.py",
+   "test": "python3 tests/prepared_pr_doc_offline.py",
    "scope": [
     "scripts/prepared_pr_drift_all.py",
     "scripts/pr_drift_doc.py",
@@ -391,7 +391,7 @@
    "expect": "8/8 checks pass",
    "source": null,
    "grounding": "oracle",
-   "version": 2,
+   "version": 3,
    "minted": "2026-09-16T16:54:57+00:00"
   },
   {
@@ -1278,6 +1278,119 @@
      "coverage_gaps": [],
      "injection": [],
      "at": "2026-09-15T04:47:42+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "bd3f8f9621495e9ec07d93e7b31ebe3c04863b28a7953a28baa7e3681ac1121d",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:18:41+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": true,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "4b6aef0343825bb56d9398f51d70b1d57d65675c03d46e879cb40cd63f269497",
+     "tier": "strong",
+     "coverage_gaps": [],
+     "injection": [],
+     "at": "2026-09-24T22:38:54+00:00"
     }
    ]
   },
@@ -1815,6 +1928,199 @@
      "coverage_gaps": [],
      "injection": [],
      "at": "2026-09-15T05:01:07+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 5
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 4
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 3
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "0c50eca0ff77c4d6d79a220909f4b138b2ec38ff03e93dd79a2dcb3049d2dc6a",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:19:51+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": true,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "fc47a1f915cf343975f2834ab2fd358264cba041634f919b11ecfbaa29d64c4c",
+     "tier": "strong",
+     "coverage_gaps": [],
+     "injection": [],
+     "at": "2026-09-24T22:39:13+00:00"
     }
    ]
   },
@@ -2120,7 +2426,7 @@
    ]
   },
   "10": {
-   "status": "pending",
+   "status": "decomposed",
    "attempts": [
     {
      "kind": "verify",
@@ -2618,11 +2924,255 @@
      ],
      "injection": [],
      "at": "2026-09-17T15:13:06+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "05bda1861b9777f4b54c382114c4a7242061161aa749fa3faa8f15e0ad5a808e",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:24:36+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": false,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "8db7ccb645c74dc0aae762c3f4e55e1d7be86fd63747afd711495e08195caad1",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:28:51+00:00"
     }
    ]
   },
   "11": {
-   "status": "pending",
+   "status": "pass",
    "attempts": [
     {
      "kind": "verify",
@@ -3103,8 +3653,727 @@
      ],
      "injection": [],
      "at": "2026-09-17T15:13:20+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 2
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 2
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L24",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "mutants": {
+        "total": 6,
+        "killed": 5
+       },
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "15851bd49e7072feeb3b51231e9c319d9e7f4302f2f6338e41cd830969155e31",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:14:02+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": false,
+       "oracle_exit": 1,
+       "oracle_ok": false,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L24",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "f28965edd437eaf0c19f203eed99e27e4b5b12459fa456e242400d7be7295d20",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:24:56+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": true,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L24",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "d4940ae2a30f444342c41fa353142f5bfe3a9b5c84939f69573996f0f74402e2",
+     "tier": "strong",
+     "coverage_gaps": [],
+     "injection": [],
+     "at": "2026-09-24T22:37:43+00:00"
     }
    ]
+  },
+  "10.1": {
+   "status": "pass",
+   "attempts": [
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-pro-0813",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": false,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "8db7ccb645c74dc0aae762c3f4e55e1d7be86fd63747afd711495e08195caad1",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:29:45+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": false,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "ffce30192c8df325ec1b1a6cf57c651ab4297d7e687a7e192834c9db2499c6b8",
+     "tier": "strong",
+     "coverage_gaps": [
+      ".github/ISSUE_TEMPLATE/config.yml",
+      ".github/ISSUE_TEMPLATE/grant-pr-scope.md",
+      ".github/ISSUE_TEMPLATE/register-pypi-publisher.md",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      "audits/openai-agents-nano-x402-2026-09-24.md",
+      "corrections.md",
+      "distribution-funnel.txt",
+      "funnel.md",
+      "research/claim11/README.md",
+      "research/claim11/rederive.cpp",
+      "research/claim11/run.sh",
+      "research/claim2/README.md",
+      "research/claim2/rederive.cpp",
+      "research/claim2/run.sh",
+      "research/claim5/README.md",
+      "research/claim5/rederive.cpp",
+      "research/claim5/run.sh",
+      "research/claim8/README.md",
+      "research/claim8/rederive.cpp",
+      "research/claim8/run.sh",
+      "x-thread-sep22.md"
+     ],
+     "injection": [],
+     "at": "2026-09-24T22:34:39+00:00"
+    },
+    {
+     "kind": "verify",
+     "ok": true,
+     "refusable": true,
+     "results": [
+      {
+       "id": "L13",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L15",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L16",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L17",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L18",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L19",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L20",
+       "pass": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L21",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L22",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      },
+      {
+       "id": "L23",
+       "pass": true,
+       "oracle_exit": 0,
+       "oracle_ok": true,
+       "cached": true,
+       "judge": "deepseek/deepseek-v4-flash-0731",
+       "control": "passed"
+      }
+     ],
+     "pre_sig": "af66d988b3582333698dba024c18f76c7fdaf0c17c5098f13743405ff021afe1",
+     "tier": "strong",
+     "coverage_gaps": [],
+     "injection": [],
+     "at": "2026-09-24T22:36:40+00:00"
+    }
+   ],
+   "parent": "10"
   }
  },
  "deltas": [
@@ -3184,6 +4453,41 @@
    "pattern": "pyproject.toml",
    "reason": "Distribution/doc/examples content; not governed application code",
    "at": "2026-09-17T14:55:52+00:00"
+  },
+  {
+   "pattern": ".github/**",
+   "reason": "CI/CD workflow config and issue templates; not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "audits/**",
+   "reason": "Audit reports, not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "corrections.md",
+   "reason": "Corrective action log, not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "distribution-funnel.txt",
+   "reason": "Distribution funnel tracking, not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "funnel.md",
+   "reason": "Distribution funnel tracking, not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "research/**",
+   "reason": "Research artifacts (claim rederivations), not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
+  },
+  {
+   "pattern": "x-thread-sep22.md",
+   "reason": "Distribution note, not governed application code",
+   "at": "2026-09-24T22:36:03+00:00"
   }
  ],
  "contested": [],
@@ -4472,6 +5776,218 @@
    "at": "2026-09-17T15:13:20+00:00",
    "prev": "4afd4acba459cf6c024113aad99ae399eda65f418388a0adc04e5db4b0aaa217",
    "receipt": "24f44f8371568328e8940403ed16898ce11c26204c33b1b438d51e6bca413c8f"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "11",
+    "ok": false
+   },
+   "at": "2026-09-24T22:14:02+00:00",
+   "prev": "24f44f8371568328e8940403ed16898ce11c26204c33b1b438d51e6bca413c8f",
+   "receipt": "82d00bd767b818d50bcf2c3687b64ff2b1bdb8249098244bca2764d73e4cdecd"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "2",
+    "ok": false
+   },
+   "at": "2026-09-24T22:18:41+00:00",
+   "prev": "82d00bd767b818d50bcf2c3687b64ff2b1bdb8249098244bca2764d73e4cdecd",
+   "receipt": "36dfb28c9b083634e45172a669f214e57cb74dc1db6b3f5720ae1653dc9573d6"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "4",
+    "ok": false
+   },
+   "at": "2026-09-24T22:19:51+00:00",
+   "prev": "36dfb28c9b083634e45172a669f214e57cb74dc1db6b3f5720ae1653dc9573d6",
+   "receipt": "9fd5e7720b17ff93f3979ee54b07e7b60bfb5562a70eae77a4f242985b64deec"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "10",
+    "ok": false
+   },
+   "at": "2026-09-24T22:24:36+00:00",
+   "prev": "9fd5e7720b17ff93f3979ee54b07e7b60bfb5562a70eae77a4f242985b64deec",
+   "receipt": "5641700188e33f864c8ab6fa10dcd8465cfb086c341f6ff6c94c759a126e6054"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "11",
+    "ok": false
+   },
+   "at": "2026-09-24T22:24:56+00:00",
+   "prev": "5641700188e33f864c8ab6fa10dcd8465cfb086c341f6ff6c94c759a126e6054",
+   "receipt": "2d6fcbb6a4009a87d53b434bf4939f27a997766c4a55362ddafbc580f7ec1319"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "10",
+    "ok": false
+   },
+   "at": "2026-09-24T22:28:51+00:00",
+   "prev": "2d6fcbb6a4009a87d53b434bf4939f27a997766c4a55362ddafbc580f7ec1319",
+   "receipt": "9ad048a599dcaf74f52f4fc1cec614234966a22e7eb93968a2fcd166505daa63"
+  },
+  {
+   "kind": "split",
+   "payload": {
+    "block": "10",
+    "children": [
+     "10.1"
+    ]
+   },
+   "at": "2026-09-24T22:29:09+00:00",
+   "prev": "9ad048a599dcaf74f52f4fc1cec614234966a22e7eb93968a2fcd166505daa63",
+   "receipt": "06cb977c6eff6b7e0e7bba6c158ad410bfce130efa5960f67f0e82055bea4fda"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "10.1",
+    "ok": false
+   },
+   "at": "2026-09-24T22:29:45+00:00",
+   "prev": "06cb977c6eff6b7e0e7bba6c158ad410bfce130efa5960f67f0e82055bea4fda",
+   "receipt": "3dce5b77eedcd97c1bead2b572dab665b469180f95a32df51801d0c375436182"
+  },
+  {
+   "kind": "amend",
+   "payload": {
+    "id": "L23",
+    "version": 3
+   },
+   "at": "2026-09-24T22:31:18+00:00",
+   "prev": "3dce5b77eedcd97c1bead2b572dab665b469180f95a32df51801d0c375436182",
+   "receipt": "334e9ce5192a6482d27d6fc47a7fbbcfd72ac28ff8def9da382313c52711c8da"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "10.1",
+    "ok": false
+   },
+   "at": "2026-09-24T22:34:39+00:00",
+   "prev": "334e9ce5192a6482d27d6fc47a7fbbcfd72ac28ff8def9da382313c52711c8da",
+   "receipt": "dda8e34b37f63f59709d402a2d82e9d4ac5b7d3c719ae673191f9315fa5b1b1b"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": ".github/**",
+    "reason_sha": "5523fb49bea625d7b3ef15149b204daca9b13465c815c1d62a3758a548007813"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "dda8e34b37f63f59709d402a2d82e9d4ac5b7d3c719ae673191f9315fa5b1b1b",
+   "receipt": "4d1bb009e267fa84ff955db364e4b82ba40cdc064ba75020fe8a0a2bb5836e82"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "audits/**",
+    "reason_sha": "1fa871acbfee74f7ee3d4886bf2df29c17d81ee2e5096793ba26761eb3a21d7c"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "4d1bb009e267fa84ff955db364e4b82ba40cdc064ba75020fe8a0a2bb5836e82",
+   "receipt": "e9e71fc03f20fc4d23a42fb5212be3c7102d88f6f83e8d07d37658e43e623ce4"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "corrections.md",
+    "reason_sha": "a43eb05a31b3d29bdc7c9a22c8a15880bb49af95423cd6230646c2e3fcfa0496"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "e9e71fc03f20fc4d23a42fb5212be3c7102d88f6f83e8d07d37658e43e623ce4",
+   "receipt": "bdced3e48f9fc6e913f7f39fbe05adebf5dc64b098f91d87592d0af050ed701b"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "distribution-funnel.txt",
+    "reason_sha": "9dafe6a45c51affaf82caa4b20927bae3a2bd0947b009bb01a6183c0627a482c"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "bdced3e48f9fc6e913f7f39fbe05adebf5dc64b098f91d87592d0af050ed701b",
+   "receipt": "f62b15b25bc9b1b06361ef739eb037d47fca890d9737ffaf5bbd1ab61c6db7bc"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "funnel.md",
+    "reason_sha": "9dafe6a45c51affaf82caa4b20927bae3a2bd0947b009bb01a6183c0627a482c"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "f62b15b25bc9b1b06361ef739eb037d47fca890d9737ffaf5bbd1ab61c6db7bc",
+   "receipt": "aecf18a5d294ac8a293ab6710d7f4f45d112cd8386f04ee8a42bc6285f9a278d"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "research/**",
+    "reason_sha": "9f6b4818680c0853a6bf9ef2b8dc3f5dc17ba9774e7cb7faffb6c7366454c8b2"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "aecf18a5d294ac8a293ab6710d7f4f45d112cd8386f04ee8a42bc6285f9a278d",
+   "receipt": "ab199995fc64b307d83ddebba7ecb0e722bdd3d76ed28186a674df1a2f652a6a"
+  },
+  {
+   "kind": "waive",
+   "payload": {
+    "pattern": "x-thread-sep22.md",
+    "reason_sha": "371ed04458296ecadeb477758f970cb3faebfbee9833ccb7d05a79c2e403bd72"
+   },
+   "at": "2026-09-24T22:36:03+00:00",
+   "prev": "ab199995fc64b307d83ddebba7ecb0e722bdd3d76ed28186a674df1a2f652a6a",
+   "receipt": "bec7bb57d4a254d87ce36c18cf8eca11a641e52b577395113be4df7454613ba7"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "10.1",
+    "ok": true
+   },
+   "at": "2026-09-24T22:36:40+00:00",
+   "prev": "bec7bb57d4a254d87ce36c18cf8eca11a641e52b577395113be4df7454613ba7",
+   "receipt": "af497a24cd79fbf8d07e661efa657e64cb1816ec7c22c4a40d453a087f2a3730"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "11",
+    "ok": true
+   },
+   "at": "2026-09-24T22:37:43+00:00",
+   "prev": "af497a24cd79fbf8d07e661efa657e64cb1816ec7c22c4a40d453a087f2a3730",
+   "receipt": "7bbbd819b06820ba924ce64f026fb1281d7573c4ee80df174ae935b380544f5f"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "2",
+    "ok": true
+   },
+   "at": "2026-09-24T22:38:54+00:00",
+   "prev": "7bbbd819b06820ba924ce64f026fb1281d7573c4ee80df174ae935b380544f5f",
+   "receipt": "bf2be6854cfe1f074da044b1666190d409eb773b56dc340c5855d0ff70aae796"
+  },
+  {
+   "kind": "verify",
+   "payload": {
+    "block": "4",
+    "ok": true
+   },
+   "at": "2026-09-24T22:39:13+00:00",
+   "prev": "bf2be6854cfe1f074da044b1666190d409eb773b56dc340c5855d0ff70aae796",
+   "receipt": "cd7d0e0b3050f151c470a562b49efdf69d863e6ddcf853dbbbc87239afc11800"
   }
  ]
 }
