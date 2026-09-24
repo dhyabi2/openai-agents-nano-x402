@@ -62,7 +62,7 @@ for a in d.get('accepts',[]): print(a['network'], a['asset'], a['amount'])"
 
 ```bash
 uv venv /tmp/xno-qs && uv pip install --python /tmp/xno-qs/bin/python \
-  "git+https://github.com/PANDeveloper001/openai-agents-nano-x402.git@v0.1.0"
+  "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
 ```
 
 (`python3 -m venv` + `pip install` is equivalent where `ensurepip` is available; on a minimal Debian/Ubuntu
@@ -72,7 +72,7 @@ The repo's own fail-closed check runs entirely offline against a local mock x402
 gate before any money moves:
 
 ```bash
-git clone -q https://github.com/PANDeveloper001/openai-agents-nano-x402 /tmp/xno-src
+git clone -q https://github.com/dhyabi2/openai-agents-nano-x402 /tmp/xno-src
 cd /tmp/xno-src && /tmp/xno-qs/bin/python tests/fail_closed_offline.py
 ```
 
