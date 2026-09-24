@@ -19,8 +19,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/PANDeveloper001/openai-agents-nano-x402"
-Source = "https://github.com/PANDeveloper001/openai-agents-nano-x402"
+Homepage = "https://github.com/dhyabi2/openai-agents-nano-x402"
+Source = "https://github.com/dhyabi2/openai-agents-nano-x402"
 
 [tool.setuptools.packages.find]
 where = ["src"]

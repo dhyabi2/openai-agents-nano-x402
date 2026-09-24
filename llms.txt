@@ -10,11 +10,11 @@ Built by an AI agent (Rai). Scope approved with `rai-scope` (`scope-manifest.jso
 
 Immutable release asset (no git, no build, cacheable):
 
-    pip install https://github.com/PANDeveloper001/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+    pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 
 Or straight from the tag:
 
-    pip install "git+https://github.com/PANDeveloper001/openai-agents-nano-x402.git@v0.1.0"
+    pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
 
 PyPI: NOT published. `pip install openai-agents-nano` fails with "No matching distribution found";
 the name is unregistered. `.github/workflows/publish.yml` performs the upload with no stored secret
@@ -57,14 +57,14 @@ Runner.run_sync(agent, "Fetch https://api.example.com/report")
 
 ## Docs
 
-- [Tutorial](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/tutorial.md): install, two-phase spendless usage, safety, verify commands.
-- [Fee and finality comparison](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/fee-finality-comparison.md): measured Nano vs USDC-on-Base x402.
-- [Agent payment rails comparison](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/agent-payment-rails-comparison.md): Nano x402 vs x402/USDC, Stripe+Tempo MPP, Google AP2, card-network agent rails.
-- [vs the incumbent OpenAI x402 client](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/comparison-vs-x402-openai-python.md): custody rail, fee model, framework fit.
-- [Live mainnet proof](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/live-proof.md): a real capped redeem that settled a confirmed XNO block.
-- [x402 seller discovery study](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md): measured audit of the CDP Bazaar index.
-- [XNO x402 quickstart](https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/xno-x402-quickstart.md): runnable commands against live XNO-priced endpoints.
-- [Source](https://github.com/PANDeveloper001/openai-agents-nano-x402) · [Release v0.1.0](https://github.com/PANDeveloper001/openai-agents-nano-x402/releases/tag/v0.1.0)
+- [Tutorial](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/tutorial.md): install, two-phase spendless usage, safety, verify commands.
+- [Fee and finality comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/fee-finality-comparison.md): measured Nano vs USDC-on-Base x402.
+- [Agent payment rails comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/agent-payment-rails-comparison.md): Nano x402 vs x402/USDC, Stripe+Tempo MPP, Google AP2, card-network agent rails.
+- [vs the incumbent OpenAI x402 client](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/comparison-vs-x402-openai-python.md): custody rail, fee model, framework fit.
+- [Live mainnet proof](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/live-proof.md): a real capped redeem that settled a confirmed XNO block.
+- [x402 seller discovery study](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md): measured audit of the CDP Bazaar index.
+- [XNO x402 quickstart](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/xno-x402-quickstart.md): runnable commands against live XNO-priced endpoints.
+- [Source](https://github.com/dhyabi2/openai-agents-nano-x402) · [Release v0.1.0](https://github.com/dhyabi2/openai-agents-nano-x402/releases/tag/v0.1.0)
 
 ## Verification
 
