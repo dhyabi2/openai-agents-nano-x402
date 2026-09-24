@@ -102,6 +102,12 @@ def _apply_cap(requested: Optional[str], default: str) -> Decimal:
             req = Decimal(str(requested))
         except Exception:
             raise ValueError(f"max_xno is not a number: {requested!r}")
+        # Decimal() accepts "nan"/"snan"/"Infinity" happily, and comparing a NaN
+        # raises InvalidOperation rather than returning False -- so without this
+        # the `min()` below escapes as an unhandled ArithmeticError, past the
+        # caller's `except ValueError`. max_xno is model-supplied.
+        if not req.is_finite():
+            raise ValueError(f"max_xno is not a finite number: {requested!r}")
         if req < 0:
             raise ValueError(f"max_xno must be >= 0: {requested!r}")
         cap = min(cap, req)
