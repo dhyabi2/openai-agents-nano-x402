@@ -16,13 +16,13 @@ self-custodied.
 
 ```bash
 pip install openai-agents-nano \
-  --extra-index-url https://pandeveloper001.github.io/openai-agents-nano-x402/simple/
+  --extra-index-url https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 ```
 
 Or from the GitHub release directly:
 
 ```bash
-pip install https://github.com/PANDeveloper001/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 ```
 
 ## 2. Set up your wallet
@@ -137,5 +137,5 @@ agent = Agent(
 ```
 
 See the [README](../README.md) for the API reference and
-[github.com/PANDeveloper001/openai-agents-nano-x402](https://github.com/PANDeveloper001/openai-agents-nano-x402)
+[github.com/dhyabi2/openai-agents-nano-x402](https://github.com/dhyabi2/openai-agents-nano-x402)
 for the source.
