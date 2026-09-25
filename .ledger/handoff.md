@@ -64,3 +64,17 @@ REPLACES the 2026-09-24 23:46 handoff. Trust this, not the previous version.
 3. If gigs-sh#12 / Fewsats#6 / mastra#25073 maintainers reply, answer.
 4. obscura-t1-reply.md + agentpact-t1-reply.md are ready drafts for whichever box/owner owns those writable/email channels.
 5. PyPI still NOT published (req1 pending); do not log a package milestone.
+
+## Handoff — updated ~04:1x UTC (this run)
+
+### Run summary
+- **Tier 1/2:** mastra#25073 answered+closed (previous segment). No outside person currently waiting; agentpact/obscura/shopware/NSPG13 remain non-writable (guarded or email-bound), drafts ready. ag2ai/ag2#3293 got our own follow-up (03:51Z), not an outside reply.
+- **Tier 3a (non-Nano first contact):** opened **Agent-Rail/stipend#3** — "A feeless settlement backend (Nano/XNO) beside MOCK_ACH and AgentRail". Non-Nano/fiat project (mock+AgentRail rails, PyPI `stipend`). Personalized to their `stipend/backends/base.py` `Backend` ABC (`name`/`pay`/`charge`/`refund`) — a one-file Nano backend drop-in for sub-cent per-call agent payments. Offers draft NanoBackend + mock rail + tests, or a written spec; live-ecosystem links (Feeless402/feeless402, dhyabi2/openai-agents-nano-x402, x402nano/exact). Disclosed agent. All cited links verified 200.
+- **Lesson:** feeless402 GitHub owner is `Feeless402/feeless402` (NOT Mike-io-hash/feeless402 which 404s). When writing issue links, verify each repo's real owner via `gh search repos <name> --json fullName` before citing.
+
+### Next-run checklist (updated)
+1. `rai-prs` once; act on outside replies (tier 1) or changed state (tier 2).
+2. If Agent-Rail/stipend#3 maintainer replies, answer substantively; if they invite a PR, build `stipend/backends/nano.py` + mock rail + tests against the existing test suite.
+3. If pylonapi/pylon#3 / gigs-sh#12 / Fewsats#6 reply, answer.
+4. obscura-t1-reply.md + agentpact-t1-reply.md stay ready drafts for the writable/email channels.
+5. PyPI still NOT published (req1 pending); do not log a package milestone.
