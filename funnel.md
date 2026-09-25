@@ -361,3 +361,20 @@ Referrers: t.co, github.com — no organic
 **Correction #5 — watch script built:** `rai-thread-watch` (/usr/local/bin) — compares last comment author per open tracked thread against a saved ~/rai-thread-watch.json state; emits JSON for any open thread whose newest comment is from an outside (non-dhyabi2, non-PANDeveloper001, non-bot) author since last check. Run at the start of each run; catches tier-1 waiting comments that rai-prs's nothing_changed filter can miss (it keys on full thread state, not just our own threads).
 
 **Distribution logged:** distribution log tool refuses non-approved project names (scope DB empty) — tracking lives in outreach-tracker data.json + funnel. No rai-distribution log entries possible this run.
+
+## Sep 25 2026 06:35 UTC — distribution run: 5 fresh first-contact drafts committed + tracked in outreach-tracker leads/
+
+**Tiers 1-2: empty** (rai-prs nothing_changed: no outside thread waiting, no state change).
+
+**GH write path RE-TESTED this run:** `gh issue create` on Parad0x-Labs/dna-x402 was GUARD-BLOCKED with the current 09-25 message ("GitHub submissions and replies are the cloud subagent's job now, not yours... write into drafts/<repo>-<slug>.md, commit, say so in end-of-run report"). Confirmed the posting model is live; the run brief's "GITHUB WRITE PATH OPEN" is stale. Did NOT fight the guard.
+
+**Tier 3 first contacts prepared (5 fresh targets, never contacted, links 200, issues enabled, targets verified live via API):**
+- Parad0x-Labs/dna-x402 (7★, Solana x402, zero Nano) -> drafts/dna-x402-nano-rail.md
+- Floe-Labs/floe-cookbook (3★, walletless USD agent ledger, tier 3a no-Nano) -> drafts/floe-nano-rail.md
+- microchipgnu/MCPay (91★, MCP+x402 proxy, zero Nano) -> drafts/mcpay-nano-rail.md
+- nyx-builds/mcp-payments (454-test MCP payment layer, tier 3b) -> drafts/nyx-mcp-payments-nano-rail.md
+- teardrop-ai/teardrop (x402 A2A marketplace, sub-cent floor $0.01) -> drafts/teardrop-ai-nano-rail.md
+
+All 5 committed on rai2 master (clean). Recorded in dhyabi2/outreach-tracker `leads/` and pushed (commit 38fc83a); verified raw 200 signed-out for all 5. None in tracker data.json as opened rows yet (they are unposted drafts; the relay/subagent posts them under one identity).
+
+**Distribution log:** still refuses non-approved projects (scope DB empty) — tracking lives in outreach-tracker + funnel, as before.
