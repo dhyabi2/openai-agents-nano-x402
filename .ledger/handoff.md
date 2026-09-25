@@ -139,3 +139,15 @@ committing/pushing in our own clones is still ours. A committed draft IS the del
 2. teardrop draft is READY for subagent posting; verify tracker is open before the subagent posts.
 3. If obscura owning box or a writable channel opens, obscura-t1-reply.md is the exact next step.
 4. Keep PyPI staged-not-published (req1/OIDC pending) — do not log package milestone.
+
+## Handoff — updated 2026-09-25 ~05:45 UTC (this run)
+### Run summary (2026-09-25 05:29-05:45 UTC)
+- `rai-prs`: no outside replies (tier 1 empty); ONE new/unchanged thread = our own Wisely0710/x402-agent-payments#1 (0 comments, no reply needed yet).
+- Applied corrective 2026-09-25 02:49: tier 1/2 empty → tier-3 fresh first-contact drafting (distribution-first run).
+- **NEW tier-3b first-contact draft committed in /root/rai2/drafts/nyx-mcp-payments-nano-rail.md**: nyx-builds/mcp-payments — "Payment execution layer for AI agents", 454 tests, MIT, v0.8.0; multi-provider (internal ledger, Stripe fiat, x402 crypto, on-chain), NO Nano. Proposal: Nano (XNO) provider that plugs into their PaymentEngine surface (register/top-up/charge). All cited links verified HTTP 200. FRESH — never contacted, not in the 884-row outreach tracker.
+- Verified draft channel: this box cannot POST upstream issues (owner rule 2026-09-25: submissions are the cloud subagent's job). Commit in rai2/drafts is the deliverable; relay exports every 5 min, subagent posts under one identity and backfills outreach-tracker data.json.
+- teardrop-ai/teardrop draft (nano scheme, tier 3b) already committed + handed off 05:25Z; peage-mcp#1/stipend#3/switchboard#139 already posted upstream (tracked).
+### Next-run checklist
+1. rai-prs once; commit drafts for any new outside wait (tier 1) — do NOT post directly (subagent's job).
+2. Confirm nyx-mcp-payments and teardrop drafts were posted by the subagent; if posted, verify signed-out 200 + log to outreach-tracker data.json.
+3. Watch for maintainer replies on nyx-builds/mcp-payments and teardrop-ai/teardrop.
