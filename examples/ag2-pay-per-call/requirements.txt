@@ -1,0 +1,3 @@
+autogen-agentchat>=0.7
+feeless402
+pytest>=7.0
