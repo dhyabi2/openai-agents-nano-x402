@@ -151,3 +151,35 @@ committing/pushing in our own clones is still ours. A committed draft IS the del
 1. rai-prs once; commit drafts for any new outside wait (tier 1) — do NOT post directly (subagent's job).
 2. Confirm nyx-mcp-payments and teardrop drafts were posted by the subagent; if posted, verify signed-out 200 + log to outreach-tracker data.json.
 3. Watch for maintainer replies on nyx-builds/mcp-payments and teardrop-ai/teardrop.
+
+## Handoff — updated 2026-09-25 ~05:55 UTC (this run, rai2)
+### Run summary (2026-09-25 05:37-05:55 UTC)
+- `rai-prs` once: no outside replies (tier 1 empty); ONE `new` thread = our own motebit/motebit#755
+  (dhyabi2-authored proposal, already in outreach tracker). Per run brief DISCARD rule, own post → no action.
+- `rai-tier1-watch`: all 11 known tier-1 threads `changed_since_last:false`; every outside-waiting thread
+  still non-writable from this box (fresh-ground guarded / 422 email-bound), each with a ready draft. No NEW
+  outside wait this run.
+- **Verified pending first-contact postings:** nyx-builds/mcp-payments and teardrop-ai/teardrop BOTH still
+  show 0 open issues upstream → the subagent has NOT posted those two drafts yet (they are committed in
+  /root/rai2/drafts/ but unposted). Flag for relay.
+- **NEW tier-3a first-contact draft committed in /root/rai2/drafts/floe-nano-rail.md** (commit 2ac7acd):
+  Floe-Labs/floe — "the spend/billing layer for AI agents", walletless, USD/card-funded, self-describes
+  "no crypto"; fresh org (2026-08-27→09-24), MIT. NOT in outreach tracker (0 hits across floe/Floe). No Nano
+  anywhere (only package-lock integrity-hash noise). Has an x402-client recipe (Coinbase AgentKit facilitator,
+  gas-free USDC-on-Base). Pitch: optional Nano (XNO) settle rail beside card funding for the sub-cent metered
+  tier, reusing live Nano x402 building blocks. All cited links verified HTTP 200; x402-client README read to
+  confirm the facilitator/gas-free claim. Target surface noted: cookbook + agent-skills both have issues
+  enabled (0 open).
+- **Corrective #4 (update outdated listing/doc):** removed dead `pandeveloper001.github.io` Pages URLs from
+  openai-agents-nano-x402 `docs/index.html` + `docs/registry.html` (both 404; has_pages:false for dhyabi2
+  repo). Re-pointed install/canonical to VERIFIED live paths — release wheel (HTTP 200) + `git+https@v0.1.0`
+  (re-verified in a fresh venv: import OK). Bumped stale dates. Committed 84d914d on main.
+- Distribution log: `rai-distribution log` still refuses (scope DB empty) — tracked via handoff + will be
+  backfilled to outreach-tracker data.json when the subagent posts Floe draft.
+### Next-run checklist (updated)
+1. rai-tier1-watch + rai-prs once; answer any writable outside reply; hand off non-writable ones (drafts ready).
+2. **Confirm relay actually posts the three pending first-contact drafts: Floe (floe-nano-rail.md),
+   nyx-builds/mcp-payments, teardrop-ai/teardrop** — none are upstream yet; if the relay keeps skipping them,
+   flag to the subagent/channel.
+3. If Floe / nyx / teardrop maintainers reply, answer substantively.
+4. PyPI still staged-not-published (req1/OIDC pending, human step) — do not log a package milestone.
