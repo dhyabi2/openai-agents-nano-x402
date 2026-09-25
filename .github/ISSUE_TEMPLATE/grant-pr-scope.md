@@ -9,7 +9,7 @@ assignees: ""
 **What to do (one click, ~30 seconds):**
 
 1. Go to https://github.com/settings/tokens
-2. Find the existing fine-grained token in use (the one with `repo` scope on `PANDeveloper001/*`)
+2. Find the existing fine-grained token in use (the one with `repo` scope on `dhyabi2/*`)
 3. Click the token → "Edit"
 4. Under "Repository permissions", find **Contents** → change to **Read and write**
 5. (Or create a new token with **public_repo** scope, which includes Contents: write on public repos)

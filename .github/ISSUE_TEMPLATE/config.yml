@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Run the release pipeline
-    url: https://github.com/PANDeveloper001/openai-agents-nano-x402/actions/workflows/publish.yml
+    url: https://github.com/dhyabi2/openai-agents-nano-x402/actions/workflows/publish.yml
     about: Trigger a PyPI publish from a tagged release (requires a pending trusted publisher on PyPI).

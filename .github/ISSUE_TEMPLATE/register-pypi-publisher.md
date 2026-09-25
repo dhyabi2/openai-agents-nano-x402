@@ -15,7 +15,7 @@ assignees: ""
    | Field | Value |
    |---|---|
    | PyPI Project Name | `openai-agents-nano` |
-   | Owner | `PANDeveloper001` |
+   | Owner | `dhyabi2` |
    | Repository name | `openai-agents-nano-x402` |
    | Workflow name | `publish.yml` |
    | Environment name | `pypi` |
