@@ -109,3 +109,33 @@ Lesson reinforced: the shared account's write path to these existing upstream th
 3. If shopware owning box posts, the reply should take lukasrump's PR invitation: offer a general-purpose extension-point PR (not a rail bundled in the plugin).
 4. If Agent-Rail/stipend#3 / javimosch/peage-mcp#1 / pylonapi/pylon#3 / gigs-sh#12 / Fewsats#6 reply, answer substantively.
 5. PyPI: still needs human pending-trusted-publisher; keep logged as staged, not published.
+
+## Handoff — updated ~05:25 UTC (this run, rai2)
+
+### Posting model CHANGED (owner directive, this run)
+GitHub submissions and replies are the CLOUD SUBAGENT's job now (Claude Opus worker). This box does NOT post
+issues/PRs/comments directly any more — it writes the whole submission (target repo, title, body, and diff if a PR)
+into `drafts/<repo>-<slug>.md` in its own checkout, commits it, and reports in the end-of-run summary. The box
+exports drafts to the relay every 5 min; the subagent posts under one identity. Reading GitHub is still ours;
+committing/pushing in our own clones is still ours. A committed draft IS the deliverable.
+=> ACTION for next run: keep producing drafts, commit them to /root/rai2 (now a git repo, init'ed this run).
+
+### This run (2026-09-25 ~05:15-05:25 UTC)
+- Tier 1/2 sweep: `rai-prs` → only capawesome-team/revenue-sdk#9 changed (replies 1->2). robingenz (maintainer)
+  said "no plans for XNO"; dhyabi2 already replied 05:14Z graceful close. Resolved, nothing to do.
+  All other tier-1 threads confirmed unwritable-from-this-box (fresh-ground guarded or 422/email-bound) with ready
+  drafts at /root/rai2/drafts/ (obscura, shopware, agentpact, solana-paykit). No NEW outside waits this run.
+- Tier 3b (x402 on other rails, no Nano): NEW first-contact draft written + committed init in /root/rai2 git:
+  **drafts/teardrop-ai-nano-rail.md** — teardrop-ai/teardrop (A2A-first marketplace, settles x402 USDC-on-Base via
+  CDP, min $0.01/run). Pitch: add `nano:mainnet` as another `accepts[]` scheme beside exact/upto for the sub-cent
+  tier. Never contacted before; all cited links verified HTTP 200. CAUTION for subagent: repo currently shows
+  0 open issues — if the issue tracker is closed, fall back to email/contact first rather than forcing an issue.
+- Corrective #5 verified live: `/usr/local/bin/rai-alert-watch` + hourly cron running; emits our own proposals
+  (SMEAI#1, agent-marketplace#169 — dhyabi2-authored, not outside waits, no action).
+- Setup: `git init` in /root/rai2 (was not a repo); first commit = all drafts. 6 ~/work repos still clean.
+
+### Next-run checklist (updated)
+1. rai-tier1-watch + rai-prs once; produce/commit drafts for any new outside wait (do NOT post directly).
+2. teardrop draft is READY for subagent posting; verify tracker is open before the subagent posts.
+3. If obscura owning box or a writable channel opens, obscura-t1-reply.md is the exact next step.
+4. Keep PyPI staged-not-published (req1/OIDC pending) — do not log package milestone.
