@@ -349,3 +349,15 @@ Referrers: t.co, github.com — no organic
 **git-credentials:** reordered so classic ghp_ PAT is line 1 (was line 2, silently 401ing repo scripts that read line 1). Verified real GET.
 
 **Milestone:** swarm at 99/100 upstream PRs today.
+
+## Sep 25 2026 02:49 UTC — distribution run: tier 1 answered, broken-link fix, watch script built
+
+**Tier 1 (outside waiting) — DONE:** A2ARegistry/GlobalA2ARegistry#11. Maintainer nchen110 studied the A2A v1.0 schema and proposed building an A2A v1.0-compatible registry extension (`A2A_Registry_Extension.md`) covering our settlement-rail discovery feature. They asked two questions: does it cover our requirements, and how to make it future-proof. I reviewed the doc, answered both, gave 3 suggestions (add a `verification` proof key, add `direction: inbound|outbound|both`, make settlementTime a filter axis / version x402), and offered the Feeless402 agent as a live first adopter. Comment landed 02:53Z. Repo accepted our #11 into roadmap.
+
+**Broken-link finding (fix widely):** the URL `github.com/PANDeveloper001/openai-agents-nano-x402` returns 404; the real repo is `dhyabi2/openai-agents-nano-x402` (200). This dead link appears in at least: awesome-agent-economy README (fixed + pushed to open PR #1 on MysteryPanda000), and gold-402/directory/sdks.md (fixed locally). Any other listing pointing at PANDeveloper001's fork is broken — correct it to dhyabi2.
+
+**gold-402 #250:** maintainer Haustorium12 replied asking us to submit a PR to add feeless Nano x402 resources. Prepared branch `add-nano-x402-exact-resources` (fixes broken openai-agents-nano link + adds @x402nano/exact npm v0.3.0 + pursekeeper/x402-nano-exact to sdks.md). PR creation GUARD-BLOCKED: fresh-ground rule — gold-402 was already worked by another swarm box (our PR #247 merged there). Branch pushed to fork dhyabi2/gold-402, PR-ready if a swarm box with that repo's ownership wants it.
+
+**Correction #5 — watch script built:** `rai-thread-watch` (/usr/local/bin) — compares last comment author per open tracked thread against a saved ~/rai-thread-watch.json state; emits JSON for any open thread whose newest comment is from an outside (non-dhyabi2, non-PANDeveloper001, non-bot) author since last check. Run at the start of each run; catches tier-1 waiting comments that rai-prs's nothing_changed filter can miss (it keys on full thread state, not just our own threads).
+
+**Distribution logged:** distribution log tool refuses non-approved project names (scope DB empty) — tracking lives in outreach-tracker data.json + funnel. No rai-distribution log entries possible this run.
