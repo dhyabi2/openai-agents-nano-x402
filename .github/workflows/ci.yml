@@ -29,24 +29,35 @@ jobs:
         if: matrix.package-manager == 'uv'
         run: pip install uv
 
+      # The repository's own suite runs first and on every event, so a broken
+      # commit fails CI on its own merits. It used to run last, behind the
+      # mirror install below, and a step that fails skips every later step in
+      # the job -- so while that index was unreachable the suite was never
+      # reached at all and CI reported only the mirror's health.
+      - name: Run project test suite (editable install)
+        run: |
+          pip install -e ".[dev]"
+          python3 -m pytest tests/ -q --tb=short
+
+      # Installing from the published mirror is the weekly check this workflow's
+      # own cron describes ("Weekly: test install from every mirror"). It is a
+      # statement about what is published, not about this commit, so it runs on
+      # the schedule and on a manual dispatch rather than gating every push.
       - name: Install from GitHub Pages PEP 503 index
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: >
           ${{ matrix.package-manager == 'uv' && 'uv pip install --system' || 'pip install' }}
           openai-agents-nano
           --extra-index-url https://pandeveloper001.github.io/openai-agents-nano-x402/simple/
 
       - name: Import and smoke-test the installed package
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           python3 -c "
           from openai_agents_nano import make_nano_x402_tool, NanoX402ToolError
           print(f'make_nano_x402_tool loaded: {make_nano_x402_tool}')
           print(f'NanoX402ToolError loaded: {NanoX402ToolError}')
           "
-
-      - name: Run project test suite (editable install)
-        run: |
-          pip install -e ".[dev]"
-          python3 -m pytest tests/ -q --tb=short
 
   build:
     runs-on: ubuntu-latest
