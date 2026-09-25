@@ -115,7 +115,7 @@
   "evidence": [
     "https://api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=1000&offset=0 (live index; nano:mainnet accepts counted 2026-09-16)",
     "https://api.cdp.coinbase.com/platform/v2/x402/validate (keyless; returns valid:true / accepted for the 8 live Nano routes)",
-    "https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md",
-    "https://github.com/PANDeveloper001/openai-agents-nano-x402/blob/main/docs/live-proof.md"
+    "https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md",
+    "https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/live-proof.md"
   ]
 }
