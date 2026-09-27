@@ -23,6 +23,7 @@ import argparse
 import base64
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -31,7 +32,29 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-UV = os.environ.get("UV", "/root/.hermes/bin/uv")
+
+
+def find_uv() -> str:
+    """Locate uv: $UV if set, else whatever is on PATH.
+
+    The default used to be the hard-coded `/root/.hermes/bin/uv`, a path that exists on one agent box
+    and nowhere else. That made this file -- the repository's proof that the PUBLISHED wheel installs
+    and runs -- unrunnable by anyone who installs the package, and unrunnable in CI too, where the
+    workflows get uv from `pip install uv` and so find it on PATH. It died with a bare
+    FileNotFoundError from the first subprocess, before a single check ran.
+    """
+    explicit = os.environ.get("UV")
+    if explicit:
+        return explicit
+    found = shutil.which("uv")
+    if found:
+        return found
+    # Say what is missing and how to get it, rather than raising FileNotFoundError on a path the
+    # reader never chose.
+    raise SystemExit(
+        "uv not found on PATH. Install it (`pip install uv`) or point UV at it "
+        "(`UV=/path/to/uv python tests/release_install_offline.py`)."
+    )
 
 PAY_TO = "nano_1x9k4qmqwc6f9amcq8gdgyb1gm7b3s5w1kzn9aafoza3tr4tbrmq1j4xyg4z"
 LOW_RAW = "100000000000000000000000000000"  # 0.1 XNO
@@ -151,17 +174,18 @@ def main() -> None:
 
     if not args.in_venv:
         # Phase 1: build the wheel, fresh venv, install, re-exec inside it.
+        uv = find_uv()  # resolved here, not at import: --in-venv phase 2 needs no uv at all
         with tempfile.TemporaryDirectory() as td:
             build_dir = Path(td) / "dist"
             subprocess.run(
-                [UV, "build", "--out-dir", str(build_dir), str(REPO)],
+                [uv, "build", "--out-dir", str(build_dir), str(REPO)],
                 check=True, capture_output=True,
             )
             wheel = next(build_dir.glob("openai_agents_nano-*.whl"))
             venv = Path(td) / "venv"
-            subprocess.run([UV, "venv", str(venv)], check=True, capture_output=True)
+            subprocess.run([uv, "venv", str(venv)], check=True, capture_output=True)
             subprocess.run(
-                [UV, "pip", "install", "--python", str(venv / "bin" / "python"), str(wheel)],
+                [uv, "pip", "install", "--python", str(venv / "bin" / "python"), str(wheel)],
                 check=True, capture_output=True,
             )
             wallet = str(Path(td) / "wallet.json")
