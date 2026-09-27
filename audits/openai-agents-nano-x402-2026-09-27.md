@@ -53,6 +53,16 @@ repository's proof that the published wheel works.
 
   **Before: 5 failed, 15 passed. After: 20 passed.** `ruff check .` still passes.
 
+  **CI then caught a defect in one of those new laws, which is worth recording.** The first version of
+  `test_the_release_proof_resolves_uv_rather_than_assuming_it` asserted that `find_uv()` returns an
+  existing path — but CI's `pip` matrix legs deliberately do not install uv, so on `test (3.12, pip)`
+  `find_uv()` correctly raised its `SystemExit` and the law failed. It was asserting a property of the
+  **runner**, not of the code: exactly the "test that asserts the wrong thing" this audit is meant to
+  find, introduced by the audit. Split in two — one law pins that the script *asks* for uv rather than
+  assuming a path, and a second, skipped when uv is absent, pins that it returns the uv that is there.
+  Verified both ways locally: 21 passed with uv on PATH, 19 passed / 2 skipped with PATH reduced to
+  `/usr/bin:/bin`.
+
 ## Found, NOT fixed
 
 - **`tests/prepared_pr_doc_offline.py` exits 1 outside the agent box.** It wants a scan report it

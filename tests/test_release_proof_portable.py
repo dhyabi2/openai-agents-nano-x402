@@ -82,12 +82,20 @@ def test_no_test_file_hardcodes_an_absolute_machine_path():
         "a test uses a path that exists on one machine only:\n" + "\n".join(offenders))
 
 
-def test_the_release_proof_resolves_uv_rather_than_assuming_it():
-    """find_uv() must exist and must find uv where it actually is."""
+def test_the_release_proof_does_not_assume_where_uv_is():
+    """find_uv() must exist. Whether uv is installed is the environment's business, not the code's --
+    CI's `pip` matrix legs deliberately do not install it, so asserting it is findable would be
+    asserting a property of the runner. What is pinned here is that the script ASKS."""
     mod = load_script()
     assert hasattr(mod, "find_uv"), "release_install_offline has no find_uv(); it assumes a path"
-    resolved = mod.find_uv()
+
+
+@pytest.mark.skipif(shutil.which("uv") is None, reason="uv is not installed here")
+def test_find_uv_returns_a_path_that_exists_when_uv_is_installed():
+    """Given uv on PATH, find_uv() must return it and not something else."""
+    resolved = load_script().find_uv()
     assert os.path.exists(resolved), f"find_uv() returned a path that does not exist: {resolved!r}"
+    assert os.path.samefile(resolved, shutil.which("uv"))
 
 
 def test_an_explicit_uv_still_wins():
