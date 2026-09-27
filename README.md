@@ -114,6 +114,58 @@ result = Runner.run_sync(agent, "Fetch https://api.example.com/report")
   (0.0001 XNO, verified on two public nodes). This is a correctness proof
   using my own accounts — it is not adoption evidence.
 
+## Let your operator set a spend cap once
+
+The per-call cap above bounds one payment; it does not bound a day, a task or
+a payee. Agents told us that is exactly why their operator will not hand over
+spend authority: "no funds, no signature" - and the operator wants to know
+what the spend buys. An **operator mandate** is that permission, signed once
+with the operator's own Nano key (Ed25519-BLAKE2b, the scheme that signs
+Nano blocks): the agent's account, a total cap and a per-payment max as raw
+integer strings (1 XNO = 10\*\*30 raw), an optional payee allow-list, a
+required `purpose`, and an expiry. `src/openai_agents_nano/mandate.py` is
+vendored byte-for-byte from
+[agent-wallet-multirail](https://github.com/dhyabi2/agent-wallet-multirail)
+(a test pins the bytes) and installs the `mandate` CLI.
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate && pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402"
+mandate keygen --out operator.key   # demo operator key (mode 600); a real operator uses their own
+mandate create --operator-key operator.key --agent nano_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7 --total-cap-xno 0.5 --per-payment-max-xno 0.01 --purpose "Web-search API calls for the research task" --days 30 --out mandate.json
+mandate verify mandate.json
+mandate status mandate.json         # remaining cap, from mandate.json.ledger.json
+```
+
+(Put your agent wallet's address in `--agent`; the one above is a well-known
+test address.) Then bind it to the tool - the model never sees it:
+
+```python
+tool = make_nano_x402_tool(mandate_path="mandate.json")   # or X402_MANDATE_PATH
+```
+
+A dry run now also says whether the mandate would allow the payment and what
+would remain. On redeem the mandate is checked twice: before the quote token
+is consumed, and again **at the moment the block is built**, against the payee
+and amount feeless402 is actually about to sign (it re-reads the 402, so a
+seller that switches payee between preview and payment is caught there). The
+amount is reserved in a local ledger before signing; a refusal returns
+`REFUSED: your operator's mandate does not allow this payment` with the
+reason (`cap_exhausted`, `over_per_payment_max`, `payee_not_allowed`,
+`expired`, `bad_signature`, `wrong_agent`, `unreadable_mandate`, ...) and
+nothing is signed. A mandate that cannot be read or verified refuses every
+payment; it never falls back to uncapped.
+
+The ledger is local: it stops this tool from overspending, not someone with
+shell access who deletes it. For a hard ceiling, also fund the wallet with no
+more than the cap.
+
+**Audit (2026-09-27):** before this change the only spend control was the
+per-call cap (`min(max_xno, default)`), enforced in code before signing as the
+README says. There was no cumulative cap, no payee allow-list and no expiry,
+and nothing claimed one. One small fix: `X402_MAX_XNO` was read once at
+import, so a value exported after importing the package was ignored; it is now
+read when the tool is built.
+
 ## Docs and measured comparisons
 
 - `docs/tutorial.md` — install + two-phase spendless usage + safety + verify commands.
@@ -144,6 +196,9 @@ result = Runner.run_sync(agent, "Fetch https://api.example.com/report")
   preview and the redeem (an irreversible Nano block is only ever authorised
   against the offer the agent was shown).
 - Per-call cap enforced in deterministic code before any signing.
+- Optional operator mandate (total cap, per-payment max, payee allow-list,
+  expiry, signed by the operator's Nano key) checked against the payee and
+  amount actually being signed; see "Let your operator set a spend cap once".
 - **Honest results:** only a ledger-confirmed settlement is reported as PAID.
   A block the ledger does not hold, or an indeterminate verdict, is reported
   as NOT PAID / UNCONFIRMED with its block hash; and if a merchant never
