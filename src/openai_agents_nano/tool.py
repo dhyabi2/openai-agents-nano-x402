@@ -35,10 +35,14 @@ from nano_pay.wallet import Wallet
 from nano_pay.x402 import PaidRequestFailed, request_with_payment
 from nano_pay import xno_to_raw, raw_to_xno
 
+from .mandate import MandateGuard, MandateRefused, raw_to_xno as _mandate_raw_to_xno
+
 DEFAULT_WALLET_ENV = "X402_WALLET_PATH"
 DEFAULT_WALLET_PATH = "~/.nano-pay/wallet.json"
 DEFAULT_MAX_XNO = os.environ.get("X402_MAX_XNO", "0.01")  # hard default cap
 QUOTE_TOKEN_TTL_S = 60 * 30  # a preview is only good for half an hour
+DEFAULT_MANDATE_ENV = "X402_MANDATE_PATH"  # an operator-signed spend cap (mandate.py)
+DEFAULT_MANDATE_LEDGER_ENV = "X402_MANDATE_LEDGER"
 
 
 class NanoX402ToolError(Exception):
@@ -86,6 +90,41 @@ class QuoteTokenStore:
             return "offer-changed"
         self._tokens.pop(token, None)  # single-use: consumed here
         return None
+
+
+class _MandatedWallet:
+    """The wallet as request_with_payment sees it when an operator mandate is set.
+
+    feeless402 re-reads the 402 before it pays, so the payee and amount it
+    signs are the ones that matter. This proxy checks THOSE, at the moment
+    the block is built: the mandate guard reserves the amount in its ledger
+    and only then lets the real wallet sign. A refusal raises MandateRefused
+    before any block exists. Everything else is the real wallet.
+    """
+
+    def __init__(self, wallet, guard: MandateGuard, ref: str):
+        self._wallet = wallet
+        self._guard = guard
+        self._ref = ref
+
+    def __getattr__(self, name):
+        return getattr(self._wallet, name)
+
+    def build_payment_block(self, rpc, to_addr, raw_amt):
+        return self._guard.spend(
+            to_addr, int(raw_amt),
+            lambda: self._wallet.build_payment_block(rpc, to_addr, raw_amt),
+            ref=self._ref[:200],
+        )
+
+
+def _format_mandate_refusal(exc: MandateRefused) -> str:
+    return (
+        "REFUSED: your operator's mandate does not allow this payment.\n"
+        f"  reason: {exc.reason}\n"
+        f"  detail: {exc.message}\n"
+        "Nothing was signed or paid. Only the operator can widen a mandate."
+    )
 
 
 def _wallet_path(wallet_path: Optional[str]) -> str:
@@ -236,6 +275,8 @@ def make_nano_x402_tool(
     rpc: Optional[RPC] = None,
     default_max_xno: Optional[str] = None,
     token_store: Optional[QuoteTokenStore] = None,
+    mandate_path: Optional[str] = None,
+    mandate_ledger: Optional[str] = None,
 ) -> FunctionTool:
     """Return an OpenAI Agents SDK FunctionTool named ``nano_x402_fetch``.
 
@@ -245,6 +286,13 @@ def make_nano_x402_tool(
     default_max_xno: the hard cap when the model does not pass one. Default:
       the ``X402_MAX_XNO`` env var, else 0.01 XNO.
     token_store: normally omitted (one is created per tool). Injectable for tests.
+    mandate_path: an operator-signed mandate (see ``mandate.py``). Default: the
+      ``X402_MANDATE_PATH`` env var, else none. When set, every payment must
+      also fit the mandate's total cap, per-payment max, payee allow-list and
+      expiry, checked against the payee and amount actually being signed; a
+      mandate that cannot be read or verified refuses every payment.
+    mandate_ledger: where the mandate's spend is recorded. Default:
+      ``X402_MANDATE_LEDGER``, else ``<mandate_path>.ledger.json``.
     """
     if function_tool is None:  # pragma: no cover - optional dependency
         raise ImportError(
@@ -253,9 +301,17 @@ def make_nano_x402_tool(
         )
     wallet = Wallet(Path(_wallet_path(wallet_path)).expanduser())
     rpc = rpc or RPC()
-    default_cap = str(default_max_xno or DEFAULT_MAX_XNO)
+    # X402_MAX_XNO is re-read here: DEFAULT_MAX_XNO was bound at import, so a
+    # value exported after `import openai_agents_nano` used to be ignored.
+    default_cap = str(default_max_xno or os.environ.get("X402_MAX_XNO") or DEFAULT_MAX_XNO)
     lock = asyncio.Lock()
     tokens = token_store or QuoteTokenStore()
+    # Read at construction, not import: a variable set after import still binds.
+    mandate_file = mandate_path or os.environ.get(DEFAULT_MANDATE_ENV) or None
+    mandate_ledger = mandate_ledger or os.environ.get(DEFAULT_MANDATE_LEDGER_ENV) or None
+
+    def _guard() -> MandateGuard:
+        return MandateGuard.from_file(mandate_file, mandate_ledger, agent=wallet.address)
 
     @function_tool(
         name_override="nano_x402_fetch",
@@ -313,12 +369,29 @@ def make_nano_x402_tool(
                 if quote is None:
                     return f"NOTE: {url} returned {_resp.status_code}, not a 402 x402 quote; nothing spent."
                 token = tokens.mint(quote.get("pay_to") or "", quote.get("amount_raw") or 0)
-                return _format_quote(quote, cap_xno, token)
+                text = _format_quote(quote, cap_xno, token)
+                if mandate_file:
+                    try:
+                        verdict = _guard().check(quote.get("pay_to") or "", int(quote.get("amount_raw") or 0))
+                        text += ("\n  mandate: allows this payment; "
+                                 f"{_mandate_raw_to_xno(int(verdict['remaining_after_raw']))} XNO would remain")
+                    except MandateRefused as e:
+                        text += f"\n  mandate: would REFUSE this payment ({e.reason}: {e.message})"
+                return text
 
             # Not dry_run: two-phase redeem. The agent must hold a single-use
             # quote token minted against the exact offer it is about to pay.
             if quote is None:
                 return f"NOTE: {url} returned {_resp.status_code}, not a 402 x402 quote; nothing spent."
+            pay_wallet = wallet
+            if mandate_file:
+                # Checked before the token is consumed, so a refusal costs no preview.
+                try:
+                    guard = _guard()
+                    guard.check(quote.get("pay_to") or "", int(quote.get("amount_raw") or 0))
+                except MandateRefused as e:
+                    return _format_mandate_refusal(e)
+                pay_wallet = _MandatedWallet(wallet, guard, ref=f"{method} {url}")
             reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
             if reason is not None:
                 return _format_refusal(reason)
@@ -331,11 +404,14 @@ def make_nano_x402_tool(
             try:
                 resp, receipt = await asyncio.to_thread(
                     request_with_payment,
-                    method, url, wallet, rpc, cap_raw,
+                    method, url, pay_wallet, rpc, cap_raw,
                     headers={"x-x402": "true"},
                     dry_run=False,
                     **req_kwargs,
                 )
+            except MandateRefused as e:
+                # Raised while building the block: nothing was signed.
+                return _format_mandate_refusal(e)
             except PaidRequestFailed as e:
                 # A signed block is in the merchant's hands with no reply: the
                 # money may have moved. Never swallow this into a generic
@@ -349,4 +425,4 @@ def make_nano_x402_tool(
     return _nano_x402_fetch
 
 
-__all__ = ["make_nano_x402_tool", "QuoteTokenStore", "NanoX402ToolError"]
+__all__ = ["make_nano_x402_tool", "QuoteTokenStore", "NanoX402ToolError", "MandateGuard", "MandateRefused"]
