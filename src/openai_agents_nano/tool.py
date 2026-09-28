@@ -134,8 +134,21 @@ def _wallet_path(wallet_path: Optional[str]) -> str:
 
 
 def _apply_cap(requested: Optional[str], default: str) -> Decimal:
-    """The applied cap is min(requested, default); a bad requested value is refused."""
-    cap = Decimal(str(default))
+    """The applied cap is min(requested, default); a bad value either side is refused."""
+    # The default is operator-supplied (default_max_xno, else X402_MAX_XNO) and is the
+    # hard limit of the two, but it used to reach Decimal() with no check: a typo
+    # ("0.01 XNO", an empty export, "nan") raised InvalidOperation straight past the
+    # caller's `except ValueError`, and a negative one got through to xno_to_raw, which
+    # is not inside any try. Check it exactly as the requested value is checked below,
+    # so a misconfigured cap is refused in text that names it.
+    try:
+        cap = Decimal(str(default))
+    except Exception:
+        raise ValueError(f"the configured default cap is not a number: {default!r}")
+    if not cap.is_finite():
+        raise ValueError(f"the configured default cap is not a finite number: {default!r}")
+    if cap < 0:
+        raise ValueError(f"the configured default cap must be >= 0: {default!r}")
     if requested is not None and str(requested).strip() != "":
         try:
             req = Decimal(str(requested))
