@@ -93,6 +93,41 @@ def make(wallet_path, mandate_path):
                                  mandate_path=mandate_path)
 
 
+def test_a_cap_refusal_does_not_burn_the_quote_token(env):
+    """A refusal that signs nothing must not cost the agent its preview.
+
+    The cap refusal ends with "Raise max_xno (or the tool's default cap) if you
+    intend to pay this endpoint". While the cap was checked AFTER
+    `tokens.reject` -- which consumes the token on success -- following that
+    instruction with the same token answered "the quote token is invalid or
+    already used", so the only advice the tool gives could not be taken. The
+    mandate check was already placed before the consume for this exact reason.
+    """
+    seller, td, wallet_path, agent = env
+    tool = make(wallet_path, None)
+
+    preview = call(tool, dry_run=True)
+    token = re.search(r"quote_token: (\S+)", preview).group(1)
+
+    # Redeem under a cap below the price: refused, and nothing signed.
+    over = call(tool, dry_run=False, quote_token=token, max_xno="0.0001")
+    assert "price is above your cap" in over
+    assert seller.signed == []
+
+    # Now do what that refusal says, with the same preview.
+    again = call(tool, dry_run=False, quote_token=token, max_xno="0.01")
+    assert "invalid or already used" not in again, (
+        "the cap refusal consumed the single-use token, so the tool's own "
+        "instruction to raise max_xno and retry cannot be followed"
+    )
+    assert seller.signed == [(PAYEE, PRICE)]
+
+    # Single use still means single use: that token is spent now.
+    third = call(tool, dry_run=False, quote_token=token, max_xno="0.01")
+    assert "invalid or already used" in third
+    assert seller.signed == [(PAYEE, PRICE)]
+
+
 def test_within_the_mandate_pays_and_is_recorded(env):
     seller, td, wallet_path, agent = env
     path = write_mandate(td, agent)
