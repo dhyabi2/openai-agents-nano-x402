@@ -56,6 +56,20 @@ pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
 
 The release also carries the sdist (`.../releases/download/v0.1.0/openai_agents_nano-0.1.0.tar.gz`).
 
+**What v0.1.0 does not include.** That release was cut before the operator mandate below, and the
+project version has not moved off `0.1.0`, so a `pip install` of the pinned wheel cannot be told
+apart from current source. The published wheel ships `__init__.py` and `tool.py` only — it does not
+carry `openai_agents_nano/mandate.py` and installs no `mandate` console script, so after the install
+above `mandate keygen` is not a command and `make_nano_x402_tool(mandate_path=...)` raises
+`TypeError: unexpected keyword argument 'mandate_path'`. Its `_apply_cap` also predates the checks
+that refuse a non-finite or negative cap, so on that wheel `X402_MAX_XNO="nan"` yields a NaN cap and
+`X402_MAX_XNO="abc"` raises `decimal.InvalidOperation` past the caller's `except ValueError`. For the
+mandate guard and those cap checks, install from source until a newer release is cut:
+
+```bash
+pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402"
+```
+
 A PyPI release is prepared but not uploaded yet — a PyPI project can only be created by a human with a
 PyPI login. `.github/workflows/publish.yml` performs the upload with no stored secret once a *pending
 trusted publisher* is registered for this project; the OIDC handshake itself is proven working, and the
