@@ -127,6 +127,26 @@ def _format_mandate_refusal(exc: MandateRefused) -> str:
     )
 
 
+def _format_mandate_unavailable(exc: BaseException) -> str:
+    """A mandate that cannot be checked refuses, in text.
+
+    `MandateGuard` raises `MandateRefused` for everything it can name, but it
+    reaches its ledger through a plain `open()`: a ledger path whose directory
+    is missing or unwritable raises `OSError` instead. That is still doubt, and
+    doubt is a refusal - an unrecordable spend must not be spent. It must also
+    not leave the tool as an exception: a refusal an agent cannot read is a
+    refusal it cannot act on.
+    """
+    return (
+        "REFUSED: your operator's mandate could not be checked, so nothing was paid.\n"
+        "  reason: mandate_unavailable\n"
+        f"  detail: {type(exc).__name__}: {exc}\n"
+        "A mandate that cannot be read or recorded refuses every payment; it never "
+        "falls back to uncapped. Nothing was signed or paid - fix the mandate or its "
+        "ledger path, or ask your operator to."
+    )
+
+
 def _wallet_path(wallet_path: Optional[str]) -> str:
     if wallet_path is not None:
         return wallet_path
@@ -399,6 +419,11 @@ def make_nano_x402_tool(
                                  f"{_mandate_raw_to_xno(int(verdict['remaining_after_raw']))} XNO would remain")
                     except MandateRefused as e:
                         text += f"\n  mandate: would REFUSE this payment ({e.reason}: {e.message})"
+                    except Exception as e:
+                        # Nothing is spent on a dry run, so the quote still stands -
+                        # but it must not read as if the mandate had allowed anything.
+                        text += (f"\n  mandate: could not be checked ({type(e).__name__}: {e});"
+                                 " a redeem will refuse until this is fixed")
                 return text
 
             # Not dry_run: two-phase redeem. The agent must hold a single-use
@@ -413,6 +438,10 @@ def make_nano_x402_tool(
                     guard.check(quote.get("pay_to") or "", int(quote.get("amount_raw") or 0))
                 except MandateRefused as e:
                     return _format_mandate_refusal(e)
+                except Exception as e:
+                    # Fail closed: an unreadable mandate or an unusable ledger path
+                    # never becomes an uncapped payment, and never an exception.
+                    return _format_mandate_unavailable(e)
                 pay_wallet = _MandatedWallet(wallet, guard, ref=f"{method} {url}")
             # The cap is checked BEFORE the token is consumed, for the same reason
             # the mandate is: a cap refusal signs nothing, broadcasts nothing and

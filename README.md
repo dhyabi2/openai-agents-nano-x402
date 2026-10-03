@@ -167,7 +167,11 @@ amount is reserved in a local ledger before signing; a refusal returns
 reason (`cap_exhausted`, `over_per_payment_max`, `payee_not_allowed`,
 `expired`, `bad_signature`, `wrong_agent`, `unreadable_mandate`, ...) and
 nothing is signed. A mandate that cannot be read or verified refuses every
-payment; it never falls back to uncapped.
+payment; it never falls back to uncapped. The same holds for the ledger itself:
+if the ledger path cannot be opened (a missing or unwritable directory), the
+redeem refuses with `mandate_unavailable` rather than spending something it
+cannot record, and a dry run says the mandate could not be checked instead of
+claiming it allows the payment.
 
 The ledger is local: it stops this tool from overspending, not someone with
 shell access who deletes it. For a hard ceiling, also fund the wallet with no
