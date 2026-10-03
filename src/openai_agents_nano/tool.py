@@ -32,7 +32,7 @@ except Exception:  # pragma: no cover - optional dependency
 
 from nano_pay.rpc import RPC
 from nano_pay.wallet import Wallet
-from nano_pay.x402 import PaidRequestFailed, request_with_payment
+from nano_pay.x402 import PaidRequestFailed, PriceCapExceeded, request_with_payment
 from nano_pay import xno_to_raw, raw_to_xno
 
 from .mandate import MandateGuard, MandateRefused, raw_to_xno as _mandate_raw_to_xno
@@ -233,6 +233,16 @@ def _format_cap_refusal(price_xno: str, cap_xno: str) -> str:
         f"  cap:   {cap_xno} XNO\n"
         "Nothing was paid. Raise max_xno (or the tool's default cap) if you "
         "intend to pay this endpoint."
+    )
+
+
+def _format_price_moved_refusal(quoted_xno: str, detail: str) -> str:
+    return (
+        "REFUSED: the endpoint asked for more than it quoted.\n"
+        f"  quoted and authorised: {quoted_xno} XNO\n"
+        f"  detail: {detail}\n"
+        "Nothing was signed and nothing was paid. Call dry_run=true again to "
+        "re-preview the new offer and mint a fresh quote_token if you still want it."
     )
 
 
@@ -468,10 +478,20 @@ def make_nano_x402_tool(
             if reason is not None:
                 return _format_refusal(reason)
 
+            # Pay at most the amount that was just quoted and authorised, not the
+            # operator's whole cap. request_with_payment RE-READS the 402 and signs
+            # whatever that read says, comparing it against the max_raw given here --
+            # so handing it cap_raw let a seller quote cheap on both dry runs, raise
+            # the price on the paying read, and be paid anything up to the cap. The
+            # quote_token check just above binds pay_to and amount, but against OUR
+            # read, never against the amount finally signed, so it did not catch
+            # this: previewed 0.001 XNO, signed 0.009 XNO, reported "PAID".
+            # price_raw is never looser than cap_raw -- the check above guarantees
+            # price_raw <= cap_raw -- so this only narrows what is accepted.
             try:
                 resp, receipt = await asyncio.to_thread(
                     request_with_payment,
-                    method, url, pay_wallet, rpc, cap_raw,
+                    method, url, pay_wallet, rpc, price_raw,
                     headers={"x-x402": "true"},
                     dry_run=False,
                     **req_kwargs,
@@ -479,6 +499,10 @@ def make_nano_x402_tool(
             except MandateRefused as e:
                 # Raised while building the block: nothing was signed.
                 return _format_mandate_refusal(e)
+            except PriceCapExceeded as e:
+                # The paying read asked for more than was quoted and authorised.
+                # feeless402 refuses before building a block, so nothing was signed.
+                return _format_price_moved_refusal(raw_to_xno(price_raw), str(e))
             except PaidRequestFailed as e:
                 # A signed block is in the merchant's hands with no reply: the
                 # money may have moved. Never swallow this into a generic
