@@ -93,6 +93,41 @@ def make(wallet_path, mandate_path):
                                  mandate_path=mandate_path)
 
 
+def test_a_cap_refusal_does_not_burn_the_quote_token(env):
+    """A refusal that signs nothing must not cost the agent its preview.
+
+    The cap refusal ends with "Raise max_xno (or the tool's default cap) if you
+    intend to pay this endpoint". While the cap was checked AFTER
+    `tokens.reject` -- which consumes the token on success -- following that
+    instruction with the same token answered "the quote token is invalid or
+    already used", so the only advice the tool gives could not be taken. The
+    mandate check was already placed before the consume for this exact reason.
+    """
+    seller, td, wallet_path, agent = env
+    tool = make(wallet_path, None)
+
+    preview = call(tool, dry_run=True)
+    token = re.search(r"quote_token: (\S+)", preview).group(1)
+
+    # Redeem under a cap below the price: refused, and nothing signed.
+    over = call(tool, dry_run=False, quote_token=token, max_xno="0.0001")
+    assert "price is above your cap" in over
+    assert seller.signed == []
+
+    # Now do what that refusal says, with the same preview.
+    again = call(tool, dry_run=False, quote_token=token, max_xno="0.01")
+    assert "invalid or already used" not in again, (
+        "the cap refusal consumed the single-use token, so the tool's own "
+        "instruction to raise max_xno and retry cannot be followed"
+    )
+    assert seller.signed == [(PAYEE, PRICE)]
+
+    # Single use still means single use: that token is spent now.
+    third = call(tool, dry_run=False, quote_token=token, max_xno="0.01")
+    assert "invalid or already used" in third
+    assert seller.signed == [(PAYEE, PRICE)]
+
+
 def test_within_the_mandate_pays_and_is_recorded(env):
     seller, td, wallet_path, agent = env
     path = write_mandate(td, agent)
@@ -192,4 +227,65 @@ def test_x402_max_xno_exported_after_import_is_honoured(env, monkeypatch):
     preview, out = buy(tool)
     assert "cap:    0.0005 XNO" in preview
     assert out.startswith("REFUSED: the endpoint's price is above your cap"), out
+    assert seller.signed == []
+
+
+# --- a mandate the guard cannot read must refuse in text, never raise ---------
+# mandate.py's contract: "Any doubt - an unreadable ledger, a ledger for another
+# mandate ... is a refusal with a machine-readable reason", and tool.py's: "The
+# return value is always agent-readable text." The ledger is opened through
+# `_Locked`, which is plain `open()`: a ledger path whose directory does not
+# exist, or one on a read-only mount, raises OSError, not MandateRefused.
+
+
+def make_with_ledger(wallet_path, mandate_path, ledger):
+    return T.make_nano_x402_tool(wallet_path=wallet_path, rpc=object(), default_max_xno="0.01",
+                                 mandate_path=mandate_path, mandate_ledger=ledger)
+
+
+def test_an_unusable_ledger_path_refuses_in_text_and_signs_nothing(env):
+    seller, td, wallet_path, agent = env
+    path = write_mandate(td, agent)
+    tool = make_with_ledger(wallet_path, path, os.path.join(td, "no-such-dir", "ledger.json"))
+
+    preview = call(tool, dry_run=True)
+    assert preview.startswith("QUOTE"), preview
+    assert "mandate: could not be checked" in preview, preview
+    assert "allows this payment" not in preview
+
+    token = re.search(r"quote_token: (\S+)", preview).group(1)
+    out = call(tool, dry_run=False, quote_token=token)
+    assert out.startswith("REFUSED"), out
+    assert "mandate_unavailable" in out
+    assert seller.signed == [], "a payment was signed while the mandate could not be checked"
+
+
+def test_a_ledger_path_under_a_regular_file_refuses_in_text(env):
+    """A different OSError than the missing directory above (NotADirectoryError),
+    and one no amount of privilege turns into a writable path."""
+    seller, td, wallet_path, agent = env
+    path = write_mandate(td, agent)
+    not_a_dir = os.path.join(td, "a-file")
+    with open(not_a_dir, "w") as fh:
+        fh.write("x")
+    tool = make_with_ledger(wallet_path, path, os.path.join(not_a_dir, "ledger.json"))
+
+    preview = call(tool, dry_run=True)
+    assert preview.startswith("QUOTE") and "could not be checked" in preview, preview
+    token = re.search(r"quote_token: (\S+)", preview).group(1)
+    out = call(tool, dry_run=False, quote_token=token)
+    assert out.startswith("REFUSED") and "mandate_unavailable" in out, out
+    assert seller.signed == []
+
+
+def test_a_mandate_file_that_is_not_json_still_refuses_in_text(env):
+    """load_signed already turns this into MandateRefused; pinned so the
+    fail-closed path stays covered for the readable-but-invalid case too."""
+    seller, td, wallet_path, agent = env
+    path = os.path.join(td, "broken.json")
+    with open(path, "w") as fh:
+        fh.write("{not json")
+    tool = make_with_ledger(wallet_path, path, os.path.join(td, "ledger.json"))
+    out = call(tool, dry_run=False, quote_token="anything")
+    assert out.startswith("REFUSED"), out
     assert seller.signed == []

@@ -127,6 +127,26 @@ def _format_mandate_refusal(exc: MandateRefused) -> str:
     )
 
 
+def _format_mandate_unavailable(exc: BaseException) -> str:
+    """A mandate that cannot be checked refuses, in text.
+
+    `MandateGuard` raises `MandateRefused` for everything it can name, but it
+    reaches its ledger through a plain `open()`: a ledger path whose directory
+    is missing or unwritable raises `OSError` instead. That is still doubt, and
+    doubt is a refusal - an unrecordable spend must not be spent. It must also
+    not leave the tool as an exception: a refusal an agent cannot read is a
+    refusal it cannot act on.
+    """
+    return (
+        "REFUSED: your operator's mandate could not be checked, so nothing was paid.\n"
+        "  reason: mandate_unavailable\n"
+        f"  detail: {type(exc).__name__}: {exc}\n"
+        "A mandate that cannot be read or recorded refuses every payment; it never "
+        "falls back to uncapped. Nothing was signed or paid - fix the mandate or its "
+        "ledger path, or ask your operator to."
+    )
+
+
 def _wallet_path(wallet_path: Optional[str]) -> str:
     if wallet_path is not None:
         return wallet_path
@@ -363,9 +383,18 @@ def make_nano_x402_tool(
             wallet.load()  # an existing funded wallet must be loaded to sign
         try:
             cap_xno = str(_apply_cap(max_xno, default_cap))
+            # xno_to_raw sat outside this guard. It refuses an amount finer than
+            # one raw (10**-30 XNO) with AmountError, and max_xno is
+            # model-supplied: a model told to "keep max_xno small" that answers
+            # "1e-40" left the tool as an exception, which the Agents SDK renders
+            # to the model as "An error occurred while running the tool. Please
+            # try again." -- a retry that cannot ever succeed, with no reason
+            # given, while "nan" one line above already refused in plain text.
+            # AmountError is a ValueError, so widening the guard to cover the
+            # conversion is the whole fix; the cap itself is unchanged.
+            cap_raw = xno_to_raw(cap_xno)
         except ValueError as e:
             return f"REFUSED: {e}"
-        cap_raw = xno_to_raw(cap_xno)
 
         req_kwargs = {}
         if json_body:
@@ -400,6 +429,11 @@ def make_nano_x402_tool(
                                  f"{_mandate_raw_to_xno(int(verdict['remaining_after_raw']))} XNO would remain")
                     except MandateRefused as e:
                         text += f"\n  mandate: would REFUSE this payment ({e.reason}: {e.message})"
+                    except Exception as e:
+                        # Nothing is spent on a dry run, so the quote still stands -
+                        # but it must not read as if the mandate had allowed anything.
+                        text += (f"\n  mandate: could not be checked ({type(e).__name__}: {e});"
+                                 " a redeem will refuse until this is fixed")
                 return text
 
             # Not dry_run: two-phase redeem. The agent must hold a single-use
@@ -414,25 +448,45 @@ def make_nano_x402_tool(
                     guard.check(quote.get("pay_to") or "", int(quote.get("amount_raw") or 0))
                 except MandateRefused as e:
                     return _format_mandate_refusal(e)
+                except Exception as e:
+                    # Fail closed: an unreadable mandate or an unusable ledger path
+                    # never becomes an uncapped payment, and never an exception.
+                    return _format_mandate_unavailable(e)
                 pay_wallet = _MandatedWallet(wallet, guard, ref=f"{method} {url}")
-            reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
-            if reason is not None:
-                return _format_refusal(reason)
-
-            # The quoted offer is authorised; enforce the cap before signing.
+            # The cap is checked BEFORE the token is consumed, for the same reason
+            # the mandate is: a cap refusal signs nothing, broadcasts nothing and
+            # spends nothing, so it must not cost the agent its preview. It used to
+            # sit after `tokens.reject`, which consumes the token on success -- so a
+            # redeem with too small a max_xno refused with
+            #
+            #     Nothing was paid. Raise max_xno (or the tool's default cap) if you
+            #     intend to pay this endpoint.
+            #
+            # and doing exactly that, with the same token, answered
+            #
+            #     REFUSED: the quote token is invalid or already used.
+            #
+            # The tool's own instruction could not be followed. Single-use still
+            # means single-use: the token is consumed only on the path that reaches
+            # a signature, and an offer that has not been paid stays redeemable
+            # until its TTL, which is what a preview is for.
             price_raw = int(quote.get("amount_raw") or 0)
             if price_raw > cap_raw:
                 return _format_cap_refusal(raw_to_xno(price_raw), cap_xno)
+
+            reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
+            if reason is not None:
+                return _format_refusal(reason)
 
             # Pay at most the amount that was just quoted and authorised, not the
             # operator's whole cap. request_with_payment RE-READS the 402 and signs
             # whatever that read says, comparing it against the max_raw given here --
             # so handing it cap_raw let a seller quote cheap on both dry runs, raise
             # the price on the paying read, and be paid anything up to the cap. The
-            # quote_token binds pay_to and amount, but it is checked against our read
-            # and never against the amount finally signed, so it did not catch this:
-            # previewed 0.001 XNO, signed 0.009 XNO, reported "PAID". price_raw is
-            # never looser than cap_raw -- the check just above guarantees
+            # quote_token check just above binds pay_to and amount, but against OUR
+            # read, never against the amount finally signed, so it did not catch
+            # this: previewed 0.001 XNO, signed 0.009 XNO, reported "PAID".
+            # price_raw is never looser than cap_raw -- the check above guarantees
             # price_raw <= cap_raw -- so this only narrows what is accepted.
             try:
                 resp, receipt = await asyncio.to_thread(

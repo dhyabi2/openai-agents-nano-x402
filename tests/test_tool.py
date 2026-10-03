@@ -135,3 +135,38 @@ def test_a_bad_configured_default_cap_reaches_the_agent_as_a_refusal():
         )
         assert out.startswith("REFUSED"), out[:200]
         assert "0.01 XNO" in out, out[:200]
+
+
+def test_sub_raw_cap_is_refused_as_text_not_an_sdk_error():
+    # max_xno is model-supplied and the tool's own description tells the model to
+    # "keep max_xno small". A cap finer than one raw (1 raw = 10**-30 XNO) cannot
+    # be converted: xno_to_raw raises AmountError. That conversion used to sit
+    # outside the `except ValueError` that already refuses "nan" and "-5", so the
+    # exception escaped and the Agents SDK handed the model "An error occurred
+    # while running the tool. Please try again." -- a retry loop with no reason,
+    # for a value no retry can fix.
+    with tempfile.TemporaryDirectory() as td:
+        tool = _make(str(Path(td) / "w.json"), default_max_xno="0.01")
+        for bad in ("0.0000000000000000000000000000005", "1e-40"):
+            out = asyncio.run(
+                invoke(tool, json.dumps({
+                    "url": "https://example.invalid/x",
+                    "max_xno": bad,
+                    "dry_run": True,
+                }))
+            )
+            assert out.startswith("REFUSED"), (bad, out)
+            assert "raw" in out, (bad, out)
+
+
+def test_sub_raw_default_cap_is_refused_as_text():
+    # The same conversion, reached from the operator's side: a default cap of
+    # half a raw is a misconfiguration, and must read as one rather than as an
+    # unexplained tool error on every call.
+    with tempfile.TemporaryDirectory() as td:
+        tool = _make(str(Path(td) / "w.json"),
+                     default_max_xno="0.0000000000000000000000000000005")
+        out = asyncio.run(
+            invoke(tool, json.dumps({"url": "https://example.invalid/x", "dry_run": True}))
+        )
+        assert out.startswith("REFUSED"), out
