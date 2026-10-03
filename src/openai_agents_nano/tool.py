@@ -414,14 +414,30 @@ def make_nano_x402_tool(
                 except MandateRefused as e:
                     return _format_mandate_refusal(e)
                 pay_wallet = _MandatedWallet(wallet, guard, ref=f"{method} {url}")
-            reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
-            if reason is not None:
-                return _format_refusal(reason)
-
-            # The quoted offer is authorised; enforce the cap before signing.
+            # The cap is checked BEFORE the token is consumed, for the same reason
+            # the mandate is: a cap refusal signs nothing, broadcasts nothing and
+            # spends nothing, so it must not cost the agent its preview. It used to
+            # sit after `tokens.reject`, which consumes the token on success -- so a
+            # redeem with too small a max_xno refused with
+            #
+            #     Nothing was paid. Raise max_xno (or the tool's default cap) if you
+            #     intend to pay this endpoint.
+            #
+            # and doing exactly that, with the same token, answered
+            #
+            #     REFUSED: the quote token is invalid or already used.
+            #
+            # The tool's own instruction could not be followed. Single-use still
+            # means single-use: the token is consumed only on the path that reaches
+            # a signature, and an offer that has not been paid stays redeemable
+            # until its TTL, which is what a preview is for.
             price_raw = int(quote.get("amount_raw") or 0)
             if price_raw > cap_raw:
                 return _format_cap_refusal(raw_to_xno(price_raw), cap_xno)
+
+            reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
+            if reason is not None:
+                return _format_refusal(reason)
 
             try:
                 resp, receipt = await asyncio.to_thread(
