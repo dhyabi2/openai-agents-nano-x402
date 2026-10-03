@@ -353,9 +353,18 @@ def make_nano_x402_tool(
             wallet.load()  # an existing funded wallet must be loaded to sign
         try:
             cap_xno = str(_apply_cap(max_xno, default_cap))
+            # xno_to_raw sat outside this guard. It refuses an amount finer than
+            # one raw (10**-30 XNO) with AmountError, and max_xno is
+            # model-supplied: a model told to "keep max_xno small" that answers
+            # "1e-40" left the tool as an exception, which the Agents SDK renders
+            # to the model as "An error occurred while running the tool. Please
+            # try again." -- a retry that cannot ever succeed, with no reason
+            # given, while "nan" one line above already refused in plain text.
+            # AmountError is a ValueError, so widening the guard to cover the
+            # conversion is the whole fix; the cap itself is unchanged.
+            cap_raw = xno_to_raw(cap_xno)
         except ValueError as e:
             return f"REFUSED: {e}"
-        cap_raw = xno_to_raw(cap_xno)
 
         req_kwargs = {}
         if json_body:
