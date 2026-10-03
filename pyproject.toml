@@ -36,7 +36,13 @@ dev = [
     "pytest",
     "feeless402",
     "openai-agents",
+    # The x402_sdk laws register the mechanism on a real x402Client. Without this
+    # they skip, and a skip proves nothing about the interface they exist to pin.
+    "x402>=2.22",
 ]
+# x402_sdk imports no x402 code -- only the caller needs the SDK -- so it is an
+# extra rather than a dependency.
+x402 = ["x402>=2.22"]
 
 [tool.ruff.lint]
 # CI runs bare `ruff check .`, which applies ruff's FULL default rule set to a repo that never adopted it:
