@@ -61,7 +61,9 @@ project version has not moved off `0.1.0`, so a `pip install` of the pinned whee
 apart from current source. The published wheel ships `__init__.py` and `tool.py` only — it does not
 carry `openai_agents_nano/mandate.py` and installs no `mandate` console script, so after the install
 above `mandate keygen` is not a command and `make_nano_x402_tool(mandate_path=...)` raises
-`TypeError: unexpected keyword argument 'mandate_path'`. Its `_apply_cap` also predates the checks
+`TypeError: unexpected keyword argument 'mandate_path'`. v0.1.0 likewise predates
+`openai_agents_nano/x402_sdk.py`, so the official-SDK section below is source-only on that wheel:
+`from openai_agents_nano import ExactNanoClientScheme` raises `ImportError` after the pinned install. Its `_apply_cap` also predates the checks
 that refuse a non-finite or negative cap, so on that wheel `X402_MAX_XNO="nan"` yields a NaN cap and
 `X402_MAX_XNO="abc"` raises `decimal.InvalidOperation` past the caller's `except ValueError`. For the
 mandate guard and those cap checks, install from source until a newer release is cut:
@@ -184,6 +186,71 @@ and nothing claimed one. One small fix: `X402_MAX_XNO` was read once at
 import, so a value exported after importing the package was ignored; it is now
 read when the tool is built.
 
+## Pay a Nano quote from the official x402 Python SDK
+
+The same payer, for the official [`x402`](https://pypi.org/project/x402/) SDK
+instead of the Agents SDK. The SDK ships client mechanisms for EVM and SVM only,
+so an `x402Client` cannot pay a `nano:mainnet` quote at all — it raises
+`SchemeNotFoundError`. `ExactNanoClientScheme` is the missing client half; the
+resource-server half is already published as
+[`x402-nano-exact`](https://pypi.org/project/x402-nano-exact/), and a Nano
+facilitator does the verifying and settling.
+
+```bash
+pip install "openai-agents-nano[x402]"
+```
+
+```python
+from nano_pay.rpc import RPC
+from nano_pay.wallet import Wallet
+from openai_agents_nano import ExactNanoClientScheme, nano_spend_controls
+from x402 import x402ClientSync
+
+wallet = Wallet("~/.nano-pay/wallet.json").load()
+rpc = RPC("https://your-node.example/rpc")        # must serve work_generate; see below
+
+client = x402ClientSync()
+client.register("nano:mainnet", ExactNanoClientScheme(wallet, rpc, max_xno="0.01"))
+client.set_spend_controls(nano_spend_controls(max_xno="0.01"))
+
+payload = client.create_payment_payload(payment_required)   # a 402 the server sent
+```
+
+The payload is `{"block": {...}}` — a Nano send block, signed locally and **not**
+broadcast, because in x402 the facilitator is what calls `process`.
+
+**Two things will bite you, and both are handled here rather than documented away.**
+
+`nano_spend_controls` is not optional decoration. The SDK runs its own spend
+controls before it dispatches, and by default allows only assets a mechanism
+reports as "default", capped at `"$1"`. A Nano quote is otherwise rejected with
+`NoMatchingRequirementsError: All payment requirements were rejected by
+spend_controls`, which never mentions Nano and so reads like a missing
+registration. This scheme deliberately does not claim XNO as a default asset:
+the SDK resolves a dollar cap against an asset's decimals, and `"$1"` at 30
+decimals is 10<sup>30</sup> raw — *exactly 1 XNO*. Letting that stand would mean
+the SDK silently treating one dollar as one XNO. `nano_spend_controls` writes the
+ceiling as an integer raw amount instead, which cannot be misread.
+
+The proof of work is generated on the calling thread, because the SDK calls the
+mechanism synchronously even from its async client. A local `work_generate` for a
+send block measured **35.2 s** here, which is 35 s of stalled event loop. Point
+`rpc` at a node or work server that answers `work_generate`, or pre-warm with
+`Wallet.prework`, and payload creation is milliseconds.
+
+Settlement is the facilitator's, so this interface gets no settle callback: call
+`scheme.settled()` or `scheme.not_settled()` after the paid request returns
+(`x402Client.on_payment_response` is the hook). Skipping it costs a stale cached
+work value, not correctness.
+
+**What it refuses, before anything is signed:** a quote on another network or in
+another asset, an `amount` that is not a positive integer in raw (a decimal is
+refused, not rescaled — on this network `"0.01"` means 0.01 *raw*, and reading it
+as XNO overpays by 10<sup>28</sup>), a payee whose checksum fails, a quote above
+the cap, and paying our own address. And after signing, it refuses to hand over a
+block whose `link` does not decode to the quoted `payTo`, or whose balance delta
+is not exactly the quoted amount. A refusal means no payment exists.
+
 ## Docs and measured comparisons
 
 - `docs/tutorial.md` — install + two-phase spendless usage + safety + verify commands.
@@ -228,7 +295,7 @@ read when the tool is built.
 ## Tests
 
 ```bash
-python -m pytest -q                          # structural
+python -m pytest -q                          # structural (includes tests/test_x402_sdk_client.py)
 python tests/fail_closed_offline.py          # L1: dry_run spends nothing, over-cap refused
 python tests/two_phase_offline.py            # L2/L3: single-use token gate + offer-change refusal
 python tests/receipt_honesty_offline.py      # L11: never headed PAID unless the ledger confirmed settlement
