@@ -151,7 +151,18 @@ def test_cap_exhaustion_refuses_before_signing(env):
 
 def test_payee_switched_after_the_preview_is_refused_at_signing(env):
     """The seller re-quotes a different payee between the token check and the
-    block: the mandate sees the payee actually being signed and refuses."""
+    block. Nothing is signed.
+
+    The refusal now comes from the payee pin rather than from the mandate: the
+    pin is applied on EVERY redeem (see tests/test_payee_moved_after_preview.py)
+    and sits outside the mandate proxy, so a switched payee is refused whether or
+    not an operator configured a mandate, and before `MandateGuard.spend` is
+    reached. The mandate's own allow-list is unchanged and still refuses a payee
+    the operator never allowed - that is
+    `test_env_var_is_read_at_construction` below (an allow-list of STRANGER
+    only, refused with `payee_not_allowed`), and `tests/test_mandate.py` on the
+    guard itself.
+    """
     seller, td, wallet_path, agent = env
     tool = make(wallet_path, write_mandate(td, agent))
     preview = call(tool, dry_run=True)
@@ -165,7 +176,8 @@ def test_payee_switched_after_the_preview_is_refused_at_signing(env):
 
     T.request_with_payment = switch_then_pay
     out = call(tool, dry_run=False, quote_token=token)
-    assert out.startswith("REFUSED: your operator's mandate") and "payee_not_allowed" in out, out
+    assert out.startswith("REFUSED: the endpoint changed where the money goes"), out
+    assert PAYEE in out and STRANGER in out, out
     assert seller.signed == []
 
 
