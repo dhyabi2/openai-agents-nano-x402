@@ -118,6 +118,46 @@ class _MandatedWallet:
         )
 
 
+class _PayeeMoved(Exception):
+    """The paying read asked for a block to an address that was never authorised."""
+
+    def __init__(self, authorised: str, asked: str):
+        self.authorised, self.asked = authorised, asked
+        super().__init__(f"authorised {authorised}, asked to sign to {asked}")
+
+
+class _PayeePinnedWallet:
+    """The wallet as request_with_payment sees it: it may only sign to the payee
+    that was quoted and authorised.
+
+    feeless402 RE-READS the 402 before it pays and signs to `offer_pay_to()` of
+    THAT read, comparing only the amount against `max_raw`
+    (`nano_pay/x402.py`: `if amount > max_raw: raise PriceCapExceeded`, then
+    `wallet.build_payment_block(rpc, pay_to, amount)`). Nothing compared the
+    payee. The quote_token binds `pay_to`, but against OUR read, never against
+    the address finally signed - the same hole the amount had, one field over:
+    preview quotes nano_A, the paying read answers nano_B for the same amount,
+    the block is signed to nano_B and the tool reports PAID.
+
+    `_MandatedWallet` already checks the signing-time payee, but only when an
+    operator mandate is configured, which is not the default. This proxy is
+    applied on every redeem and refuses before any block exists. Everything else
+    is the wallet it wraps.
+    """
+
+    def __init__(self, wallet, pay_to: str):
+        self._wallet = wallet
+        self._pay_to = str(pay_to)
+
+    def __getattr__(self, name):
+        return getattr(self._wallet, name)
+
+    def build_payment_block(self, rpc, to_addr, raw_amt):
+        if str(to_addr) != self._pay_to:
+            raise _PayeeMoved(self._pay_to, str(to_addr))
+        return self._wallet.build_payment_block(rpc, to_addr, raw_amt)
+
+
 def _format_mandate_refusal(exc: MandateRefused) -> str:
     return (
         "REFUSED: your operator's mandate does not allow this payment.\n"
@@ -241,6 +281,16 @@ def _format_price_moved_refusal(quoted_xno: str, detail: str) -> str:
         "REFUSED: the endpoint asked for more than it quoted.\n"
         f"  quoted and authorised: {quoted_xno} XNO\n"
         f"  detail: {detail}\n"
+        "Nothing was signed and nothing was paid. Call dry_run=true again to "
+        "re-preview the new offer and mint a fresh quote_token if you still want it."
+    )
+
+
+def _format_payee_moved_refusal(authorised: str, asked: str) -> str:
+    return (
+        "REFUSED: the endpoint changed where the money goes after it quoted.\n"
+        f"  quoted and authorised: {authorised}\n"
+        f"  asked to be paid:      {asked}\n"
         "Nothing was signed and nothing was paid. Call dry_run=true again to "
         "re-preview the new offer and mint a fresh quote_token if you still want it."
     )
@@ -488,6 +538,16 @@ def make_nano_x402_tool(
             # this: previewed 0.001 XNO, signed 0.009 XNO, reported "PAID".
             # price_raw is never looser than cap_raw -- the check above guarantees
             # price_raw <= cap_raw -- so this only narrows what is accepted.
+            # The amount the paying read may charge is pinned above (price_raw).
+            # The payee is pinned here, at the only moment that is the real one:
+            # the block being built. request_with_payment compares the amount of
+            # its own read against max_raw and compares the payee against nothing,
+            # so a seller could quote one address on both dry runs and name another
+            # on the paying read for the same money. This only narrows what is
+            # signed - the address allowed is exactly the one just quoted and
+            # authorised, and it is checked outside the mandate proxy so a moved
+            # payee refuses before the mandate ledger reserves anything.
+            pay_wallet = _PayeePinnedWallet(pay_wallet, quote.get("pay_to") or "")
             try:
                 resp, receipt = await asyncio.to_thread(
                     request_with_payment,
@@ -496,6 +556,9 @@ def make_nano_x402_tool(
                     dry_run=False,
                     **req_kwargs,
                 )
+            except _PayeeMoved as e:
+                # Raised while building the block: nothing was signed.
+                return _format_payee_moved_refusal(e.authorised, e.asked)
             except MandateRefused as e:
                 # Raised while building the block: nothing was signed.
                 return _format_mandate_refusal(e)
