@@ -92,7 +92,7 @@ import threading
 from decimal import Decimal, InvalidOperation
 from typing import Any, Optional
 
-from nano_pay import RAW_PER_XNO, raw_to_xno
+from nano_pay import raw_to_xno
 from nano_pay.wallet import NET
 
 SCHEME_EXACT = "exact"
@@ -101,6 +101,9 @@ ASSET_XNO = "XNO"
 
 DEFAULT_MAX_XNO = "0.01"
 """Same default ceiling as ``make_nano_x402_tool``: a cap is never absent."""
+
+_RAW_EXPONENT = 30
+"""``RAW_PER_XNO == 10 ** _RAW_EXPONENT``; pinned by a test so the two cannot desync."""
 
 _RAW_RE = re.compile(r"[1-9][0-9]*")
 _HEX64_RE = re.compile(r"[0-9A-Fa-f]{64}")
@@ -155,12 +158,41 @@ def parse_raw_amount(amount: Any) -> int:
             as_xno = None
         hint = ""
         if as_xno is not None and as_xno.is_finite() and as_xno > 0:
-            hint = f"; {text} XNO would be '{int(as_xno * RAW_PER_XNO)}'"
+            # Exactly, for the same reason as _xno_to_raw_exact: a hint that
+            # names the wrong number is worse than no hint.
+            as_raw = _xno_to_raw_exact(as_xno)
+            if as_raw is not None:
+                hint = f"; {text} XNO would be '{as_raw}'"
         raise NanoX402Refused(
             f"amount must be an integer string in raw on nano:mainnet, got {amount!r}"
             f"{hint}. Refusing rather than guessing which unit the seller meant."
         )
     raise NanoX402Refused(f"amount must be a positive integer string in raw, got {amount!r}")
+
+
+def _xno_to_raw_exact(value: Decimal) -> Optional[int]:
+    """Scale a finite ``Decimal`` of XNO to integer raw, exactly.
+
+    ``value * RAW_PER_XNO`` would go through the ambient ``decimal`` context,
+    whose default precision is 28 while a raw amount reaches 39 digits, so the
+    product is rounded before anyone can inspect it -- and the usual
+    ``to_integral_value()`` check cannot see it, because a value rounded at the
+    28th significant digit is still an integer. This mirrors
+    ``nano_pay.raw_to_xno`` in the other direction: the digits are placed by
+    integer arithmetic on the decimal tuple and never multiplied.
+
+    Returns:
+        The amount in raw, or ``None`` if ``value`` is finer than one raw.
+    """
+    _, digits, exponent = value.as_tuple()
+    mantissa = int("".join(map(str, digits)))
+    shift = int(exponent) + _RAW_EXPONENT
+    if shift >= 0:
+        return mantissa * 10 ** shift
+    scale = 10 ** -shift
+    if mantissa % scale:
+        return None
+    return mantissa // scale
 
 
 def _cap_to_raw(max_xno: Any) -> int:
@@ -171,10 +203,10 @@ def _cap_to_raw(max_xno: Any) -> int:
         raise NanoX402Refused(f"max_xno is not a number: {max_xno!r}") from exc
     if not value.is_finite() or value <= 0:
         raise NanoX402Refused(f"max_xno must be a positive, finite number of XNO: {max_xno!r}")
-    raw = value * RAW_PER_XNO
-    if raw != raw.to_integral_value():
+    raw = _xno_to_raw_exact(value)
+    if raw is None:
         raise NanoX402Refused(f"max_xno is finer than one raw (10**-30 XNO): {max_xno!r}")
-    return int(raw)
+    return raw
 
 
 def nano_spend_controls(
