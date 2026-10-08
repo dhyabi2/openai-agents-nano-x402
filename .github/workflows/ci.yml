@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    # Weekly: test install from every mirror
+    # Weekly: test install of the published release
     - cron: "0 6 * * 1"
   workflow_dispatch:
 
@@ -39,16 +39,26 @@ jobs:
           pip install -e ".[dev]"
           python3 -m pytest tests/ -q --tb=short
 
-      # Installing from the published mirror is the weekly check this workflow's
-      # own cron describes ("Weekly: test install from every mirror"). It is a
-      # statement about what is published, not about this commit, so it runs on
-      # the schedule and on a manual dispatch rather than gating every push.
-      - name: Install from GitHub Pages PEP 503 index
+      # Installing what is published is the weekly check this workflow's own cron
+      # describes. It is a statement about the published artifact, not about this
+      # commit, so it runs on the schedule and on a manual dispatch rather than
+      # gating every push.
+      #
+      # It used to install `openai-agents-nano` from a GitHub Pages PEP 503 index
+      # on an account that has since been deleted, and the package is on no other
+      # index -- README.md says so in as many words ("Until then `pip install
+      # openai-agents-nano` fails with 'No matching distribution found'"). So the
+      # step could only ever fail, the smoke test after it could never run, and
+      # the weekly signal about what is installable was permanently red instead of
+      # absent. The v0.1.0 GitHub release is the install path README.md actually
+      # publishes, and it is what is checked here; `tests/test_ci_workflow.py`
+      # pins that this URL is one the README offers, so the two cannot drift apart
+      # again.
+      - name: Install the published release (weekly)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: >
           ${{ matrix.package-manager == 'uv' && 'uv pip install --system' || 'pip install' }}
-          openai-agents-nano
-          --extra-index-url https://pandeveloper001.github.io/openai-agents-nano-x402/simple/
+          https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
 
       - name: Import and smoke-test the installed package
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
