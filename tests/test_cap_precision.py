@@ -43,6 +43,7 @@ from __future__ import annotations
 import os
 import sys
 import tempfile
+import time
 from decimal import Decimal, localcontext
 
 import pytest
@@ -175,3 +176,50 @@ def test_the_raw_exponent_matches_the_dependency_it_mirrors():
 def test_a_cap_round_trips_back_to_the_text_it_came_from(cap, expected):
     """raw_to_xno is the inverse; the pair agreeing pins both directions."""
     assert Decimal(raw_to_xno(expected)) == Decimal(cap)
+
+
+# ------------------------------- a seller-chosen exponent must not cost the payer
+#
+# The exponent of a ``Decimal`` is part of the text, and in ``parse_raw_amount``
+# the text is the seller's quote. Scaling by ``10 ** (exponent + 30)`` without a
+# bound made ``1.0e20000000`` build a 20-million-digit integer (about 20 s and
+# 180 MB) before the quote was refused. Each of these must be refused at once.
+
+HUGE_EXPONENTS = ["1.0e20000000", "1.0E+999999999", "9.9e40", "1.0e-20000000", "1.0E-999999999"]
+
+
+@pytest.mark.parametrize("amount", HUGE_EXPONENTS)
+def test_a_seller_quote_with_a_huge_exponent_is_refused_fast(amount):
+    start = time.perf_counter()
+    with pytest.raises(NanoX402Refused):
+        parse_raw_amount(amount)
+    assert time.perf_counter() - start < 1.0, amount
+
+
+@pytest.mark.parametrize("cap", HUGE_EXPONENTS + ["1e40", "1" + "0" * 40])
+def test_a_cap_with_a_huge_exponent_is_refused_fast(cap):
+    start = time.perf_counter()
+    with pytest.raises(NanoX402Refused):
+        _cap_to_raw(cap)
+    assert time.perf_counter() - start < 1.0, cap
+
+
+@pytest.mark.parametrize("cap,expected", [
+    ("1E+2", 100 * 10 ** 30),
+    ("1.0000000000000000000000000000000000000000E+2", 100 * 10 ** 30),
+    ("0.01" + "0" * 5000, 10 ** 28),
+    ("9" * 40 + "e-1", int("9" * 40) * 10 ** 29),
+    ("1e-30", 1),
+])
+@pytest.mark.parametrize("prec", [28, 40])
+def test_exponent_and_trailing_zero_forms_still_scale_exactly(cap, expected, prec):
+    """The bound refuses magnitudes, not spellings: trailing zeros are free."""
+    with localcontext() as ctx:
+        ctx.prec = prec
+        assert _cap_to_raw(cap) == expected
+
+
+@pytest.mark.parametrize("cap", ["1." + "0" * 5000 + "1", "1e-31", "3E-31"])
+def test_a_long_sub_raw_tail_is_still_refused(cap):
+    with pytest.raises(NanoX402Refused):
+        _cap_to_raw(cap)
