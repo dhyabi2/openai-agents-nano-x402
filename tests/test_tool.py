@@ -170,3 +170,82 @@ def test_sub_raw_default_cap_is_refused_as_text():
             invoke(tool, json.dumps({"url": "https://example.invalid/x", "dry_run": True}))
         )
         assert out.startswith("REFUSED"), out
+
+
+# --- an unusable wallet file is text, not an exception ------------------------
+#
+# `wallet.exists()` / `create()` / `load()` sat outside every guard in
+# `_nano_x402_fetch` and outside its lock. `load()` is
+# `json.loads(path.read_text())`, so a path that exists but is not a usable
+# wallet left the tool as an exception; the Agents SDK renders that to the model
+# as "An error occurred while running the tool. Please try again." - an unbounded
+# retry that cannot ever succeed, with no reason given, and the agent cannot even
+# preview a price. The module's own contract (tool.py docstring) is that "the
+# return value is always agent-readable text".
+
+
+def _unusable_wallet_answer(path, dry_run=True):
+    tool = _make(str(path))
+    args = json.dumps({"url": "https://example.test/paid", "dry_run": dry_run})
+    return asyncio.run(invoke(tool, args))
+
+
+def test_a_wallet_path_that_is_a_directory_answers_in_text():
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "as-a-dir.json"
+        path.mkdir()
+
+        answer = _unusable_wallet_answer(path)
+
+        assert answer.startswith("ERROR: the wallet at "), answer
+        assert "Nothing was spent" in answer
+        assert "not something to retry" in answer
+        assert str(path) in answer, "the answer names the path the operator has to fix"
+
+
+def test_a_wallet_file_that_is_not_json_answers_in_text():
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "corrupt.json"
+        path.write_text("{this is not json")
+
+        answer = _unusable_wallet_answer(path)
+
+        assert answer.startswith("ERROR: the wallet at "), answer
+        assert "Nothing was spent" in answer
+
+
+def test_an_unusable_wallet_refuses_a_redeem_the_same_way():
+    """dry_run=false too: the refusal is before any quote, so nothing signs."""
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "corrupt.json"
+        path.write_text("")
+
+        answer = _unusable_wallet_answer(path, dry_run=False)
+
+        assert answer.startswith("ERROR: the wallet at "), answer
+        assert "no payment was attempted" in answer
+
+
+def test_the_generic_sdk_retry_text_is_never_the_answer():
+    """What the model saw before: no reason, and an instruction to try again."""
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "as-a-dir.json"
+        path.mkdir()
+
+        answer = _unusable_wallet_answer(path)
+
+        assert "An error occurred while running the tool" not in answer
+        assert "Please try again" not in answer
+
+
+def test_a_usable_wallet_path_is_still_created_and_used():
+    """The control: a path that does not exist yet is still created, and a
+    pre-existing wallet is still loaded - the guard changes neither."""
+    with tempfile.TemporaryDirectory() as td:
+        fresh = Path(td) / "fresh.json"
+        answer = _unusable_wallet_answer(fresh)
+        assert not answer.startswith("ERROR: the wallet at "), answer
+        assert fresh.exists(), "a missing wallet is still created"
+
+        again = _unusable_wallet_answer(fresh)
+        assert not again.startswith("ERROR: the wallet at "), again

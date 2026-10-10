@@ -447,10 +447,31 @@ def make_nano_x402_tool(
         dry_run: bool = False,
         quote_token: Optional[str] = None,
     ) -> str:
-        if not wallet.exists():
-            wallet.create()
-        else:
-            wallet.load()  # an existing funded wallet must be loaded to sign
+        try:
+            if not wallet.exists():
+                wallet.create()
+            else:
+                wallet.load()  # an existing funded wallet must be loaded to sign
+        except Exception as e:
+            # These three lines sat outside every guard in this function, and
+            # outside the lock. `load()` is `json.loads(path.read_text())` and
+            # `create()` is a mkdir plus a write, so a path that exists but is
+            # not a usable wallet - a directory, a truncated or hand-edited file,
+            # the wrong artefact pointed at by X402_WALLET_PATH - left the tool
+            # as an exception. The Agents SDK renders that to the model as "An
+            # error occurred while running the tool. Please try again.": an
+            # unbounded retry that cannot ever succeed, with no reason given, and
+            # the agent cannot even PREVIEW a price. It is the same defect class
+            # as the `xno_to_raw` conversion below, one line further out. Nothing
+            # is signed or broadcast on this path, so nothing can have been spent.
+            return (
+                f"ERROR: the wallet at {wallet.path} cannot be used "
+                f"({type(e).__name__}: {e}). Nothing was spent and no payment was "
+                f"attempted. This is a configuration problem, not something to "
+                f"retry: point X402_WALLET_PATH (or wallet_path=) at a wallet JSON "
+                f"file, or at a path that does not exist yet so this tool can "
+                f"create one."
+            )
         try:
             cap_xno = str(_apply_cap(max_xno, default_cap))
             # xno_to_raw sat outside this guard. It refuses an amount finer than
