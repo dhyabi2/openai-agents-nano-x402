@@ -296,13 +296,27 @@ def _format_payee_moved_refusal(authorised: str, asked: str) -> str:
     )
 
 
-def _format_receipt(resp, receipt: dict, cap_xno: str) -> str:
+def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = "") -> str:
     """Render a redeem result with a truthful head line.
 
     Only a ledger-confirmed payment may be headed PAID. A block the ledger
     does not hold (settled False) or whose verdict is indeterminate must never
     read as paid: the block hash and verdict are always shown so a caller can
     check before ever paying again.
+
+    `authorised_pay_to` is the payee THIS tool quoted, minted a token against
+    and pinned `_PayeePinnedWallet` to, so it is the address the block was
+    signed to or no block exists at all. It is printed in preference to the
+    receipt's own `pay_to`, which is the merchant's echo: feeless402 sets
+    `base["pay_to"]` from its own ground truth and then merges the merchant's
+    receipt fields over it (`nano_pay/x402.py:584`), whose exclusion list - the
+    one its comment calls "never let them speak for ours" - lists `settled`,
+    `block`, `amount_xno`, `amount_raw`, `note` and `ledger` but not `pay_to`,
+    and re-asserts `amount_xno` and `block` afterwards but not `pay_to`. So a
+    merchant that returns a `payment-response` header naming any address at all
+    decided the one line of the record that says where the money went, in the
+    field the payee pinning exists to guarantee. A merchant claim that differs
+    is still shown, named as the merchant's and as untrusted.
     """
     settled = receipt.get("settled")
     if settled is True:
@@ -315,11 +329,17 @@ def _format_receipt(resp, receipt: dict, cap_xno: str) -> str:
         headline,
         f"  status:    {resp.status_code}",
         f"  amount:    {receipt.get('amount_xno')} XNO  (cap {cap_xno})",
-        f"  pay_to:    {receipt.get('pay_to')}",
+        f"  pay_to:    {authorised_pay_to or receipt.get('pay_to')}",
         f"  block:     {receipt.get('block')}",
         f"  settled:   {receipt.get('settled')}",
         f"  ledger:    {receipt.get('ledger')}",
     ]
+    claimed = str(receipt.get("pay_to") or "")
+    if authorised_pay_to and claimed and claimed != authorised_pay_to:
+        lines.append(
+            f"  merchant claims pay_to: {claimed} - UNTRUSTED, and not where this "
+            f"payment went; the block above was signed to {authorised_pay_to}"
+        )
     note = receipt.get("note")
     if note:
         lines.append(f"  note:      {note}")
@@ -574,7 +594,8 @@ def make_nano_x402_tool(
             except Exception as e:
                 return f"ERROR: payment or request failed: {e}"
             receipt = receipt or {}
-            return _format_receipt(resp, receipt, cap_xno)
+            return _format_receipt(resp, receipt, cap_xno,
+                                   authorised_pay_to=str(quote.get("pay_to") or ""))
 
     return _nano_x402_fetch
 
