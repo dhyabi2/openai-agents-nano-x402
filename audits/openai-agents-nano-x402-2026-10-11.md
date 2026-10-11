@@ -11,8 +11,8 @@ An independent review showed that was wrong; this version says what was found
 and what changed.
 
 The suite as CI runs it, from a clean venv: `pip install -e '.[dev]'`, then
-`python3 -m pytest tests/ -q --tb=short`: **295 passed, 0 skipped** (289 before
-this change, plus the 6 tests in `tests/test_journal_replay_payee.py`). `[dev]`
+`python3 -m pytest tests/ -q --tb=short`: **309 passed, 0 skipped** (289 before
+this change, plus the 20 tests in `tests/test_journal_replay_payee.py`). `[dev]`
 installs the official `x402` SDK, so the four `x402_sdk` laws that skip under a
 bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
 
@@ -35,27 +35,51 @@ bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
   `tool.py` now:
   - reads the journal before the paying request (read-only, as a file:
     feeless402 has no API for it, and nothing in feeless402 is patched) and
-    **refuses before anything is sent** when a live entry for the same method and
-    URL holds a block whose `link_as_account` is not the authorised payee. The
-    refusal names that block hash and payee and tells the agent not to pay again.
+    **refuses before anything is sent** when a live entry that feeless402 could
+    re-present for this request holds a block paying another account. "Could
+    re-present" is feeless402's own key: same method, URL and request body
+    (recomputed with its `_journal_key` and `_request_fingerprint`), and an
+    amount no higher than the price authorised. An entry for another body or a
+    higher amount does not refuse. The refusal names the block hash, the journal
+    file and the entry key with its expiry, tells the agent not to pay again and
+    tells the operator how to clear it.
   - after the payment, counts the blocks the pinned wallet actually built. If it
-    built none and the journal held an entry for this request, the block was
-    re-presented. Its payee is taken from the journalled block, or failing that
-    from feeless402's reported `pay_to`. If that is not the authorised payee, the
-    result is headed **PAYEE MISMATCH**. It names the address actually paid,
-    says that address is not the authorised payee, and, under a mandate, says
-    the block was not checked against the allow-list in this call. It is never
-    headed PAID and never says "signed to A".
+    built none and a receipt came back, the block was re-presented, whether or
+    not the journal held the entry when it was read before the call. Its payee is
+    taken only from the signed block in the journal (`link`, or
+    `link_as_account`), read before the call, at the send and after the call,
+    matched by the block hash feeless402 reports. If that is the authorised
+    account the result reads PAID with a `re-sent:` line; another account is
+    headed **PAYEE MISMATCH**; a block that cannot be read is headed **PAYEE
+    UNVERIFIED**. The receipt's `pay_to` never confirms a payee, because the
+    merchant's payment-response can overwrite it; it is shown only as unproven.
+    Under a mandate, both say the block was not checked against the allow-list
+    in this call. Neither is headed PAID or says "signed to A".
   - on a re-presentation the merchant does not answer (`PaidRequestFailed`),
     prints feeless402's `pay_to` and flags a mismatch the same way.
+  - compares payees as accounts, so `xrb_X` and `nano_X` are the same payee.
 
   Re-presenting the same block to the same payee is the journal doing its job,
   and still reads PAID. `tests/test_journal_replay_payee.py` drives the real
   `request_with_payment` and its real journal; only the network, the node and
-  the signature are stubbed. Its four mismatch tests fail on the previous
-  `tool.py`, and its two controls pass on both versions. Limitation: a second
-  process writing the same journal between the tool's read and the send is not
-  covered.
+  the signature are stubbed.
+
+  Limitation: the tool's lock is per tool instance. Another tool instance in
+  the same process, another process, or the `feeless402` CLI sharing the wallet
+  file can write a journal entry between the tool's pre-send read and
+  feeless402's. That block is then sent; the tool cannot stop it, and reports it
+  as PAYEE MISMATCH or PAYEE UNVERIFIED instead of PAID.
+
+  **Correction to the first version of this fix (`96094c4`).** It said the
+  result was "never headed PAID" and that only "a second process" was not
+  covered. Neither held: the post-payment check ran only when the journal held
+  an entry before the call, so an entry written by another tool instance in the
+  same process (or another process) during the paying read was reported as PAID
+  to the authorised payee; it fell back to the receipt's `pay_to`, which the
+  merchant can overwrite; it compared `xrb_`/`nano_` spellings as different
+  payees; and its pre-send check matched method and URL only, so an entry for
+  another body or an amount above the price refused every request to that URL
+  for 24 hours with no way out named. All four are fixed as described above.
 
 ## Corrected claims
 

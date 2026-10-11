@@ -61,20 +61,25 @@ class Resp:
         return {}
 
 
-def _payment_required(pay_to):
+def _payment_required(pay_to, amount=PRICE):
     q = {"x402Version": 2, "accepts": [{"scheme": "exact", "network": "nano:mainnet",
-                                        "asset": "XNO", "amount": str(PRICE), "payTo": pay_to}]}
+                                        "asset": "XNO", "amount": str(amount), "payTo": pay_to}]}
     return {"payment-required": base64.b64encode(json.dumps(q).encode()).decode()}
 
 
 class Seller:
     """An x402 seller on the wire. `quote_for(n)` names the payee of the n-th
-    unpaid read; `reply` is False to drop every paid request (no reply)."""
+    unpaid read and `amount_for(n)` its price; `reply` is False to drop every
+    paid request (no reply); `receipt` is a payment-response the merchant sends
+    with a paid reply; `on_read(n)` runs on the n-th unpaid read."""
 
     def __init__(self):
         self.reads = 0
         self.quote_for = lambda n: A
+        self.amount_for = lambda n: PRICE
+        self.on_read = lambda n: None
         self.reply = True
+        self.receipt = None
         self.paid_headers = []
 
     def request(self, method, url, headers=None, **kw):
@@ -83,9 +88,13 @@ class Seller:
             self.paid_headers.append(headers["X-PAYMENT"])
             if not self.reply:
                 raise requests.ConnectionError("merchant did not reply")
-            return Resp(200, {}, "the resource")
+            hdrs = {}
+            if self.receipt is not None:
+                hdrs["payment-response"] = base64.b64encode(json.dumps(self.receipt).encode()).decode()
+            return Resp(200, hdrs, "the resource")
         self.reads += 1
-        return Resp(402, _payment_required(self.quote_for(self.reads)))
+        self.on_read(self.reads)
+        return Resp(402, _payment_required(self.quote_for(self.reads), self.amount_for(self.reads)))
 
 
 class RPC:
@@ -122,10 +131,10 @@ def _call(tool, **args):
     return asyncio.run(tool.on_invoke_tool(ctx, raw))
 
 
-def _buy(tool):
-    preview = _call(tool, dry_run=True)
+def _buy(tool, **args):
+    preview = _call(tool, dry_run=True, **args)
     token = re.search(r"quote_token: (\S+)", preview).group(1)
-    return preview, _call(tool, dry_run=False, quote_token=token)
+    return preview, _call(tool, dry_run=False, quote_token=token, **args)
 
 
 def _journal(wallet_path):
@@ -133,16 +142,18 @@ def _journal(wallet_path):
     return json.loads(p.read_text()) if p.exists() else {}
 
 
-def _journal_a_lost_payment_to(seller, tool, payee, wallet_path):
+def _journal_a_lost_payment_to(seller, tool, payee, wallet_path, amount=PRICE, **args):
     """An earlier, authorised redeem to `payee` whose reply never came back:
     feeless402 keeps the signed block in its journal to re-present it."""
     seller.quote_for = lambda n: payee
+    seller.amount_for = lambda n: amount
     seller.reply = False
-    _, out = _buy(tool)
+    _, out = _buy(tool, **args)
     assert out.startswith("PAYMENT OUTCOME UNKNOWN"), out
     entries = list(_journal(wallet_path).values())
     assert len(entries) == 1, entries
     seller.reply = True
+    seller.amount_for = lambda n: PRICE
     seller.paid_headers.clear()
     return entries[0]["hash"]
 
@@ -179,6 +190,12 @@ def test_a_block_journalled_to_another_payee_is_refused_before_anything_is_sent(
     assert out.startswith("REFUSED: a payment for this same request is already signed to a DIFFERENT payee"), out
     assert B in out and old_block in out, out
     assert "PAID" not in out
+    # The operator is told exactly what to clear, and the agent not to pay.
+    journal_file = pathlib.Path(wallet_path).parent / "pending-payments.json"
+    (key,) = _journal(wallet_path).keys()
+    assert f"journal file:        {journal_file}" in out, out
+    assert f'journal entry:       "{key}"' in out, out
+    assert "do NOT pay again" in out and "remove only the journal entry named above" in out, out
     assert seller.paid_headers == [], "the journalled block to B was re-sent"
     assert built == []
 
@@ -186,7 +203,10 @@ def test_a_block_journalled_to_another_payee_is_refused_before_anything_is_sent(
 # --- the check after the payment ---------------------------------------------
 
 
-def test_a_re_presented_block_to_another_payee_is_never_reported_as_paid_to_the_authorised_one(env):
+def test_a_re_presented_block_whose_payee_cannot_be_read_is_unverified_never_paid(env):
+    """The pre-send check cannot see the journalled block's payee, so the block
+    to B goes out. The receipt's pay_to (B here) is not proof of the payee - a
+    merchant can overwrite it - so the result is PAYEE UNVERIFIED."""
     seller, built, wallet_path = env
     tool = _tool(wallet_path)
     old_block = _journal_a_lost_payment_to(seller, tool, B, wallet_path)
@@ -197,15 +217,16 @@ def test_a_re_presented_block_to_another_payee_is_never_reported_as_paid_to_the_
     # feeless402 really did re-present the old block to B, without building one.
     assert len(seller.paid_headers) == 1 and built == []
     assert not out.startswith("PAID"), out
-    assert out.startswith("PAYEE MISMATCH"), out
-    assert f"block actually pays: {B}" in out, out
+    assert out.startswith("PAYEE UNVERIFIED"), out
     assert f"authorised pay_to:   {A}" in out, out
+    assert "block actually pays: UNKNOWN" in out, out
+    assert f"reported pay_to:     {B}" in out and "not proof of the payee" in out, out
     assert old_block in out
     assert f"signed to {A}" not in out, out
     assert "pay_to:    " + A not in out, out
 
 
-def test_under_a_mandate_the_mismatch_says_the_allow_list_was_not_checked(env, tmp_path):
+def test_under_a_mandate_an_unverified_block_says_the_allow_list_was_not_checked(env, tmp_path):
     seller, built, wallet_path = env
     agent = Wallet(pathlib.Path(wallet_path))
     agent.load()
@@ -221,7 +242,7 @@ def test_under_a_mandate_the_mismatch_says_the_allow_list_was_not_checked(env, t
     built.clear()
     _preview_a_then_pay_read_b(seller)
     _, out = _buy(tool)
-    assert out.startswith("PAYEE MISMATCH"), out
+    assert out.startswith("PAYEE UNVERIFIED"), out
     assert "NOT checked against your operator's mandate" in out, out
 
 
@@ -251,6 +272,7 @@ def test_a_re_presented_block_to_the_authorised_payee_still_reads_paid(env):
     _, out = _buy(tool)
     assert out.startswith("PAID"), out
     assert f"pay_to:    {A}" in out and old_block in out, out
+    assert "re-sent:" in out, out
     assert len(seller.paid_headers) == 1 and built == []
 
 
@@ -260,4 +282,264 @@ def test_an_ordinary_payment_through_the_real_client_reads_paid(env):
     _, out = _buy(tool)
     assert out.startswith("PAID"), out
     assert built == [(A, PRICE)]
+    assert "re-sent" not in out, out
     assert _journal(wallet_path) == {}
+
+
+# --- review round 2 ------------------------------------------------------------
+
+
+def _sent_payee(header):
+    return json.loads(base64.b64decode(header))["payload"]["block"]["link_as_account"]
+
+
+def _move_journal_aside(wallet_path):
+    jp = pathlib.Path(wallet_path).parent / "pending-payments.json"
+    saved = jp.read_text()
+    jp.unlink()
+    return jp, saved
+
+
+def _land_journal_on_paying_read(seller, jp, saved):
+    """Another tool instance or process sharing the wallet writes its journal
+    entry to B after this tool's pre-send check, during the paying read."""
+    start = seller.reads
+
+    def on_read(n):
+        if n - start == 3:
+            jp.write_text(saved)
+
+    seller.on_read = on_read
+    seller.quote_for = lambda n: A if n - start <= 2 else B
+
+
+def test_an_entry_written_during_the_paying_read_is_a_payee_mismatch_not_paid(env):
+    """P2: the journal entry to B appears after the pre-send check. The block to
+    B is re-presented; the tool must name B, from the signed block itself."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    old_block = _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    jp, saved = _move_journal_aside(wallet_path)
+    built.clear()
+    _land_journal_on_paying_read(seller, jp, saved)
+    _, out = _buy(tool)
+    assert built == [] and len(seller.paid_headers) == 1
+    assert _sent_payee(seller.paid_headers[0]) == B
+    assert not out.startswith("PAID"), out
+    assert out.startswith("PAYEE MISMATCH"), out
+    assert f"block actually pays: {B}" in out and old_block in out, out
+    assert f"signed to {A}" not in out, out
+
+
+def test_an_unreadable_entry_written_during_the_paying_read_is_unverified(env):
+    """P2 with the late entry's payee unreadable: nothing positively confirms
+    the payee, so the tool says so instead of PAID."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    _strip_payee_from_journalled_header(wallet_path)
+    jp, saved = _move_journal_aside(wallet_path)
+    built.clear()
+    _land_journal_on_paying_read(seller, jp, saved)
+    seller.receipt = {"pay_to": A, "status": "ok"}
+    _, out = _buy(tool)
+    assert built == [] and len(seller.paid_headers) == 1
+    assert out.startswith("PAYEE UNVERIFIED"), out
+    assert f"signed to {A}" not in out, out
+
+
+def test_a_merchant_receipt_naming_the_authorised_payee_does_not_confirm_it(env):
+    """P1: the journalled header's payee is unreadable and the merchant's
+    payment-response says pay_to=A while the block sent pays B. The merchant's
+    word never confirms the payee."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    _strip_payee_from_journalled_header(wallet_path)
+    built.clear()
+    _preview_a_then_pay_read_b(seller)
+    seller.receipt = {"pay_to": A, "status": "ok"}
+    _, out = _buy(tool)
+    assert built == [] and len(seller.paid_headers) == 1
+    sent = json.loads(base64.b64decode(seller.paid_headers[0]))
+    assert sent["accepted"]["payTo"] == B
+    assert not out.startswith("PAID"), out
+    assert out.startswith("PAYEE UNVERIFIED"), out
+    assert f"signed to {A}" not in out, out
+    assert f"reported pay_to:     {A}" in out and "not proof" in out, out
+
+
+def test_the_payee_is_matched_by_the_block_hash_not_any_entry(env):
+    """A live entry for another request that pays A must not vouch for the
+    unreadable block to B that was actually re-presented."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    _strip_payee_from_journalled_header(wallet_path)
+    # An unrelated, readable entry to A for another URL.
+    other = T._x402_module._journal_key("GET", URL + "/other", A, PRICE)
+    j = _journal(wallet_path)
+    (entry,) = j.values()
+    payload = json.loads(base64.b64decode(entry["header"]))
+    payload["payload"]["block"]["link_as_account"] = A
+    j[other] = dict(entry, url=URL + "/other", hash="%064X" % 0xA11CE,
+                    header=base64.b64encode(json.dumps(payload).encode()).decode())
+    (pathlib.Path(wallet_path).parent / "pending-payments.json").write_text(json.dumps(j))
+    built.clear()
+    _preview_a_then_pay_read_b(seller)
+    _, out = _buy(tool)
+    assert built == [] and len(seller.paid_headers) == 1
+    assert not out.startswith("PAID"), out
+    assert out.startswith("PAYEE UNVERIFIED"), out
+
+
+def test_xrb_and_nano_spellings_of_the_authorised_payee_are_the_same_account(env):
+    """A block journalled to xrb_A is a block to A: no refusal, and when it is
+    re-presented it reads PAID."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    xa = "xrb_" + A[len("nano_"):]
+    old_block = _journal_a_lost_payment_to(seller, tool, xa, wallet_path)
+    built.clear()
+    start = seller.reads
+    seller.quote_for = lambda n: A if n - start <= 2 else xa
+    _, out = _buy(tool)
+    assert not out.startswith("REFUSED"), out
+    assert built == [] and len(seller.paid_headers) == 1
+    assert out.startswith("PAID"), out
+    assert old_block in out and "re-sent:" in out, out
+    assert "merchant claims pay_to" not in out, out
+
+
+def test_xrb_spelling_with_no_reply_is_not_a_mismatch(env):
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    xa = "xrb_" + A[len("nano_"):]
+    _journal_a_lost_payment_to(seller, tool, xa, wallet_path)
+    start = seller.reads
+    seller.quote_for = lambda n: A if n - start <= 2 else xa
+    seller.reply = False
+    _, out = _buy(tool)
+    assert out.startswith("PAYMENT OUTCOME UNKNOWN"), out
+    assert f"pay_to:    {xa}" in out, out
+    assert "PAYEE MISMATCH" not in out, out
+
+
+def test_an_entry_for_a_different_body_does_not_refuse(env):
+    """feeless402 keys its journal on the request body too: a block for another
+    body is never re-presented for this one, so it must not block it."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path, method="POST", json_body='{"q": 1}')
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool, method="POST", json_body='{"q": 2}')
+    assert out.startswith("PAID"), out
+    assert built == [(A, PRICE)] and _sent_payee(seller.paid_headers[0]) == A
+
+
+def test_an_entry_for_the_same_body_to_another_payee_is_refused(env):
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    old_block = _journal_a_lost_payment_to(seller, tool, B, wallet_path, method="POST", json_body='{"q": 1}')
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool, method="POST", json_body='{"q": 1}')
+    assert out.startswith("REFUSED: a payment for this same request"), out
+    assert old_block in out and seller.paid_headers == [] and built == []
+
+
+def test_an_entry_above_this_price_does_not_refuse(env):
+    """feeless402 refuses an amount above the price authorised before it looks
+    in the journal, so a block for more than this redeem's price is never
+    re-presented here."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path, amount=PRICE + 1)
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool)
+    assert out.startswith("PAID"), out
+    assert built == [(A, PRICE)]
+
+
+def test_an_entry_at_this_price_to_the_other_payee_is_refused(env):
+    """The control for the one above: the same entry at the authorised price
+    could be re-presented, so it refuses."""
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path, amount=PRICE)
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool)
+    assert out.startswith("REFUSED: a payment for this same request"), out
+
+
+@pytest.fixture
+def clock(monkeypatch):
+    now = [1_900_000_000.0]
+    monkeypatch.setattr(T.time, "time", lambda: now[0])
+    return now
+
+
+def _age_journal(wallet_path, t):
+    p = pathlib.Path(wallet_path).parent / "pending-payments.json"
+    j = json.loads(p.read_text())
+    for entry in j.values():
+        entry["t"] = t
+    p.write_text(json.dumps(j))
+
+
+def test_an_entry_exactly_at_its_ttl_has_expired_and_does_not_refuse(env, clock):
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    _age_journal(wallet_path, clock[0] - X.JOURNAL_TTL_S)
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool)
+    assert out.startswith("PAID"), out
+    assert built == [(A, PRICE)]
+
+
+def test_an_entry_just_inside_its_ttl_still_refuses_and_says_when_it_expires(env, clock):
+    seller, built, wallet_path = env
+    tool = _tool(wallet_path)
+    _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    _age_journal(wallet_path, clock[0] - X.JOURNAL_TTL_S + 60)
+    built.clear()
+    seller.quote_for = lambda n: A
+    _, out = _buy(tool)
+    assert out.startswith("REFUSED: a payment for this same request"), out
+    import time as _time
+    expires = _time.strftime("%Y-%m-%d %H:%M:%S UTC", _time.gmtime(clock[0] + 60))
+    assert f"(expires {expires})" in out, out
+
+
+def test_the_pin_counts_the_blocks_it_builds():
+    calls = []
+
+    class Inner:
+        def build_payment_block(self, rpc, to, amt):
+            calls.append(to)
+            return {"link_as_account": to}, "H", "root"
+
+    pinned = T._PayeePinnedWallet(Inner(), A)
+    assert pinned.built == 0
+    pinned.build_payment_block(None, A, PRICE)
+    pinned.build_payment_block(None, A, PRICE)
+    assert pinned.built == 2
+    with pytest.raises(T._PayeeMoved):
+        pinned.build_payment_block(None, B, PRICE)
+    assert pinned.built == 2 and calls == [A, A]
+
+
+def test_the_journalled_payee_comes_from_the_signed_link_when_present():
+    link_b = M.public_key_from_address(B).hex().upper()
+    hdr = lambda block: base64.b64encode(json.dumps({"payload": {"block": block}}).encode()).decode()
+    assert T._journalled_block(hdr({"link": link_b}))[0] == B
+    assert T._journalled_block(hdr({"link": link_b, "link_as_account": B}))[0] == B
+    # A link_as_account that disagrees with the signed link is not believed.
+    assert T._journalled_block(hdr({"link": link_b, "link_as_account": A}))[0] is None
+    assert T._journalled_block(hdr({}))[0] is None
+    assert T._journalled_block("not base64 json") == (None, None)

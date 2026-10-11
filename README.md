@@ -119,8 +119,44 @@ result = Runner.run_sync(agent, "Fetch https://api.example.com/report")
     consumed (single-use), then feeless402 signs locally, retries with the
     payment header, and verifies on the ledger before the tool returns a
     receipt (status, body, amount_xno, pay_to, block, settled, ledger, note).
-- Payments are serialised behind an `asyncio.Lock`: Nano blocks are stateful
-  and non-replayable, so one wallet never sends concurrently.
+- Payments made through one tool instance are serialised behind that
+  instance's `asyncio.Lock`: Nano blocks are stateful and non-replayable. The
+  lock does not reach other tool instances (even in the same process), other
+  processes, or the `feeless402` CLI using the same wallet file; nothing here
+  stops those from paying at the same time (see "Re-presented blocks" below).
+- **Re-presented blocks.** feeless402 journals every signed block beside the
+  wallet (`pending-payments.json`) and, when a paying read matches an entry's
+  key (method, URL, `pay_to`, amount, request body), re-sends that stored block
+  without signing a new one, so this tool's payee pin and the mandate check
+  never see it. The tool therefore:
+  - before paying, refuses with `REFUSED: a payment for this same request is
+    already signed to a DIFFERENT payee.` when a live entry that feeless402 could
+    re-present for this request (same method, URL and body, an amount no higher
+    than the price authorised) holds a block paying another account. The refusal
+    names the block hash, the journal file and the entry's key with its expiry
+    time; it tells the agent not to pay again and the operator how to clear it
+    (check the block on the ledger, then delete that one key from the file, or
+    wait for it to expire after 24 hours). Entries for another body or above
+    this price do not refuse. `xrb_` and `nano_` spellings of the same account
+    are the same payee everywhere.
+  - after paying, when the block sent was not signed in this call, takes its
+    payee only from the signed block in the journal (read before, at and after
+    the send, matched by block hash) - never from the receipt's `pay_to`, which
+    the merchant's `payment-response` can overwrite. If that block pays the
+    authorised account, the result is PAID with a `re-sent:` line. If it pays
+    another account, it is headed `PAYEE MISMATCH`. If it cannot be read, it is
+    headed `PAYEE UNVERIFIED` and shows the reported `pay_to` only as unproven.
+    Neither is ever headed PAID.
+  - when the merchant does not reply, `PAYMENT OUTCOME UNKNOWN` carries a
+    `pay_to:` line (feeless402's own record of the block's payee, with no
+    merchant receipt merged in) and a `PAYEE MISMATCH:` line if it is not the
+    authorised account.
+
+  Limit: the pre-send check reads the journal before feeless402 does, so an
+  entry another instance, process or the CLI writes in between is not refused;
+  that block is still sent, and only the result says so (`PAYEE MISMATCH`, or
+  `PAYEE UNVERIFIED` when the entry cannot be read back). Run one tool instance
+  per wallet file if that matters.
 - Both a brand-new and an **existing funded wallet** work: the tool creates a
   fresh wallet file on first use and *loads* one that already exists, so an
   imported or topped-up `~/.nano-pay/wallet.json` signs with its held balance
@@ -289,7 +325,9 @@ is not exactly the quoted amount. A refusal means no payment exists.
   as NOT PAID / UNCONFIRMED with its block hash; and if a merchant never
   replies after the block is signed, the tool surfaces the signed block and
   verdict with a "re-present the SAME block, do not re-pay blind" action —
-  never a generic failure that invites a double payment.
+  never a generic failure that invites a double payment. A block this call did
+  not sign is PAID only when the signed block in the payer's own journal pays
+  the authorised account; otherwise it is PAYEE MISMATCH or PAYEE UNVERIFIED.
 - Self-custodied: your seed stays on disk; nothing here holds your funds.
 
 ## Tests
