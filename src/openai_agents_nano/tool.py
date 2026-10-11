@@ -17,6 +17,8 @@ The return value is always agent-readable text.
 from __future__ import annotations
 
 import asyncio
+import base64
+import json
 import os
 import secrets
 import time
@@ -34,6 +36,7 @@ from nano_pay.rpc import RPC
 from nano_pay.wallet import Wallet
 from nano_pay.x402 import PaidRequestFailed, PriceCapExceeded, request_with_payment
 from nano_pay import xno_to_raw, raw_to_xno
+import nano_pay.x402 as _x402_module
 
 from .mandate import MandateGuard, MandateRefused, raw_to_xno as _mandate_raw_to_xno
 
@@ -148,6 +151,11 @@ class _PayeePinnedWallet:
     def __init__(self, wallet, pay_to: str):
         self._wallet = wallet
         self._pay_to = str(pay_to)
+        # How many blocks THIS proxy built, all of them to `_pay_to`. Zero after
+        # a redeem that returned a receipt means feeless402 did not sign in this
+        # call: it re-presented a block from its payment journal, and neither
+        # this pin nor the mandate proxy was ever consulted for it.
+        self.built = 0
 
     def __getattr__(self, name):
         return getattr(self._wallet, name)
@@ -155,7 +163,118 @@ class _PayeePinnedWallet:
     def build_payment_block(self, rpc, to_addr, raw_amt):
         if str(to_addr) != self._pay_to:
             raise _PayeeMoved(self._pay_to, str(to_addr))
-        return self._wallet.build_payment_block(rpc, to_addr, raw_amt)
+        out = self._wallet.build_payment_block(rpc, to_addr, raw_amt)
+        self.built += 1
+        return out
+
+
+# --- feeless402's payment journal ---------------------------------------------
+# feeless402 (0.2.13) writes every signed block to `pending-payments.json` beside
+# the wallet before sending it, keyed by (method, url, pay_to, amount, body). When
+# a later paying read names a (pay_to, amount) that has an entry, it re-sends that
+# stored block WITHOUT calling `wallet.build_payment_block` - so `_PayeePinnedWallet`
+# and `_MandatedWallet` never see it. Preview quotes A, the paying read names B, a
+# block to B from an earlier unanswered redeem is journalled: that block to B is
+# re-presented, and nothing in this tool was asked.
+#
+# The journal is read here, read-only, as a file: feeless402 exposes no API for
+# it, and this tool does not patch feeless402. A journal that cannot be read
+# yields an empty view here; feeless402 itself refuses to pay on a journal it
+# cannot read, so no replay can follow from that case.
+_JOURNAL_FILE = "pending-payments.json"
+
+
+def _journal_entries(wallet, method: str, url: str) -> list:
+    """Live journal entries for this (method, url): [(block_hash, payee_or_None)]."""
+    try:
+        path = Path(getattr(wallet, "path", "") or "").parent / _JOURNAL_FILE
+        if not path.is_file():
+            return []
+        data = json.loads(path.read_text())
+        if not isinstance(data, dict):
+            return []
+    except Exception:
+        return []
+    ttl = float(getattr(_x402_module, "JOURNAL_TTL_S", 24 * 3600))
+    now = time.time()
+    out = []
+    for entry in data.values():
+        try:
+            if not isinstance(entry, dict) or now - float(entry.get("t", 0)) >= ttl:
+                continue
+            if str(entry.get("url")) != url or str(entry.get("method", "")).upper() != method.upper():
+                continue
+            out.append((str(entry.get("hash") or "").upper(), _journalled_payee(entry.get("header"))))
+        except Exception:
+            continue
+    return out
+
+
+def _journalled_payee(header) -> Optional[str]:
+    """The payee of a journalled block: `link_as_account` in the signed block the
+    stored payment header carries. None when the header cannot be read."""
+    try:
+        payload = json.loads(base64.b64decode(str(header)).decode())
+        payee = payload["payload"]["block"]["link_as_account"]
+        return str(payee) if str(payee).startswith(("nano_", "xrb_")) else None
+    except Exception:
+        return None
+
+
+def _format_journalled_elsewhere_refusal(authorised: str, pending: list) -> str:
+    lines = [
+        "REFUSED: a payment for this same request is already signed to a DIFFERENT payee.",
+        f"  you authorised:        {authorised}",
+    ]
+    for block_hash, payee in pending:
+        lines.append(f"  pending signed block:  {block_hash} to {payee}")
+    lines.append(
+        "Nothing new was signed and nothing was sent. feeless402 keeps that earlier "
+        "block in its payment journal and would re-present it, unchecked, if the "
+        "merchant names that payee again - and it may already be on the ledger. Do "
+        "NOT pay again: check that block hash on the ledger or ask the merchant "
+        "about it first. The entry expires from the journal after 24 hours."
+    )
+    return "\n".join(lines)
+
+
+def _format_payee_mismatch(resp, receipt: dict, cap_xno: str, authorised: str,
+                           actual: str, source: str, mandated: bool) -> str:
+    """A receipt for a block this call did not sign, to a payee it did not authorise."""
+    settled = receipt.get("settled")
+    state = {True: "the ledger HOLDS this block - money moved",
+             False: "the ledger does not hold this block"}.get(
+        settled, "verdict indeterminate - check the block hash")
+    lines = [
+        "PAYEE MISMATCH (Nano x402) - NOT a payment to the payee you authorised:",
+        f"  authorised pay_to:   {authorised}",
+        f"  block actually pays: {actual}  ({source})",
+        f"  block:     {receipt.get('block')}",
+        f"  amount:    {receipt.get('amount_xno')} XNO  (cap {cap_xno})",
+        f"  settled:   {settled}  ({state})",
+        f"  ledger:    {receipt.get('ledger')}",
+        f"  status:    {resp.status_code}",
+        "  why:       feeless402 re-presented a block signed in an EARLIER call from its "
+        "payment journal; it was not signed in this call, so this tool's payee pin "
+        "never checked it.",
+    ]
+    if mandated:
+        lines.append(
+            "  mandate:   this block was NOT checked against your operator's mandate "
+            f"allow-list in this call (the check ran against {authorised})."
+        )
+    lines.append(
+        "  action:    do NOT pay again and do NOT treat this as paid to the authorised "
+        "payee; check the block hash on the ledger and report it to your operator."
+    )
+    lines.append("  body:")
+    try:
+        body = resp.text
+    except Exception:
+        body = ""
+    body = (body or "").strip()
+    lines.append(body[:4000] if body else "  (empty response body)")
+    return "\n".join(lines)
 
 
 def _format_mandate_refusal(exc: MandateRefused) -> str:
@@ -305,9 +424,12 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
     check before ever paying again.
 
     `authorised_pay_to` is the payee THIS tool quoted, minted a token against
-    and pinned `_PayeePinnedWallet` to, so it is the address the block was
-    signed to or no block exists at all. It is printed in preference to the
-    receipt's own `pay_to`, which is the merchant's echo: feeless402 sets
+    and pinned `_PayeePinnedWallet` to, so it is the address any block built in
+    this call was signed to. A block feeless402 re-presented from its journal is
+    not built in this call; the redeem path checks that case first and reports a
+    payee that differs as a PAYEE MISMATCH, never through here.
+
+    It is printed in preference to the receipt's own `pay_to`, which is the merchant's echo: feeless402 sets
     `base["pay_to"]` from its own ground truth and then merges the merchant's
     receipt fields over it (`nano_pay/x402.py:584`), whose exclusion list - the
     one its comment calls "never let them speak for ours" - lists `settled`,
@@ -353,7 +475,7 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
     return "\n".join(lines)
 
 
-def _format_failed_payment(exc: "PaidRequestFailed", cap_xno: str) -> str:
+def _format_failed_payment(exc: "PaidRequestFailed", cap_xno: str, authorised_pay_to: str = "") -> str:
     """A signed block was handed to the merchant but no reply came back.
 
     Never a generic error that hides the block: the money may well have
@@ -372,6 +494,16 @@ def _format_failed_payment(exc: "PaidRequestFailed", cap_xno: str) -> str:
         f"  settled:   {settled}",
         f"  ledger:    {ledger}",
     ]
+    # Here `pay_to` is feeless402's own (no merchant receipt was merged in).
+    paid_to = str(rec.get("pay_to") or "")
+    if paid_to:
+        lines.append(f"  pay_to:    {paid_to}")
+    if authorised_pay_to and paid_to and paid_to != authorised_pay_to:
+        lines.append(
+            f"  PAYEE MISMATCH: this block pays {paid_to}, NOT the payee you "
+            f"authorised ({authorised_pay_to}); it was re-presented from an earlier "
+            "call and never checked by this tool."
+        )
     note = rec.get("note")
     if note:
         lines.append(f"  note:      {note}")
@@ -565,6 +697,15 @@ def make_nano_x402_tool(
             if price_raw > cap_raw:
                 return _format_cap_refusal(raw_to_xno(price_raw), cap_xno)
 
+            authorised = str(quote.get("pay_to") or "")
+            # A block for this same request already journalled to another payee
+            # would be re-presented without ever reaching the pins below. Refuse
+            # before anything is sent; like the cap refusal, it costs no token.
+            journalled = _journal_entries(wallet, method, url)
+            elsewhere = [(h, p) for h, p in journalled if p is not None and p != authorised]
+            if elsewhere:
+                return _format_journalled_elsewhere_refusal(authorised, elsewhere)
+
             reason = tokens.reject(quote_token or "", quote.get("pay_to") or "", quote.get("amount_raw") or 0)
             if reason is not None:
                 return _format_refusal(reason)
@@ -589,6 +730,7 @@ def make_nano_x402_tool(
             # authorised, and it is checked outside the mandate proxy so a moved
             # payee refuses before the mandate ledger reserves anything.
             pay_wallet = _PayeePinnedWallet(pay_wallet, quote.get("pay_to") or "")
+            pinned = pay_wallet
             try:
                 resp, receipt = await asyncio.to_thread(
                     request_with_payment,
@@ -611,12 +753,32 @@ def make_nano_x402_tool(
                 # A signed block is in the merchant's hands with no reply: the
                 # money may have moved. Never swallow this into a generic
                 # "failed" that invites a blind re-pay.
-                return _format_failed_payment(e, cap_xno)
+                return _format_failed_payment(e, cap_xno, authorised_pay_to=authorised)
             except Exception as e:
                 return f"ERROR: payment or request failed: {e}"
             receipt = receipt or {}
-            return _format_receipt(resp, receipt, cap_xno,
-                                   authorised_pay_to=str(quote.get("pay_to") or ""))
+            if pinned.built == 0 and receipt and journalled:
+                # No block was built in this call and the journal held an entry
+                # for this request before it: feeless402 re-presented a stored
+                # block (it skips building only then), so the pin and the mandate
+                # proxy never saw it. (A second process writing the same journal
+                # between the read above and the send is not covered.)
+                # Its payee is the block's own link (from the journal entry read
+                # before the call); failing that, feeless402's reported pay_to -
+                # which a merchant receipt can overwrite, so it is only trusted
+                # when it DISAGREES with the authorised payee.
+                block_hash = str(receipt.get("block") or "").upper()
+                actual, source = None, ""
+                for h, p in journalled:
+                    if h and h == block_hash and p is not None:
+                        actual, source = p, "the journalled signed block's link"
+                        break
+                if actual is None and receipt.get("pay_to"):
+                    actual, source = str(receipt.get("pay_to")), "as reported by feeless402"
+                if actual is not None and actual != authorised:
+                    return _format_payee_mismatch(resp, receipt, cap_xno, authorised,
+                                                  actual, source, bool(mandate_file))
+            return _format_receipt(resp, receipt, cap_xno, authorised_pay_to=authorised)
 
     return _nano_x402_fetch
 
