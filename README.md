@@ -136,14 +136,29 @@ result = Runner.run_sync(agent, "Fetch https://api.example.com/report")
     names the block hash, the journal file and the entry's key with its expiry
     time; it tells the agent not to pay again and the operator how to clear it
     (check the block on the ledger, then delete that one key from the file, or
-    wait for it to expire after 24 hours). Entries for another body or above
-    this price do not refuse. `xrb_` and `nano_` spellings of the same account
-    are the same payee everywhere.
+    wait for it to expire after 24 hours). An entry above this price does not
+    refuse (feeless402 refuses that amount before it reads the journal). From
+    feeless402 0.2.12, whose key includes the body, an entry for another body
+    does not refuse either; 0.2.9-0.2.11 leave the body out of the key and could
+    re-present it, so there it still refuses. In the NanoGPT dialect the stored
+    header carries no amount, so the tool asks the node what the block pays
+    (its predecessor's balance minus its own); if the node does not say, or
+    feeless402's key functions are missing or fail, an entry for the same method
+    and URL refuses conservatively. The payee is read from the block's signed
+    `link`; the unsigned `link_as_account` is used only when the block has no
+    `link`, and a `link` that cannot be read leaves the payee unreadable. An
+    entry is live exactly when feeless402 says so (`now - t < 24h`; an
+    infinite or far-future time stays live and prints `expires unknown`).
+    `xrb_` and `nano_` spellings of the same account are the same payee
+    everywhere; a string that is not a valid address never matches.
   - after paying, when the block sent was not signed in this call, takes its
     payee only from the signed block in the journal (read before, at and after
     the send, matched by block hash) - never from the receipt's `pay_to`, which
     the merchant's `payment-response` can overwrite. If that block pays the
-    authorised account, the result is PAID with a `re-sent:` line. If it pays
+    authorised account, the result is PAID with a `re-sent:` line (and, under a
+    mandate, a `mandate:` line saying the mandate was not charged for that
+    block in this call, and that whether it was when it was signed is
+    unknown). If it pays
     another account, it is headed `PAYEE MISMATCH`. If it cannot be read, it is
     headed `PAYEE UNVERIFIED` and shows the reported `pay_to` only as unproven.
     Neither is ever headed PAID.

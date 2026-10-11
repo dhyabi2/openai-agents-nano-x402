@@ -11,8 +11,11 @@ An independent review showed that was wrong; this version says what was found
 and what changed.
 
 The suite as CI runs it, from a clean venv: `pip install -e '.[dev]'`, then
-`python3 -m pytest tests/ -q --tb=short`: **309 passed, 0 skipped** (289 before
-this change, plus the 20 tests in `tests/test_journal_replay_payee.py`). `[dev]`
+`python3 -m pytest tests/ -q --tb=short`: **332 passed, 0 skipped** (289 before
+this change, plus the 43 tests in `tests/test_journal_replay_payee.py`).
+`tests/test_journal_replay_payee.py` also passes, 43 of 43, against feeless402
+0.2.9 and 0.2.12; on 0.2.8, which has no journal, the 34 tests that need one
+skip. `[dev]`
 installs the official `x402` SDK, so the four `x402_sdk` laws that skip under a
 bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
 
@@ -39,8 +42,9 @@ bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
     re-present for this request holds a block paying another account. "Could
     re-present" is feeless402's own key: same method, URL and request body
     (recomputed with its `_journal_key` and `_request_fingerprint`), and an
-    amount no higher than the price authorised. An entry for another body or a
-    higher amount does not refuse. The refusal names the block hash, the journal
+    amount no higher than the price authorised. An entry for a higher amount
+    does not refuse; from feeless402 0.2.12 an entry for another body does not
+    either (older versions leave the body out of the key, so there it refuses). The refusal names the block hash, the journal
     file and the entry key with its expiry, tells the agent not to pay again and
     tells the operator how to clear it.
   - after the payment, counts the blocks the pinned wallet actually built. If it
@@ -80,6 +84,32 @@ bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
   payees; and its pre-send check matched method and URL only, so an entry for
   another body or an amount above the price refused every request to that URL
   for 24 hours with no way out named. All four are fixed as described above.
+
+  **Review round 3.** Five further findings, all fixed:
+  - (MEDIUM) In the NanoGPT dialect (the offer carries `paymentId`) the stored
+    header echoes no offer, so the amount was unknown and every live entry for
+    the same method and URL to another payee refused, even for another body.
+    feeless402 keys that dialect exactly like v2, on the offer's amount, which is
+    the amount it signs. The tool now asks the node for the balance of the
+    block the journalled block follows and subtracts the block's own signed
+    balance, then applies the same amount and key checks. A node that does not
+    answer, a missing or failing key function, still refuses.
+  - (LOW) The amount check now comes before the missing-helper fallback, as in
+    feeless402, which raises `PriceCapExceeded` before it reads the journal.
+    The comment saying feeless402 refuses an unreadable journal now says that
+    holds from 0.2.12 only.
+  - (LOW) A journal time of Infinity or 1e20 crashed the refusal's expiry date
+    (`OverflowError`), and a NaN time was live to the tool but dead to
+    feeless402. Liveness is now feeless402's own test, `now - t < TTL`, and an
+    expiry that cannot be printed reads `unknown`.
+  - (LOW) A re-sent block reported PAID under a mandate now says the mandate
+    was not charged for it in this call, and that whether it was when it was
+    signed is unknown.
+  - (INFO) A block whose `link` is present but unreadable was attributed to its
+    unsigned `link_as_account`. It is now unreadable (PAYEE UNVERIFIED if
+    re-presented); `link_as_account` is used only when there is no `link`.
+    `_same_payee` no longer confirms two identical strings that are not valid
+    addresses. The end-to-end stub now builds blocks with a signed `link`.
 
 ## Corrected claims
 
