@@ -36,6 +36,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 import requests
 from agents.tool_context import ToolContext
+from nano_pay.verify import block_hash
 from nano_pay.wallet import Wallet
 import nano_pay.x402 as X
 
@@ -58,10 +59,17 @@ OPERATOR = M.address_from_public_key(M.public_key_from_private(OPERATOR_KEY))
 # only and so re-present a block for another body too.
 KEYS_BODY = hasattr(X, "_request_fingerprint") and hasattr(X, "_journal_key")
 
-# The ledger as the stubbed node sees it: every block built below follows PREV,
-# whose balance is PREV_BALANCE, so the block's own balance gives its amount.
-PREV = "AB" * 32
+# The ledger as the stubbed node sees it: every block built below is signed by
+# PAYER and follows PREV, whose balance is PREV_BALANCE, so the block's own
+# balance gives its amount. PREV is the real state-block hash of PREV_CONTENTS,
+# as on a real ledger: the tool hashes the node's answer and checks it.
+PAYER_KEY = M.private_key_from_seed(bytes.fromhex("22" * 32), 0)  # test-fixture
+PAYER = M.address_from_public_key(M.public_key_from_private(PAYER_KEY))
 PREV_BALANCE = 10 ** 30
+PREV_CONTENTS = {"type": "state", "account": PAYER, "previous": "CD" * 32,
+                 "representative": PAYER, "balance": str(PREV_BALANCE), "link": "00" * 32,
+                 "signature": "00" * 64, "work": "00" * 8}
+PREV = block_hash(PREV_CONTENTS)
 
 
 class Resp:
@@ -129,8 +137,8 @@ class RPC:
 
     def call(self, body):
         if body.get("hash") == PREV and self.answers_prev:
-            return {"balance": str(PREV_BALANCE), "contents": {"balance": str(PREV_BALANCE)},
-                    "confirmed": "true"}
+            return {"block_account": PAYER, "balance": str(PREV_BALANCE),
+                    "contents": dict(PREV_CONTENTS), "confirmed": "true"}
         return {"contents": {}, "confirmed": "true"}
 
 
@@ -148,7 +156,8 @@ def env(monkeypatch, tmp_path):
         # (the account's public key) and in `link_as_account`, and the balance
         # after the send follows PREV.
         built.append((to, int(amt)))
-        block = {"type": "state", "previous": PREV, "balance": str(PREV_BALANCE - int(amt)),
+        block = {"type": "state", "account": PAYER, "representative": PAYER,
+                 "previous": PREV, "balance": str(PREV_BALANCE - int(amt)),
                  "link": M.public_key_from_address(to).hex().upper(), "link_as_account": to}
         return block, ("%064X" % (0xB10C + len(built))), "root"
 
@@ -835,3 +844,209 @@ def test_a_journalled_block_with_an_unreadable_link_is_unverified_not_refused_by
     assert built == [] and len(seller.paid_headers) == 1
     assert out.startswith("PAYEE UNVERIFIED"), out
     assert "block actually pays: UNKNOWN" in out, out
+
+
+# --- the ledger's answer is authenticated, not trusted -----------------------------
+#
+# In the NanoGPT dialect the journalled amount is read from the node: the
+# balance of the block the journalled one follows. That block's hash, PREV, is
+# in the journalled block, signed by this wallet; the node's `contents` must
+# hash to it, so a node that answers wrongly cannot change the amount read.
+
+
+def _ledger_block(amount=PRICE, **over):
+    block = {"type": "state", "account": PAYER, "representative": PAYER, "previous": PREV,
+             "balance": str(PREV_BALANCE - amount),
+             "link": M.public_key_from_address(B).hex().upper(), "link_as_account": B}
+    block.update(over)
+    return block
+
+
+class _Answer:
+    """A node whose `block_info` reply for PREV is `answer` (or raises it)."""
+
+    def __init__(self, answer):
+        self.answer, self.calls = answer, 0
+
+    def call(self, body):
+        self.calls += 1
+        if isinstance(self.answer, BaseException):
+            raise self.answer
+        return self.answer
+
+
+def _honest_answer(**top):
+    reply = {"block_account": PAYER, "balance": str(PREV_BALANCE),
+             "contents": dict(PREV_CONTENTS), "confirmed": "true"}
+    reply.update(top)
+    return reply
+
+
+def _altered(**fields):
+    reply = _honest_answer()
+    reply["contents"].update(fields)
+    return reply
+
+
+def test_an_honest_node_gives_the_signed_amount():
+    assert T._amount_from_ledger(_ledger_block(), RPC()) == PRICE
+    assert T._amount_from_ledger(_ledger_block(), _Answer(_honest_answer())) == PRICE
+    # The node may spell the account xrb_ and the hashes in lower case.
+    reply = _honest_answer(block_account="xrb_" + PAYER[5:])
+    reply["contents"].update(account="xrb_" + PAYER[5:], representative="xrb_" + PAYER[5:],
+                             previous=PREV_CONTENTS["previous"].lower())
+    assert T._amount_from_ledger(_ledger_block(previous=PREV.lower()), _Answer(reply)) == PRICE
+
+
+@pytest.mark.parametrize("balance", [PREV_BALANCE + 1, PREV_BALANCE - 1, 2 ** 128 - 1, 10 ** 40])
+def test_a_top_level_balance_that_disagrees_with_the_unchanged_contents_is_refused(balance):
+    """The reply's `balance` is not where the amount comes from: a node whose
+    top-level balance disagrees with its own (authentic) contents is not believed."""
+    assert T._amount_from_ledger(_ledger_block(), _Answer(_honest_answer(balance=str(balance)))) is None
+
+
+@pytest.mark.parametrize("fields", [
+    {"balance": str(PREV_BALANCE + 1)}, {"balance": str(PREV_BALANCE - 1)},
+    {"balance": str(2 ** 128 - 1)}, {"balance": str(10 ** 40)},
+    {"representative": B}, {"link": "11" * 32}, {"previous": "CE" * 32},
+    {"account": B}, {"balance": " %d" % PREV_BALANCE}, {"balance": PREV_BALANCE},
+    {"balance": "1_" + str(PREV_BALANCE)[1:]}, {"representative": "garbage"},
+    {"link": "zz"}, {"previous": None},
+])
+def test_contents_that_do_not_hash_to_previous_are_refused(fields):
+    """A node that alters the contents - and the top-level balance to match - is
+    caught by the hash."""
+    reply = _altered(**fields)
+    reply["balance"] = fields.get("balance", reply["balance"])
+    reply.pop("block_account")
+    assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) is None, fields
+
+
+@pytest.mark.parametrize("reply", [
+    {"balance": str(PREV_BALANCE)}, {"balance": str(PREV_BALANCE), "contents": {"balance": str(PREV_BALANCE)}},
+    {"error": "Block not found"}, {}, [], "str", None, {"contents": "x"},
+    _honest_answer(block_account=B),
+])
+def test_a_reply_without_authentic_contents_is_refused(reply):
+    assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) is None
+
+
+@pytest.mark.parametrize("exc", [RuntimeError("every node failed"), TimeoutError("timed out"),
+                                 ValueError("bad json")])
+def test_an_rpc_that_raises_gives_no_amount(exc):
+    assert T._amount_from_ledger(_ledger_block(), _Answer(exc)) is None
+
+
+@pytest.mark.parametrize("over", [
+    {"balance": str(PREV_BALANCE)}, {"balance": str(PREV_BALANCE + 5)},
+    {"balance": None}, {"balance": "-5"}, {"account": B}, {"account": None},
+    {"previous": "0" * 64}, {"previous": "AB"}, {"previous": "ZZ" * 32},
+])
+def test_a_journalled_block_that_gives_no_positive_amount_is_refused(over):
+    block = _ledger_block(**over)
+    if over.get("balance", "") is None:
+        block.pop("balance")
+    if "account" in over and over["account"] is None:
+        block.pop("account")
+    assert T._amount_from_ledger(block, RPC()) is None, over
+
+
+def _rewrite_journalled_block(wallet_path, fn):
+    p = pathlib.Path(wallet_path).parent / "pending-payments.json"
+    j = json.loads(p.read_text())
+    for entry in j.values():
+        payload = json.loads(base64.b64decode(entry["header"]))
+        fn(payload["payload"]["block"])
+        entry["header"] = base64.b64encode(json.dumps(payload).encode()).decode()
+    p.write_text(json.dumps(j))
+
+
+def _nanogpt_lost_to_b_then_paying_read_b(env, rpc):
+    seller, built, wallet_path = env
+    _nanogpt(seller)
+    tool = _tool(wallet_path, rpc=rpc)
+    old_block = _journal_a_lost_payment_to(seller, tool, B, wallet_path)
+    built.clear()
+    _preview_a_then_pay_read_b(seller)
+    return seller, built, wallet_path, tool, old_block
+
+
+class _LiesAboutPrev(RPC):
+    """Honest until `lie` is set; then answers `reply` (or raises it) for PREV."""
+
+    def __init__(self, reply):
+        self.reply, self.lie = reply, False
+
+    def call(self, body):
+        if self.lie and body.get("hash") == PREV:
+            if isinstance(self.reply, BaseException):
+                raise self.reply
+            return self.reply
+        return super().call(body)
+
+
+@pytest.mark.parametrize("reply", [
+    # The pre-fix bypass: a top-level balance off by one, or huge, beside unchanged contents.
+    _honest_answer(balance=str(PREV_BALANCE + 1)), _honest_answer(balance=str(PREV_BALANCE - 1)),
+    _honest_answer(balance=str(10 ** 40)),
+    {"balance": str(PREV_BALANCE + 1), "contents": {"balance": str(PREV_BALANCE + 1)}},
+    {"balance": str(PREV_BALANCE - 1), "contents": {"balance": str(PREV_BALANCE - 1)}},
+    # Altered contents, consistent with themselves.
+    dict(_altered(balance=str(PREV_BALANCE + 1)), balance=str(PREV_BALANCE + 1)),
+    dict(_altered(balance=str(PREV_BALANCE - 1)), balance=str(PREV_BALANCE - 1)),
+    # No answer the tool can use.
+    {"error": "Block not found"}, RuntimeError("every node failed"), TimeoutError("timed out"),
+])
+def test_a_node_that_answers_wrongly_cannot_skip_the_refusal(env, reply):
+    rpc = _LiesAboutPrev(reply)
+    seller, built, wallet_path, tool, old_block = _nanogpt_lost_to_b_then_paying_read_b(env, rpc)
+    rpc.lie = True
+    _, out = _buy(tool)
+    assert out.startswith("REFUSED: a payment for this same request"), out
+    assert old_block in out and seller.paid_headers == [] and built == []
+
+
+@pytest.mark.parametrize("balance", [str(PREV_BALANCE), str(PREV_BALANCE + 5), None])
+def test_a_journalled_block_with_no_positive_amount_still_refuses(env, balance):
+    """A zero or negative difference, or no balance at all, is no amount: the
+    entry cannot be ruled out, so it refuses (it is never read as 0, or as the
+    whole previous balance)."""
+    seller, built, wallet_path, tool, old_block = _nanogpt_lost_to_b_then_paying_read_b(env, RPC())
+
+    def edit(block):
+        if balance is None:
+            block.pop("balance")
+        else:
+            block["balance"] = balance
+
+    _rewrite_journalled_block(wallet_path, edit)
+    _, out = _buy(tool)
+    assert out.startswith("REFUSED: a payment for this same request"), out
+    assert seller.paid_headers == [] and built == []
+
+
+def test_an_entry_keyed_under_the_xrb_spelling_with_only_a_link_is_still_matched(env):
+    """feeless402 keys the entry on the payee as the merchant spelled it (xrb_
+    here); the tool reads the payee from the signed `link` (nano_), so it must
+    try both spellings to recompute the key."""
+    seller, built, wallet_path = env
+    xrb_b = "xrb_" + B[5:]
+    tool = _tool(wallet_path)
+    old_block = _journal_a_lost_payment_to(seller, tool, xrb_b, wallet_path)
+    _rewrite_journalled_block(wallet_path, lambda block: block.pop("link_as_account", None))
+    built.clear()
+    start = seller.reads
+    seller.quote_for = lambda n: A if n - start <= 2 else xrb_b
+    _, out = _buy(tool)
+    assert out.startswith("REFUSED: a payment for this same request"), out
+    assert old_block in out and seller.paid_headers == [] and built == []
+
+
+def test_a_previous_block_of_another_account_gives_no_amount():
+    """`previous` is authentic but belongs to another account (a journalled
+    block that does not follow this wallet's own chain): no amount, even when
+    the node does not name the account at the top level."""
+    reply = _honest_answer()
+    reply.pop("block_account")
+    assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) == PRICE
+    assert T._amount_from_ledger(_ledger_block(account=B), _Answer(reply)) is None

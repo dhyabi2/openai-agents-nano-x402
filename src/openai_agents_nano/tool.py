@@ -33,6 +33,7 @@ except Exception:  # pragma: no cover - optional dependency
     function_tool = None
 
 from nano_pay.rpc import RPC
+from nano_pay.verify import block_hash as _state_block_hash
 from nano_pay.wallet import Wallet
 from nano_pay.x402 import PaidRequestFailed, PriceCapExceeded, request_with_payment
 from nano_pay import xno_to_raw, raw_to_xno
@@ -283,33 +284,72 @@ def _header_block(header):
         return None
 
 
+def _raw_digits(value) -> Optional[int]:
+    """A raw amount written as a plain decimal-digit string, else None. Rejects
+    what `int()` would also take - signs, spaces, underscores, bools, floats."""
+    if not isinstance(value, str) or not value or not value.isascii() or not value.isdigit():
+        return None
+    return int(value)
+
+
 def _amount_from_ledger(block, rpc) -> Optional[int]:
     """The amount a journalled send block pays, from the ledger: the balance of
     the block it follows (`previous`, which this wallet signed) minus its own
     signed `balance`. feeless402 keys the journal on the offer's amount, which
     is the amount it signed, so this is that amount. The NanoGPT dialect does
-    not echo the offer in the header, so this is the only way to read it. None
-    whenever it cannot be read: no `previous`, no answer, a non-positive
-    difference, or a `previous` the node attributes to another account."""
+    not echo the offer in the header, so this is the only way to read it.
+
+    The node's answer is not trusted: the previous block's `contents` are
+    hashed here, with feeless402's own state-block hash, and must hash to
+    `previous` - the hash this wallet signed into the journalled block. The
+    balance is read only from those contents (never the reply's top-level
+    `balance`, which must agree with them), and their `account` must be the
+    journalled block's own. So a node that answers wrongly, by mistake or on
+    purpose, gets None, not a wrong amount. None whenever the amount cannot be
+    read that way: no `previous`, `account` or `balance` in the journalled
+    block, no answer, an RPC error, contents that do not hash to `previous`,
+    another account's block, or a non-positive difference.
+
+    The call is one `block_info` per matching entry, made while the instance
+    lock is held, and may take up to the RPC's own timeout (per node it fails
+    over to) before the tool answers."""
     if rpc is None or not isinstance(block, dict):
         return None
     try:
-        prev = str(block.get("previous") or "")
-        balance = int(str(block["balance"]))
+        prev = str(block.get("previous") or "").upper()
+        balance = _raw_digits(block.get("balance"))
+        account = block.get("account")
+        if balance is None or not account:
+            return None
         if len(prev) != 64 or not prev.strip("0"):
             return None
         bytes.fromhex(prev)
         info = rpc.call({"action": "block_info", "json_block": "true", "hash": prev})
         if not isinstance(info, dict):
             return None
-        contents = info.get("contents") if isinstance(info.get("contents"), dict) else {}
-        owner = info.get("block_account") or contents.get("account")
-        if owner and block.get("account") and not _same_payee(owner, block.get("account")):
+        contents = info.get("contents")
+        if not isinstance(contents, dict):
             return None
-        prev_balance = info.get("balance", contents.get("balance"))
+        if not _same_payee(contents.get("account"), account):
+            return None
+        prev_balance = _raw_digits(contents.get("balance"))
         if prev_balance is None:
             return None
-        amount = int(str(prev_balance)) - balance
+        # A node that contradicts the contents it returns is not believed at all.
+        if "balance" in info and _raw_digits(info.get("balance")) != prev_balance:
+            return None
+        if "block_account" in info and not _same_payee(info.get("block_account"), account):
+            return None
+        hashed = _state_block_hash({
+            "account": normalise_address(str(contents["account"])),
+            "representative": normalise_address(str(contents["representative"])),
+            "balance": str(prev_balance),
+            "previous": str(contents["previous"]),
+            "link": str(contents["link"]),
+        })
+        if str(hashed).upper() != prev:
+            return None
+        amount = prev_balance - balance
         return amount if amount > 0 else None
     except Exception:
         return None

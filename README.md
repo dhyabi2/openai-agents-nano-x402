@@ -142,9 +142,18 @@ result = Runner.run_sync(agent, "Fetch https://api.example.com/report")
     does not refuse either; 0.2.9-0.2.11 leave the body out of the key and could
     re-present it, so there it still refuses. In the NanoGPT dialect the stored
     header carries no amount, so the tool asks the node what the block pays
-    (its predecessor's balance minus its own); if the node does not say, or
-    feeless402's key functions are missing or fail, an entry for the same method
-    and URL refuses conservatively. The payee is read from the block's signed
+    (its predecessor's balance minus its own). The node is not trusted: the
+    predecessor's contents it returns must hash (feeless402's own state-block
+    hash) to the `previous` this wallet signed into the journalled block, must
+    belong to the block's own account, and must agree with the reply's
+    top-level balance; the balance is read only from those contents. So a node
+    that answers wrongly, by mistake or on purpose, cannot make the check skip.
+    If the node does not say, answers wrongly, errors, or gives no positive
+    amount, or feeless402's key functions are missing or fail, an entry for the
+    same method and URL refuses conservatively. That lookup is one `block_info`
+    call per such entry, made while the tool instance's lock is held, so a slow
+    node can delay the answer by up to the RPC's own timeout (20 s per node it
+    tries, by default) per entry. The payee is read from the block's signed
     `link`; the unsigned `link_as_account` is used only when the block has no
     `link`, and a `link` that cannot be read leaves the payee unreadable. An
     entry is live exactly when feeless402 says so (`now - t < 24h`; an

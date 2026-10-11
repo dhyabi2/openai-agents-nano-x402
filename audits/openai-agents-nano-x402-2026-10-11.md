@@ -11,10 +11,10 @@ An independent review showed that was wrong; this version says what was found
 and what changed.
 
 The suite as CI runs it, from a clean venv: `pip install -e '.[dev]'`, then
-`python3 -m pytest tests/ -q --tb=short`: **332 passed, 0 skipped** (289 before
-this change, plus the 43 tests in `tests/test_journal_replay_payee.py`).
-`tests/test_journal_replay_payee.py` also passes, 43 of 43, against feeless402
-0.2.9 and 0.2.12; on 0.2.8, which has no journal, the 34 tests that need one
+`python3 -m pytest tests/ -q --tb=short`: **387 passed, 0 skipped** (289 before
+this change, plus the 98 tests in `tests/test_journal_replay_payee.py`).
+`tests/test_journal_replay_payee.py` also passes, 98 of 98, against feeless402
+0.2.9 and 0.2.12; on 0.2.8, which has no journal, the 48 tests that need one
 skip. `[dev]`
 installs the official `x402` SDK, so the four `x402_sdk` laws that skip under a
 bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
@@ -110,6 +110,33 @@ bare `pip install -e .` run here. `ruff check .` (CI's lint step) is clean.
     re-presented); `link_as_account` is used only when there is no `link`.
     `_same_payee` no longer confirms two identical strings that are not valid
     addresses. The end-to-end stub now builds blocks with a signed `link`.
+
+  **Review round 4.** Two findings, both fixed:
+  - (LOW-MEDIUM) The NanoGPT amount read in round 3 trusted the node's
+    `block_info` reply: it took the top-level `balance` without checking the
+    returned contents against `previous`. A wrong or lying node (any one in
+    the RPC's failover list) could report a balance one raw off, or huge, and
+    the pre-send refusal would skip; the block went out to the other payee and
+    only the post-payment check caught it (PAYEE MISMATCH). Now the returned
+    `contents` are hashed locally with feeless402's own `block_hash`
+    (`nano_pay.verify`, nanopy's state-block hash) and must equal `previous`,
+    which this wallet signed into the journalled block; the contents' account
+    must be the journalled block's own, a top-level `balance` or
+    `block_account` that disagrees with them is refused, and the balance is
+    taken only from the authenticated contents. Any failure gives no amount,
+    and an entry with no amount refuses. A node that answers wrongly can
+    therefore no longer bypass the refusal; the most it can do is make it
+    refuse (by not answering, or answering wrongly), which is the conservative
+    side. The stated limit that remains: the lookup is one `block_info` call per
+    entry for the same method and URL, made while the tool instance's lock is
+    held, and can take up to the RPC's own timeout (20 s per node it fails over
+    to, by default) before the tool answers.
+  - (LOW) Tests now pin the edges of that read: an RPC that raises
+    (`RuntimeError`, `TimeoutError`) or answers `Block not found` refuses; a
+    zero or negative difference refuses; a journalled block with no balance
+    refuses (never read as 0); and an entry keyed under the `xrb_` spelling of
+    the payee, with only a signed `link`, is still matched. The end-to-end
+    stub's `previous` is now the real hash of the predecessor it serves.
 
 ## Corrected claims
 
