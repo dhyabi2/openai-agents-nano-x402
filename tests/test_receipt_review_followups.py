@@ -69,7 +69,7 @@ def test_a_re_sent_journalled_block_then_a_free_read_is_never_nothing_sent(env, 
     assert len(seller.paid_headers) == 1, "the journalled block was re-sent"
     assert built == [], "no new block was signed in this call"
     assert _journal(wallet_path) == {}, "feeless402 dropped the entry and recursed"
-    assert "nothing was signed or sent" not in out, out
+    assert "this call signed nothing" not in out, out
     assert out.startswith("UNCONFIRMED"), out
     assert old_block.upper() in out, out
     assert "before paying again" in out
@@ -92,7 +92,7 @@ def test_a_free_paying_read_with_no_journal_still_says_nothing_was_sent(env, mon
     monkeypatch.setattr(X.requests, "request", request)
     _, out = _buy(tool)
     assert out.startswith("NOT PAID - no payment was requested on the paying read"), out
-    assert "nothing was signed or sent" in out
+    assert "block:     none - this call signed nothing" in out, out
     assert A not in out
 
 
@@ -138,6 +138,8 @@ SECRET = "ab" * 32
     json.dumps({"seed": SECRET, "index": -1}),
     json.dumps({"seed": SECRET, "index": "0"}),
     json.dumps({"seed": SECRET, "index": True}),
+    json.dumps({"seed": SECRET, "index": 2 ** 32}),
+    json.dumps({"seed": SECRET, "index": 1.0}),
     json.dumps({"seed": SECRET[:-2], "index": 0}),
     json.dumps({"seed": SECRET[:-1] + "z", "index": 0}),
 ])
@@ -149,7 +151,7 @@ def test_a_bad_wallet_says_plainly_what_is_wrong_without_the_seed(tmp_path, cont
     out = _call(tool, dry_run=True)
     assert out.startswith("ERROR: the wallet at bad.json cannot be used"), out
     assert ("wallet file is not a wallet: expected a JSON object with a 64-hex "
-            "'seed' and a non-negative integer 'index'") in out, out
+            "'seed' and a non-negative integer 'index' below 2^32") in out, out
     assert SECRET[:20] not in out, "the seed never goes into model context"
     assert "AssertionError: )" not in out
 
@@ -170,3 +172,40 @@ def test_a_receipt_without_a_block_never_names_the_merchants_pay_to_as_payee():
     # And with no authorised payee given at all.
     out2 = T._format_receipt(R(), {"settled": None, "pay_to": merchant}, "0.01")
     assert f"pay_to:    {merchant}" not in out2 and "UNTRUSTED" in out2, out2
+
+
+@pytest.mark.parametrize("seed", [SECRET + "\n", " " + SECRET,
+                                  " ".join(SECRET[i:i + 2] for i in range(0, 64, 2))])
+def test_a_seed_with_whitespace_that_signs_is_accepted(tmp_path, seed):
+    """feeless402 reads the seed with bytes.fromhex, which ignores whitespace:
+    such a wallet pays, and derives the same address, so it is not refused."""
+    from nano_pay.wallet import Wallet
+    from test_journal_replay_payee import _call
+    clean = tmp_path / "clean" / "w.json"
+    clean.parent.mkdir()
+    clean.write_text(json.dumps({"seed": SECRET, "index": 0}))
+    spaced = tmp_path / "spaced" / "w.json"
+    spaced.parent.mkdir()
+    spaced.write_text(json.dumps({"seed": seed, "index": 0}))
+    assert Wallet(spaced).load().address == Wallet(clean).load().address
+
+    class Free:
+        status_code, headers, text = 200, {}, "free"
+    import requests
+    orig = requests.request
+    requests.request = lambda *a, **k: Free()
+    try:
+        out = _call(T.make_nano_x402_tool(wallet_path=str(spaced), rpc=RPC(),
+                                          default_max_xno="0.01"), dry_run=True)
+    finally:
+        requests.request = orig
+    assert not out.startswith("ERROR: the wallet"), out
+
+
+def test_index_at_the_top_of_its_range_is_accepted(tmp_path):
+    from test_journal_replay_payee import _call
+    p = tmp_path / "w.json"
+    p.write_text(json.dumps({"seed": SECRET, "index": 2 ** 32 - 1}))
+    out = _call(T.make_nano_x402_tool(wallet_path=str(p), rpc=RPC(), default_max_xno="0.01"),
+                dry_run=True, url="http://127.0.0.1:9/never")
+    assert not out.startswith("ERROR: the wallet"), out

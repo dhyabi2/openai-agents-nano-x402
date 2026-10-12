@@ -20,7 +20,6 @@ import asyncio
 import base64
 import json
 import os
-import re
 import secrets
 import time
 from decimal import Decimal
@@ -670,7 +669,7 @@ def _format_unanswered_earlier_block(resp, cap_xno: str, earlier: list) -> str:
     wait, it drops the journal entry and recurses, and the recursive call returns
     `(response, None)` when its first unpaid read is not a 402. A signed block
     DID reach the merchant on that path and can still be broadcast, so this must
-    never say that nothing was signed or sent.
+    never say that this call signed nothing and leave it there.
     """
     hashes = sorted({e.get("hash") for e in earlier if e.get("hash")})
     lines = [
@@ -696,7 +695,16 @@ def _format_unanswered_earlier_block(resp, cap_xno: str, earlier: list) -> str:
     return "\n".join(lines)
 
 
-_HEX64 = re.compile(r"[0-9a-fA-F]{64}")
+def _seed_is_usable(seed) -> bool:
+    """feeless402's own rule for a seed (`Wallet.create`, and nanopy reads it the
+    same way): `bytes.fromhex(seed)` must give 32 bytes. `fromhex` ignores
+    whitespace, so a trailing newline or spaced byte pairs derive the same key."""
+    if not isinstance(seed, str):
+        return False
+    try:
+        return len(bytes.fromhex(seed)) == 32
+    except ValueError:
+        return False
 
 
 class _NotAWallet(ValueError):
@@ -762,13 +770,16 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
     """
     if not receipt:
         # feeless402 returns (response, None) when the paying read is not a 402:
-        # nothing was asked for, so nothing was signed or sent. There is no block,
+        # nothing was asked for, so this call signed nothing. (The redeem path
+        # sends an earlier journalled block for this request elsewhere; another
+        # process sharing the wallet could still have journalled one after that
+        # snapshot, so this never claims more than this call.) There is no block,
         # so no payee may be named - printing the authorised one here read as a
         # payment to it.
         lines = [
             "NOT PAID - no payment was requested on the paying read:",
             f"  status:    {resp.status_code}",
-            "  block:     none - nothing was signed or sent",
+            "  block:     none - this call signed nothing",
             "  note:      the endpoint answered without a 402 when the payment was "
             "due; the quote_token was used. Call dry_run=true again if it asks for "
             "payment later.",
@@ -956,12 +967,13 @@ def make_nano_x402_tool(
             data = getattr(wallet, "data", None)
             seed = data.get("seed") if isinstance(data, dict) else None
             index = data.get("index") if isinstance(data, dict) else None
-            if not (isinstance(seed, str) and _HEX64.fullmatch(seed)
-                    and isinstance(index, int) and not isinstance(index, bool) and index >= 0):
+            if not (_seed_is_usable(seed)
+                    and isinstance(index, int) and not isinstance(index, bool)
+                    and 0 <= index < 2 ** 32):
                 # Never echo the seed: this text goes into the model's context.
                 raise _NotAWallet(
                     "wallet file is not a wallet: expected a JSON object with a "
-                    "64-hex 'seed' and a non-negative integer 'index'")
+                    "64-hex 'seed' and a non-negative integer 'index' below 2^32")
             wallet.address
         except Exception as e:
             # These three lines sat outside every guard in this function, and
@@ -1154,7 +1166,7 @@ def make_nano_x402_tool(
                 # live block for THIS request before the call (or at the send), it may
                 # have re-sent it, been answered 402, dropped the entry and recursed
                 # into an unpaid read that was not a 402: a signed block reached the
-                # merchant, so "nothing was signed or sent" would be false.
+                # merchant, so "this call signed nothing" alone would mislead.
                 seen = list(journal_before) + list(pinned.seen_at_send)
                 earlier = await asyncio.to_thread(
                     lambda: [e for e in seen

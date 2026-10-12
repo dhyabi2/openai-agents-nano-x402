@@ -355,15 +355,16 @@ is not exactly the quoted amount. A refusal means no payment exists.
 - **No 402 on the paying read:** if the endpoint answers the paying read
   without asking for payment, the result is headed
   `NOT PAID - no payment was requested on the paying read` and names no block
-  hash and no payee (the quote_token is used up). It says "nothing was signed
-  or sent" only when no block for that request was ever signed; if
-  feeless402's payment journal held a block signed in an earlier call for the
-  same request, the result is UNCONFIRMED instead and names that earlier block
+  hash and no payee (the quote_token is used up). Its block line reads "none -
+  this call signed nothing"; if feeless402's payment journal held a block
+  signed in an earlier call for the same request, the result is UNCONFIRMED
+  instead and names that earlier block
   hash, to be checked before paying again. A receipt that reports no block
   never names a payee; a merchant-supplied `pay_to` there is marked UNTRUSTED.
 - **Unusable wallet files fail early:** a wallet file that cannot sign (not
-  JSON, or JSON that is not an object with a 64-hex `seed` and a non-negative
-  integer `index`) is a configuration ERROR on every call, a `dry_run=true`
+  JSON, or JSON that is not an object with a `seed` that `bytes.fromhex` reads as 32
+  bytes - whitespace in it is ignored, as when signing - and a non-negative
+  integer `index` below 2^32) is a configuration ERROR on every call, a `dry_run=true`
   preview included, before any request is made or a quote_token minted. Wallet
   errors name only the wallet's file name, never its absolute path, and never
   the seed.
