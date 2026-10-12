@@ -200,7 +200,8 @@ def test_a_wallet_path_that_is_a_directory_answers_in_text():
         assert answer.startswith("ERROR: the wallet at "), answer
         assert "Nothing was spent" in answer
         assert "not something to retry" in answer
-        assert str(path) in answer, "the answer names the path the operator has to fix"
+        assert path.name in answer, "the answer names the file the operator has to fix"
+        assert str(path) not in answer, "but not its absolute path, which goes into model context"
 
 
 def test_a_wallet_file_that_is_not_json_answers_in_text():
