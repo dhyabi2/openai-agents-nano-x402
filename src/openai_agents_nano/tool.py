@@ -688,6 +688,27 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
     field the payee pinning exists to guarantee. A merchant claim that differs
     is still shown, named as the merchant's and as untrusted.
     """
+    if not receipt:
+        # feeless402 returns (response, None) when the paying read is not a 402:
+        # nothing was asked for, so nothing was signed or sent. There is no block,
+        # so no payee may be named - printing the authorised one here read as a
+        # payment to it.
+        lines = [
+            "NOT PAID - no payment was requested on the paying read:",
+            f"  status:    {resp.status_code}",
+            "  block:     none - nothing was signed or sent",
+            "  note:      the endpoint answered without a 402 when the payment was "
+            "due; the quote_token was used. Call dry_run=true again if it asks for "
+            "payment later.",
+            "  body:",
+        ]
+        try:
+            body = resp.text
+        except Exception:
+            body = ""
+        body = (body or "").strip()
+        lines.append(body[:4000] if body else "  (empty response body)")
+        return "\n".join(lines)
     settled = receipt.get("settled")
     if settled is True:
         headline = "PAID (Nano x402):"
@@ -699,13 +720,16 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
         headline,
         f"  status:    {resp.status_code}",
         f"  amount:    {receipt.get('amount_xno')} XNO  (cap {cap_xno})",
-        f"  pay_to:    {authorised_pay_to or receipt.get('pay_to')}",
+        # The authorised payee stands in only for a block this call reports: with
+        # no block there is no signed payee to name.
+        f"  pay_to:    {(authorised_pay_to if receipt.get('block') else '') or receipt.get('pay_to')}",
         f"  block:     {receipt.get('block')}",
         f"  settled:   {receipt.get('settled')}",
         f"  ledger:    {receipt.get('ledger')}",
     ]
     claimed = str(receipt.get("pay_to") or "")
-    if authorised_pay_to and claimed and not _same_payee(claimed, authorised_pay_to):
+    if (authorised_pay_to and receipt.get("block") and claimed
+            and not _same_payee(claimed, authorised_pay_to)):
         lines.append(
             f"  merchant claims pay_to: {claimed} - UNTRUSTED, and not where this "
             f"payment went; the block above was signed to {authorised_pay_to}"
@@ -844,6 +868,12 @@ def make_nano_x402_tool(
                 wallet.create()
             else:
                 wallet.load()  # an existing funded wallet must be loaded to sign
+            # `load()` is only `json.loads`: `{}`, `[]` or a bad seed pass it, and
+            # the first thing to read the seed used to be the redeem's signing
+            # step - after a quote, a token, and the token consumed - failing as
+            # "'seed'". Deriving the address here reads the seed and index now,
+            # so such a file is the same configuration error as a corrupt one.
+            wallet.address
         except Exception as e:
             # These three lines sat outside every guard in this function, and
             # outside the lock. `load()` is `json.loads(path.read_text())` and
@@ -856,9 +886,14 @@ def make_nano_x402_tool(
             # the agent cannot even PREVIEW a price. It is the same defect class
             # as the `xno_to_raw` conversion below, one line further out. Nothing
             # is signed or broadcast on this path, so nothing can have been spent.
+            # Only the file name: this text goes into the model's context, and the
+            # operator who has to fix it knows where their wallet lives.
+            name = wallet.path.name
+            detail = str(e).replace(str(wallet.path), name).replace(
+                str(wallet.path.parent), "<wallet dir>")
             return (
-                f"ERROR: the wallet at {wallet.path} cannot be used "
-                f"({type(e).__name__}: {e}). Nothing was spent and no payment was "
+                f"ERROR: the wallet at {name} cannot be used "
+                f"({type(e).__name__}: {detail}). Nothing was spent and no payment was "
                 f"attempted. This is a configuration problem, not something to "
                 f"retry: point X402_WALLET_PATH (or wallet_path=) at a wallet JSON "
                 f"file, or at a path that does not exist yet so this tool can "
