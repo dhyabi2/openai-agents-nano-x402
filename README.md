@@ -352,6 +352,21 @@ is not exactly the quoted amount. A refusal means no payment exists.
   never a generic failure that invites a double payment. A block this call did
   not sign is PAID only when the signed block in the payer's own journal pays
   the authorised account; otherwise it is PAYEE MISMATCH or PAYEE UNVERIFIED.
+- **No 402 on the paying read:** if the endpoint answers the paying read
+  without asking for payment, the result is headed
+  `NOT PAID - no payment was requested on the paying read` and names no block
+  hash and no payee (the quote_token is used up). It says "nothing was signed
+  or sent" only when no block for that request was ever signed; if
+  feeless402's payment journal held a block signed in an earlier call for the
+  same request, the result is UNCONFIRMED instead and names that earlier block
+  hash, to be checked before paying again. A receipt that reports no block
+  never names a payee; a merchant-supplied `pay_to` there is marked UNTRUSTED.
+- **Unusable wallet files fail early:** a wallet file that cannot sign (not
+  JSON, or JSON that is not an object with a 64-hex `seed` and a non-negative
+  integer `index`) is a configuration ERROR on every call, a `dry_run=true`
+  preview included, before any request is made or a quote_token minted. Wallet
+  errors name only the wallet's file name, never its absolute path, and never
+  the seed.
 - Self-custodied: your seed stays on disk; nothing here holds your funds.
 
 ## Tests

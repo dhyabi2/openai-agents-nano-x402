@@ -20,6 +20,7 @@ import asyncio
 import base64
 import json
 import os
+import re
 import secrets
 import time
 from decimal import Decimal
@@ -660,6 +661,77 @@ def _format_payee_moved_refusal(authorised: str, asked: str) -> str:
     )
 
 
+def _format_unanswered_earlier_block(resp, cap_xno: str, earlier: list) -> str:
+    """No receipt, no block built in this call, but feeless402's journal held a
+    live block for this request before the call.
+
+    feeless402 (0.2.13, `request_with_payment`) re-sends a journalled block; if
+    the merchant answers 402 and the ledger does not hold the block within its
+    wait, it drops the journal entry and recurses, and the recursive call returns
+    `(response, None)` when its first unpaid read is not a 402. A signed block
+    DID reach the merchant on that path and can still be broadcast, so this must
+    never say that nothing was signed or sent.
+    """
+    hashes = sorted({e.get("hash") for e in earlier if e.get("hash")})
+    lines = [
+        "UNCONFIRMED (Nano x402) - a block signed in an EARLIER call for this request "
+        "may have been re-sent; check it before paying again:",
+        f"  status:    {resp.status_code}",
+        f"  block:     {', '.join(hashes) if hashes else 'UNKNOWN - the earlier block hash could not be read'}"
+        "  (signed in an earlier call, from feeless402's payment journal)",
+        f"  cap:       {cap_xno} XNO",
+        "  note:      no payment was requested on the final paying read and this call "
+        "signed no new block, but feeless402's payment journal held a signed block for "
+        "this request before the call; it may have been re-sent to the merchant and can "
+        "still reach the ledger. Check that block hash on the ledger before paying again. "
+        "The quote_token was used.",
+        "  body:",
+    ]
+    try:
+        body = resp.text
+    except Exception:
+        body = ""
+    body = (body or "").strip()
+    lines.append(body[:4000] if body else "  (empty response body)")
+    return "\n".join(lines)
+
+
+_HEX64 = re.compile(r"[0-9a-fA-F]{64}")
+
+
+class _NotAWallet(ValueError):
+    """A wallet file that parses as JSON but is not a wallet."""
+
+
+def _redact_wallet_path(text: str, path) -> str:
+    """Replace the wallet's full path spellings in `text` with its file name.
+
+    Only whole path strings are replaced: never a bare "." or "/" (the parent of
+    a relative or root-level path), which would mangle every dot and slash in
+    the message. An absolute parent directory longer than "/" is replaced with
+    "<wallet dir>" after the full paths are.
+    """
+    path = Path(path)
+    name = path.name
+    fulls, parents = set(), set()
+    for spelling in (path, path.absolute()):
+        fulls.add(str(spelling))
+        parents.add(str(spelling.parent))
+    try:
+        resolved = path.resolve()
+        fulls.add(str(resolved))
+        parents.add(str(resolved.parent))
+    except Exception:
+        pass
+    for full in sorted(fulls, key=len, reverse=True):
+        if full and full not in (".", "/", name):
+            text = text.replace(full, name)
+    for parent in sorted(parents, key=len, reverse=True):
+        if Path(parent).is_absolute() and len(parent) > 1:
+            text = text.replace(parent, "<wallet dir>")
+    return text
+
+
 def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = "",
                     re_presented: bool = False, mandated: bool = False) -> str:
     """Render a redeem result with a truthful head line.
@@ -721,8 +793,11 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
         f"  status:    {resp.status_code}",
         f"  amount:    {receipt.get('amount_xno')} XNO  (cap {cap_xno})",
         # The authorised payee stands in only for a block this call reports: with
-        # no block there is no signed payee to name.
-        f"  pay_to:    {(authorised_pay_to if receipt.get('block') else '') or receipt.get('pay_to')}",
+        # no block there is no signed payee to name - and the merchant's own
+        # `pay_to` (which its payment-response can overwrite) is never printed
+        # here as if it were where the money went.
+        (f"  pay_to:    {authorised_pay_to or receipt.get('pay_to')}" if receipt.get("block")
+         else "  pay_to:    none - no block was reported, so no payee is confirmed"),
         f"  block:     {receipt.get('block')}",
         f"  settled:   {receipt.get('settled')}",
         f"  ledger:    {receipt.get('ledger')}",
@@ -733,6 +808,11 @@ def _format_receipt(resp, receipt: dict, cap_xno: str, authorised_pay_to: str = 
         lines.append(
             f"  merchant claims pay_to: {claimed} - UNTRUSTED, and not where this "
             f"payment went; the block above was signed to {authorised_pay_to}"
+        )
+    elif claimed and not receipt.get("block"):
+        lines.append(
+            f"  merchant claims pay_to: {claimed} - UNTRUSTED; with no block there is "
+            f"no signed payee to confirm it"
         )
     if re_presented:
         lines.append(
@@ -873,6 +953,15 @@ def make_nano_x402_tool(
             # step - after a quote, a token, and the token consumed - failing as
             # "'seed'". Deriving the address here reads the seed and index now,
             # so such a file is the same configuration error as a corrupt one.
+            data = getattr(wallet, "data", None)
+            seed = data.get("seed") if isinstance(data, dict) else None
+            index = data.get("index") if isinstance(data, dict) else None
+            if not (isinstance(seed, str) and _HEX64.fullmatch(seed)
+                    and isinstance(index, int) and not isinstance(index, bool) and index >= 0):
+                # Never echo the seed: this text goes into the model's context.
+                raise _NotAWallet(
+                    "wallet file is not a wallet: expected a JSON object with a "
+                    "64-hex 'seed' and a non-negative integer 'index'")
             wallet.address
         except Exception as e:
             # These three lines sat outside every guard in this function, and
@@ -889,8 +978,7 @@ def make_nano_x402_tool(
             # Only the file name: this text goes into the model's context, and the
             # operator who has to fix it knows where their wallet lives.
             name = wallet.path.name
-            detail = str(e).replace(str(wallet.path), name).replace(
-                str(wallet.path.parent), "<wallet dir>")
+            detail = _redact_wallet_path(str(e), wallet.path)
             return (
                 f"ERROR: the wallet at {name} cannot be used "
                 f"({type(e).__name__}: {detail}). Nothing was spent and no payment was "
@@ -1061,6 +1149,18 @@ def make_nano_x402_tool(
                 return _format_failed_payment(e, cap_xno, authorised_pay_to=authorised)
             except Exception as e:
                 return f"ERROR: payment or request failed: {e}"
+            if not receipt and pinned.built == 0:
+                # No receipt and no block built here. If feeless402's journal held a
+                # live block for THIS request before the call (or at the send), it may
+                # have re-sent it, been answered 402, dropped the entry and recursed
+                # into an unpaid read that was not a 402: a signed block reached the
+                # merchant, so "nothing was signed or sent" would be false.
+                seen = list(journal_before) + list(pinned.seen_at_send)
+                earlier = await asyncio.to_thread(
+                    lambda: [e for e in seen
+                             if _could_be_re_presented(e, method, url, req_kwargs, price_raw, rpc)])
+                if earlier:
+                    return _format_unanswered_earlier_block(resp, cap_xno, earlier)
             receipt = receipt or {}
             block_hash = str(receipt.get("block") or "").upper()
             if pinned.built == 0 and receipt:
