@@ -20,6 +20,7 @@ import asyncio
 import base64
 import json
 import os
+import re
 import secrets
 import time
 from decimal import Decimal
@@ -292,6 +293,11 @@ def _raw_digits(value) -> Optional[int]:
     return int(value)
 
 
+def _hex64(value) -> bool:
+    """Exactly 64 hex digits (a 32-byte hash or public key), as a string."""
+    return isinstance(value, str) and re.fullmatch(r"[0-9A-Fa-f]{64}", value) is not None
+
+
 def _amount_from_ledger(block, rpc) -> Optional[int]:
     """The amount a journalled send block pays, from the ledger: the balance of
     the block it follows (`previous`, which this wallet signed) minus its own
@@ -307,7 +313,10 @@ def _amount_from_ledger(block, rpc) -> Optional[int]:
     journalled block's own. So a node that answers wrongly, by mistake or on
     purpose, gets None, not a wrong amount. None whenever the amount cannot be
     read that way: no `previous`, `account` or `balance` in the journalled
-    block, no answer, an RPC error, contents that do not hash to `previous`,
+    block, no answer, an RPC error, contents whose `previous`/`link` are not
+    exactly 64 hex digits or whose `balance` is not below 2**128 (fields of the
+    wrong width can be shifted to keep the hash), contents that do not hash to
+    `previous`,
     another account's block, or a non-positive difference.
 
     The call is one `block_info` per matching entry, made while the instance
@@ -340,12 +349,20 @@ def _amount_from_ledger(block, rpc) -> Optional[int]:
             return None
         if "block_account" in info and not _same_payee(info.get("block_account"), account):
             return None
+        # The state-block hash is taken over the fields' hex, concatenated. A
+        # field of the wrong width moves the boundaries: digits shifted out of
+        # `link` into `balance` (and from `representative` into `previous`) keep
+        # the same bytes and the same hash, but read another balance. So every
+        # field must have its fixed width before the hash means anything.
+        c_prev, c_link = contents.get("previous"), contents.get("link")
+        if not (_hex64(c_prev) and _hex64(c_link) and 0 <= prev_balance < 2 ** 128):
+            return None
         hashed = _state_block_hash({
             "account": normalise_address(str(contents["account"])),
             "representative": normalise_address(str(contents["representative"])),
             "balance": str(prev_balance),
-            "previous": str(contents["previous"]),
-            "link": str(contents["link"]),
+            "previous": c_prev,
+            "link": c_link,
         })
         if str(hashed).upper() != prev:
             return None
@@ -916,8 +933,9 @@ def make_nano_x402_tool(
     """
     if function_tool is None:  # pragma: no cover - optional dependency
         raise ImportError(
-            "openai-agents is not installed; install with `pip install "
-            "openai-agents-nano[x402]` or `pip install openai-agents`."
+            "openai-agents is not installed; install with `pip install openai-agents`, "
+            "or reinstall this package from source (it is not on PyPI): `pip install "
+            "\"git+https://github.com/dhyabi2/openai-agents-nano-x402\"`."
         )
     wallet = Wallet(Path(_wallet_path(wallet_path)).expanduser())
     rpc = rpc or RPC()
