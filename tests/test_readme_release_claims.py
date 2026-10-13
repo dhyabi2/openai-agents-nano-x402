@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import json
 import re
+import shlex
 import tomllib
 from pathlib import Path
 
@@ -110,4 +111,97 @@ def test_console_scripts_the_pinned_release_lacks_are_flagged():
             f"but the published {TAG} wheel installs no entry point, so the command does not exist "
             f"after the README's own install step. Say so next to {TAG}, or publish a release that "
             f"carries it."
+        )
+
+
+# --- The README's own install commands must be runnable ----------------------
+#
+# The Install section above states plainly that `pip install openai-agents-nano`
+# fails with "No matching distribution found - this project is not on PyPI, and
+# the name is not registered", because the PyPI project can only be created by a
+# human with a PyPI login. A later section nonetheless opened with that very
+# command (`pip install "openai-agents-nano[x402]"`), so a reader who started at
+# the official-SDK section - which is self-contained, with its own install block
+# and its own imports - got that error and no payer at all. Measured in a clean
+# venv:
+#
+#     $ pip install "openai-agents-nano[x402]"
+#     ERROR: Could not find a version that satisfies the requirement
+#            openai-agents-nano[x402] (from versions: none)
+#     ERROR: No matching distribution found for openai-agents-nano[x402]
+#
+# This law reads the commands out of the README's own fenced `bash` blocks, so it
+# covers any section added later, and it is derived from `project.name` rather
+# than a literal. Prose is deliberately not parsed: the Install section has to be
+# able to say that the bare-name install fails without tripping the check.
+#
+# It lapses by itself the day the name is registered - at that point the fixture
+# `pypi_registered` below is flipped to True in the same commit that publishes,
+# and bare-name installs are legal again.
+
+PYPI_REGISTERED = False
+"""Whether `project.name` resolves on PyPI. Flip this in the commit that
+publishes, together with the README's install paragraph."""
+
+_PIP_INSTALL = re.compile(r"^\s*(?:\$\s*)?(?:python[0-9.]*\s+-m\s+)?pip\s+install\s+(.*)$", re.M)
+
+
+def _normalise_dist(name: str) -> str:
+    """PEP 503 normalisation, so openai_agents_nano == openai-agents-nano."""
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def _project_name() -> str:
+    data = tomllib.loads((ROOT / "pyproject.toml").read_text())
+    return _normalise_dist(data["project"]["name"])
+
+
+def _bash_blocks() -> list[str]:
+    return re.findall(r"```bash\n(.*?)```", README, re.S)
+
+
+def _install_requirements() -> list[tuple[str, str]]:
+    """(requirement, whole command) for every requirement a README bash block installs."""
+    found = []
+    for block in _bash_blocks():
+        for args in _PIP_INSTALL.findall(block):
+            command = args.strip()
+            try:
+                tokens = shlex.split(command, comments=True)
+            except ValueError:
+                continue  # an unbalanced quote is not an install this law can read
+            for token in tokens:
+                if token.startswith("-"):
+                    continue
+                found.append((token, command))
+    return found
+
+
+def test_the_readme_installs_something_so_this_law_can_see_it():
+    """Guard the parser: a README whose bash blocks stopped parsing would disarm the law."""
+    assert _install_requirements(), (
+        "no `pip install` requirement was parsed out of the README's bash blocks; "
+        "the fenced-block or command shape changed, so fix this parser rather than "
+        "deleting the law below."
+    )
+
+
+def test_no_readme_command_installs_this_project_by_bare_pypi_name():
+    if PYPI_REGISTERED:
+        return  # the name resolves; a bare install is a real install path again
+    project = _project_name()
+    for requirement, command in _install_requirements():
+        if "://" in requirement or "@" in requirement:
+            continue  # a direct reference (URL, or PEP 508 `name[extra] @ git+...`)
+        named = _normalise_dist(re.sub(r"\[.*?\]", "", requirement).split("[")[0])
+        assert named != project, (
+            f"README runs `pip install {requirement}`, which installs {project!r} by bare "
+            f"name from PyPI. The README's own Install section says that name is not "
+            f"registered, so this command fails with 'No matching distribution found' and "
+            f"the reader gets no payer at all. Full command: `pip install {command}`.\n"
+            f"Install from source instead, keeping any extra:\n"
+            f'  pip install "openai_agents_nano[x402] @ '
+            f'git+https://github.com/dhyabi2/openai-agents-nano-x402"\n'
+            f"When the PyPI name is registered, flip PYPI_REGISTERED in this file in the "
+            f"same commit that publishes."
         )

@@ -257,7 +257,9 @@ resource-server half is already published as
 facilitator does the verifying and settling.
 
 ```bash
-pip install "openai-agents-nano[x402]"
+# Source, with the x402 extra: this module is not in the v0.1.0 wheel, and the
+# bare name `openai-agents-nano` is not on PyPI (see Install above).
+pip install "openai_agents_nano[x402] @ git+https://github.com/dhyabi2/openai-agents-nano-x402"
 ```
 
 ```python
