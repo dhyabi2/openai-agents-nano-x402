@@ -14,12 +14,13 @@ self-custodied.
 
 ## 1. Install
 
+The bare name `openai-agents-nano` is not on PyPI yet, so install from source:
+
 ```bash
-pip install openai-agents-nano \
-  --extra-index-url https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402"
 ```
 
-Or from the GitHub release directly:
+Or the pinned v0.1.0 GitHub release:
 
 ```bash
 pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
