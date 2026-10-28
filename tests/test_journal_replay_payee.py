@@ -888,6 +888,24 @@ def _altered(**fields):
     return reply
 
 
+def _shifted(d):
+    """Contents that hash to PREV but read another balance: the state-block hash
+    is taken over the fields' hex concatenated, so moving the boundaries by `d`
+    hex digits (into `previous`, out of `link`) keeps the bytes - and the hash -
+    while `balance` now reads a different 32 hex digits. Only fixed field widths
+    stop it."""
+    c = dict(PREV_CONTENTS)
+    prev, link = c["previous"], c["link"]
+    rep = M.public_key_from_address(c["representative"]).hex().upper()
+    bal = "%032X" % int(c["balance"])
+    c.update(previous=prev + rep[:d],
+             representative=M.address_from_public_key(bytes.fromhex(rep[d:] + bal[:d])),
+             balance=str(int(bal[d:] + link[:d], 16)), link=link[d:])
+    reply = _honest_answer(balance=c["balance"])
+    reply["contents"] = c
+    return reply
+
+
 def test_an_honest_node_gives_the_signed_amount():
     assert T._amount_from_ledger(_ledger_block(), RPC()) == PRICE
     assert T._amount_from_ledger(_ledger_block(), _Answer(_honest_answer())) == PRICE
@@ -919,6 +937,27 @@ def test_contents_that_do_not_hash_to_previous_are_refused(fields):
     reply = _altered(**fields)
     reply["balance"] = fields.get("balance", reply["balance"])
     reply.pop("block_account")
+    assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) is None, fields
+
+
+@pytest.mark.parametrize("d", [2, 4, 8])
+def test_contents_with_shifted_field_boundaries_are_refused(d):
+    """A node that moves hex digits between `previous`, `representative`,
+    `balance` and `link` keeps the hash and changes the balance read. Fields of
+    the wrong width are not believed, so it gives no amount, not a wrong one."""
+    reply = _shifted(d)
+    assert T._state_block_hash(reply["contents"]) == PREV  # the forgery does hash to PREV
+    assert int(reply["contents"]["balance"]) != PREV_BALANCE
+    assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) is None
+
+
+@pytest.mark.parametrize("fields", [
+    {"balance": str(2 ** 128)}, {"balance": str(2 ** 130)}, {"previous": "CD" * 32 + "00"},
+    {"link": "00" * 31}, {"previous": "CD" * 31}, {"link": "00" * 33},
+])
+def test_contents_fields_of_the_wrong_width_are_refused(fields):
+    reply = _altered(**fields)
+    reply["balance"] = fields.get("balance", reply["balance"])
     assert T._amount_from_ledger(_ledger_block(), _Answer(reply)) is None, fields
 
 
@@ -994,6 +1033,8 @@ class _LiesAboutPrev(RPC):
     # Altered contents, consistent with themselves.
     dict(_altered(balance=str(PREV_BALANCE + 1)), balance=str(PREV_BALANCE + 1)),
     dict(_altered(balance=str(PREV_BALANCE - 1)), balance=str(PREV_BALANCE - 1)),
+    # Contents that hash to PREV with the field boundaries shifted, so they read another balance.
+    _shifted(2), _shifted(4),
     # No answer the tool can use.
     {"error": "Block not found"}, RuntimeError("every node failed"), TimeoutError("timed out"),
 ])
