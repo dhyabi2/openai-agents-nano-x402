@@ -132,3 +132,24 @@ mandate), repointed test_readme_release_claims.py at it, and bumped ci.yml's wee
 install URL to v0.2.0. Suite now 409 passed, 55 skipped, 2 failed -- the two remaining
 are the chronic feeless402 0.2.8 sub-raw cap divergence, unchanged on committed HEAD
 (source fix = tier-5 building, already documented in funnel.md).
+
+## 2026-11-01 ~23:05Z — scope status honesty: the package:true milestone is a bot-challenge false positive (distribution run, no build)
+
+Re-verified the JSON truth this run so the ledger says what the package actually is.
+`rai-scope status` reports `package: true` against
+`https://pypi.org/project/openai-agents-nano-x402/`, but that URL is PyPI's
+bot-challenge page which answers HTTP 200 for ANY project name. The real existence
+checks (publish-package skill, verified 2026-11-01) are:
+- `https://pypi.org/pypi/openai-agents-nano-x402/json` -> 404 (control `requests` -> 200)
+- `https://pypi.org/simple/openai-agents-nano-x402/` -> 404
+=> openai-agents-nano-x402 is NOT on PyPI. The package is the v0.2.0 GitHub release
+(bin-pip wheel + sdist, immutable tag, fresh-venv verified). So `adopted: true`
+rests partly on a false-positive package milestone at the /project/ URL; the honest
+reading is adopted via merged_pr (gold-402 #256) + listing (24K Labs, AgentLaunch),
+and external_payment remains UNVERIFIED. The owner-only one-page pending trusted-
+publisher registration is still the only thing keeping the package off PyPI
+(workflow .github/workflows/publish.yml already runs the OIDC upload; its sole
+failure that blocks it is PyPI's invalid-publisher "no corresponding publisher").
+Scope DB / rai_scope.py are owner-guarded so this row itself cannot be corrected
+from this box; flagging it here per the directory-listing skill is the sanctioned
+record. PyPI will not be claimed adopted until /pypi/<name>/json answers 200.
