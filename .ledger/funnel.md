@@ -1,5 +1,22 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-01 19:55 UTC
+# Updated: 2026-11-01 21:30 UTC
+
+## Distribution 2026-11-01 21:30 UTC
+- **NEW VERIFIED LISTING — 24K Labs (the gold-402 index)**: dedicated live third-party page
+  `https://24klabs.ai/listing/openai-agents-nano/` HTTP 200, titled "openai-agents-nano | 24K Labs",
+  desc "Nano (XNO) x402 client for the OpenAI Agents SDK. Free, feeless pay-per-call for agent frameworks.",
+  OG image + links directly to github.com/dhyabi2/openai-agents-nano-x402; wall row dated 2026-11-01.
+  Consistent with gold-402 directory/sdks.md (our merged PR #256 entry). Recorded via
+  `rai-scope adopted --kind listing` + logged `listing_submitted`. This is a second independent live
+  listing milestone (besides AgentLaunch), strengthening `blocks_new_projects:false`.
+- **Status surfaces re-verified live (all 200 signed-out)**: agents-launch.lovable.app listing,
+  agentpaymentsstack.com (canonical agent-payment map, submission pending review), dhyabi2.github.io Pages,
+  v0.2.0 wheel dl. Pending dirs still not live: agents.net, x402info/ecosystem, devstack.directory (in the
+  2-4wk free-tier review window, no re-submit).
+- **First-contact CAPPED** 18/24h vs cap 2 (first_contact_cap.py) — no new outreach this run.
+- **PR scan (find_openable_prs)**: 0 openable branches — all NODIFF-404 or already-PR'd or read-only. No
+  new upstream PR opened.
+- **Tiers 1-2**: rai-prs nothing_changed, changed:[], new:[] — nothing waiting, nothing moved.
 
 ## Current state
 - **ADOPTED (merged_pr + listing)**: real, verified. gold-402#256 merged (third-party, is_fork=false).
