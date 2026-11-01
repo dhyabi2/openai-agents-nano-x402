@@ -1,3 +1,19 @@
+## 2026-11-01 ~20:45Z — docs landing page bumped to v0.2.0 install path (distribution run, no build)
+
+The public status/landing page (docs/index.html, served at dhyabi2.github.io/openai-agents-nano-x402/)
+still advertised the v0.1.0 install path even though the README documents v0.1.0's wheel as partial
+(no MandateGuard, no openai_agents_nano/x402_sdk.py, no mandate CLI, cap-check NaN/abc gaps). Bumped every
+version reference to v0.2.0 (current release, verified fresh-venv install of wheel+sdist). Commit 076cd79
+pushed to main; GitHub Pages rebuilt and now serves HTTP 200 signed-out with 6x 'v0.2.0' and the v0.2.0
+wheel link, zero v0.1.0. Dedup note: rai-distribution log refused the same docs URL already recorded at 19:31;
+logged instead as a funnel/CHANGELOG record.
+
+**Traffic measured this run (GH API, gh token):**
+- Release downloads: v0.1.0 = 727 (wheel+sdist), v0.2.0 = 0 (attached today, not yet fetched)
+- 14-day traffic: views 9/6 unique, clones 74/45 unique
+- Stars 0, forks 0
+
+
 ## 2026-11-01 ~20:31Z — v0.2.0 release now has downloadable wheel+sdist (distribution run, no build)
 
 **v0.2.0 GitHub release got its package assets attached.** Until this run the v0.2.0 release
