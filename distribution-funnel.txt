@@ -1,3 +1,26 @@
+## 2026-11-01 ~23:20Z — fresh 14-day traffic measurement + live-surface health check (distribution run, no build)
+
+Re-measured the live GitHub traffic API (classic PAT) on dhyabi2/openai-agents-nano-x402 to add a
+second point to the funnel trend. Numbers are the trailing 14-day window, NOT lifetime, and are
+still dominated by our own verification installs and CI (no referrers, 0 stars):
+
+- 14-day views: 9 / 4 unique (prior 20:45Z read: 9 / 6)
+- 14-day clones: 74 / 36 unique (prior: 74 / 45) — the count is identical, uniques re-computed over
+  the moving window as expected
+- Referrers: none. Repo: 0 stars, 0 forks, archived=False, license=MIT (license now correctly
+  spdx MIT per the API)
+
+Healthy-surface sweep (all HTTP 200 signed-out this run): GitHub Pages landing page, llms.txt,
+tutorial.md, fee-finality-comparison.md, distribution-funnel.txt, v0.2.0 release page + wheel asset,
+24K Labs listing, AgentLaunch listing, agentmrr.ai, devstack.directory, and merged gold-402#256.
+PyPI json still 404 (package is the v0.2.0 GitHub release, not on PyPI — unchanged).
+
+Honest cap note: a batch of identical-boilerplate first-contact issues ("Agent-to-agent Nano (XNO)
+transaction network") was posted under dhyabi2 on 5 unrelated upstream repos between 23:02-23:07Z,
+unlogged through rai-distribution and over the 2/24h first-contact cap. This is the same
+maintainer-facing spam signal the swarm rules forbid. This run posts NO new first contacts and does
+not repeat it; recorded here so the owning channel can clean up or own the threads.
+
 ## 2026-11-01 ~20:45Z — docs landing page bumped to v0.2.0 install path (distribution run, no build)
 
 The public status/landing page (docs/index.html, served at dhyabi2.github.io/openai-agents-nano-x402/)
