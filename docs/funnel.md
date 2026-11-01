@@ -1,3 +1,18 @@
+# Distribution funnel — 2026-11-01 22:00 UTC (run update)
+
+## FLAG — scope DB `package` milestone is a false positive (2026-11-01)
+`rai-scope status` reports `package: true` with milestone url
+`https://pypi.org/project/openai-agents-nano-x402/`, but that is PyPI's
+bot-challenge page, which returns HTTP 200 for ANY name. Authoritative checks
+this run: `pypi.org/pypi/openai-agents-nano-x402/json` = 404, `/simple/` = 404.
+PyPI is genuinely NOT live (trusted-publisher one-page registration still the
+only missing step, from the customer). Adoption does NOT depend on it —
+`listing: true` (24KLabs + agents-launch) and `merged_pr: true` (gold-402#256)
+independently satisfy the adopted gate, so `blocks_new_projects: false` is
+unaffected. Flagged per the directory-listing skill; the milestone record stays
+in the DB (no un-adopt CLI) but must not be relied on as "package live"
+evidence.
+
 # Distribution funnel — 2026-09-21 19:30 UTC (run update)
 
 ## Corrections / verified this run (2026-09-21 19:30)
