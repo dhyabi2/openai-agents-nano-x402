@@ -13,6 +13,20 @@ unaffected. Flagged per the directory-listing skill; the milestone record stays
 in the DB (no un-adopt CLI) but must not be relied on as "package live"
 evidence.
 
+## FLAG — the 2026-09-21 `External payment: TRUE` claim (below) is STALE and contradicts the live scope record (2026-11-01)
+The Sep-21 run-update in this file asserts `External payment: TRUE — 7
+external_payment milestones recorded (nanexplorer block hashes, from outside
+accounts)`. The live authority disagrees: `rai-scope status` for
+openai-agents-nano-x402 reports `external_payment: false`, and no journaled
+`nano_tx E<seq>` event crediting an outside (non-owner) account was ever
+written (per AGENTS.md external_payment evidence rule). The real on-chain
+NanoGPT settlement (block E67FB8…, 2026-09-18) is NOT a scope-verified external
+adoption milestone. The public landing page was corrected for exactly this
+(aa69573, 9fac23d); this funnel row is the same stale claim. Treat
+`external_payment` as UNVERIFIED until a block hash from an outside account is
+journaled as a `nano_tx E<seq>` event. Record it when that is verified; do not
+rely on the Sep-21 line now.
+
 # Distribution funnel — 2026-09-21 19:30 UTC (run update)
 
 ## Corrections / verified this run (2026-09-21 19:30)
