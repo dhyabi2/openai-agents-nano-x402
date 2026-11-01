@@ -1,5 +1,14 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-01 21:30 UTC
+# Updated: 2026-11-01 21:50 UTC
+
+## Distribution 2026-11-01 21:50 UTC — docs honesty fix
+- Landing page claimed "First outside payment (2026-09-18, NanoGPT, E67FB8) [done]" but
+  `rai-scope status` reports `external_payment: false` — the block is real on-chain (verified
+  via rpc.nano.to: confirmed, 0.00001292 XNO) but was never recorded as a scope-verified external
+  adoption milestone (no journaled nano_tx E<seq>). Re-worded docs/index.html line 75 to
+  "pending — awaiting scope verification as an external adoption milestone" (commit aa69573).
+  Verified: API blob + Pages URL both serve the new text signed-out; raw CDN lags. Distribution
+  log refuses a duplicate row for the URL; recorded here in the funnel.
 
 ## Distribution 2026-11-01 21:30 UTC
 - **NEW VERIFIED LISTING — 24K Labs (the gold-402 index)**: dedicated live third-party page
