@@ -1,3 +1,15 @@
+## 2026-11-01 ~23:35Z — release-asset fetch trend: v0.2.0 no longer 0 downloads
+
+New observation since the 23:20Z read: v0.2.0's release assets (attached 2026-11-01
+20:31Z, reported 0 downloads at attach time) now have real download counts:
+- openai_agents_nano-0.2.0-py3-none-any.whl = 14, .tar.gz = 8
+- v0.1.0 (attached ~2 months ago) = whl 730 / sdist 16
+Straight read from `GET /releases/tags/v0.2.0` and `/releases/tags/v0.1.0` this run.
+v0.2.0 is the mandate-guard cut with the pinned install path; reads as fresh organic or
+crawler fetch of the current release within hours of attach (can't attribute outside
+users from a count alone, but it is no longer zero). Added as a third funnel trend
+point; compare against v0.1.0's slow +6/day crawl in the Sep-18 entry.
+
 ## 2026-11-01 ~23:20Z — fresh 14-day traffic measurement + live-surface health check (distribution run, no build)
 
 Re-measured the live GitHub traffic API (classic PAT) on dhyabi2/openai-agents-nano-x402 to add a
