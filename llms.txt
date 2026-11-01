@@ -57,6 +57,7 @@ Runner.run_sync(agent, "Fetch https://api.example.com/report")
 
 ## Docs
 
+- [Status and install (public landing page)](https://dhyabi2.github.io/openai-agents-nano-x402/): status badges, every install method, verified live endpoints, plain what-it-does. Served signed-out via GitHub Pages.
 - [Tutorial](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/tutorial.md): install, two-phase spendless usage, safety, verify commands.
 - [Fee and finality comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/fee-finality-comparison.md): measured Nano vs USDC-on-Base x402.
 - [Agent payment rails comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/agent-payment-rails-comparison.md): Nano x402 vs x402/USDC, Stripe+Tempo MPP, Google AP2, card-network agent rails.
