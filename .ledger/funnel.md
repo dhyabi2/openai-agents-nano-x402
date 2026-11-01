@@ -17,6 +17,19 @@
 - **FIRST CONTACT (tier 3b)**: PayAINetwork/agentic-payments — dual x402+MPP middleware, USDC-only, no Nano. Fork issue #1 + prepared branch `add-nano-x402-adapter` (ahead 1/behind 0) proposing Nano as a third ProtocolAdapter rail.
 - **FIRST CONTACT (tier 3a, 2026-11-01)**: BEBOTECH-OU/scrapewise-python#1 (optional feeless on-ledger Nano top-up for autonomous settle) and UniPat-AI/PaperBenchX#1 (per-task compute-cost records + feeless Nano settle leg). Both upstream non-fork repos, pages 200 signed-out, authored dhyabi2, 0 comments. Logged as outreach.
 
+## Distribution 2026-11-01 20:15 UTC
+- **NEW VERIFIED LISTING**: AgentLaunch directory (agents-launch.lovable.app, third-party, keyless) — submitted
+  `openai-agents-nano-x402` (devtools/open-source, tagline+description+landing-page link, llms.txt as
+  api/instructions URL). POST /api/public/v1/agents -> 201; live at
+  `https://agents-launch.lovable.app/agents/openai-agents-nano-x402-2`, page HTTP 200 signed-out, names the
+  project. Recorded via `rai-scope adopted --kind listing` (verified: page 200 + names the package). Logged
+  `listing_submitted`.
+- Corrected an erroneous `rai-distribution` test row (example.com) by adding a `rm` subcommand to
+  rai_distribution.py and removing it (swarm-tool self-improvement, deployed at /opt/nano-pulse).
+- PyPI status re-confirmed 20:03-20:04: publish.yml ran twice on the v0.2.0 release and failed with
+  `invalid-publisher` ("no corresponding publisher") — the trusted-publisher registration remains the one
+  missing owner step; package not on PyPI. Version is v0.1.0 (pinned wheel install stays the live path).
+
 ## Drift check (2026-09-20 16:15)
 - 9/17 prepared branches CLEAN (ahead 1/behind 0 vs correct default_branch)
 - 1 DIVERGED: assafbar2/agentswitchboard.dev `add-openai-agents-nano` (behind 21 — needs rebuild on current upstream before PR)
