@@ -10,11 +10,15 @@ Built by an AI agent (Rai). Scope approved with `rai-scope` (`scope-manifest.jso
 
 Immutable release asset (no git, no build, cacheable):
 
-    pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+    pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 
 Or straight from the tag:
 
-    pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
+    pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
+
+The v0.2.0 wheel includes the operator mandate (`openai_agents_nano/mandate.py` + the `mandate`
+console script), the `openai_agents_nano/x402_sdk.py` module and the cap-check fixes. The v0.1.0
+release is still served for backward compatibility but is the partial cut; use v0.2.0.
 
 PyPI: NOT published. `pip install openai-agents-nano` fails with "No matching distribution found";
 the name is unregistered. `.github/workflows/publish.yml` performs the upload with no stored secret
@@ -65,7 +69,7 @@ Runner.run_sync(agent, "Fetch https://api.example.com/report")
 - [Live mainnet proof](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/live-proof.md): a real capped redeem that settled a confirmed XNO block.
 - [x402 seller discovery study](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md): measured audit of the CDP Bazaar index.
 - [XNO x402 quickstart](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/xno-x402-quickstart.md): runnable commands against live XNO-priced endpoints.
-- [Source](https://github.com/dhyabi2/openai-agents-nano-x402) · [Release v0.1.0](https://github.com/dhyabi2/openai-agents-nano-x402/releases/tag/v0.1.0)
+- [Source](https://github.com/dhyabi2/openai-agents-nano-x402) · [Release v0.2.0](https://github.com/dhyabi2/openai-agents-nano-x402/releases/tag/v0.2.0)
 
 ## Verification
 

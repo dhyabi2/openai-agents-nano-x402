@@ -1,21 +1,15 @@
 """The pinned install path the README offers must be able to satisfy what the README documents.
 
-`README.md` presents the **v0.1.0 GitHub release** as "the immutable, public install path
-(works today)", and it is the only published install path: there is no PyPI project yet. But the
-source tree has moved on since that tag, and the project version never left `0.1.0`, so nothing
-about a `pip install` of that wheel signals the gap.
+`README.md` presents the **v0.2.0 GitHub release** as "the immutable, public install path
+(works today)", and it is the current published install path: there is no PyPI project yet. The
+v0.1.0 release is still served but is the partial cut; v0.2.0 carries the operator
+mandate, the x402_sdk module and the `mandate` console script. What matters is that the
+pinned artifact the README points at actually provides every feature the README documents.
 
-Measured against the real release asset (`tests/data/release-v0.1.0-contents.json`, recorded by
-downloading it): the wheel ships `__init__` and `tool` only, and carries no console script. The
-tree also ships `mandate`, and `pyproject.toml` declares a `mandate` CLI. So a reader who followed
-the Install section and then the operator-mandate section got:
-
-    $ mandate keygen --out operator.key
-    mandate: command not found
-    >>> make_nano_x402_tool(mandate_path="mandate.json")
-    TypeError: make_nano_x402_tool() got an unexpected keyword argument 'mandate_path'
-    >>> import openai_agents_nano.mandate
-    ModuleNotFoundError: No module named 'openai_agents_nano.mandate'
+Measured against the real release asset (`tests/data/release-v0.2.0-contents.json`, recorded by
+downloading it): the wheel ships `__init__`, `mandate`, `tool` and `x402_sdk`, and declares the
+`mandate` console script. A reader who follows the Install section can run `mandate keygen`,
+`make_nano_x402_tool(mandate_path=...)` and `import openai_agents_nano.x402_sdk`.
 
 This law does not judge which way the gap is closed -- re-cutting the release would satisfy it by
 making the fixture's module list grow. It only refuses the state where the README documents a
@@ -34,7 +28,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 README = (ROOT / "README.md").read_text()
-RELEASE = json.loads((ROOT / "tests/data/release-v0.1.0-contents.json").read_text())
+RELEASE = json.loads((ROOT / "tests/data/release-v0.2.0-contents.json").read_text())
 TAG = RELEASE["release_tag"]
 
 # A paragraph that tells the reader the pinned release lacks something.

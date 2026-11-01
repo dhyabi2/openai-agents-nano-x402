@@ -50,7 +50,7 @@ jobs:
       # openai-agents-nano` fails with 'No matching distribution found'"). So the
       # step could only ever fail, the smoke test after it could never run, and
       # the weekly signal about what is installable was permanently red instead of
-      # absent. The v0.1.0 GitHub release is the install path README.md actually
+      # absent. The v0.2.0 GitHub release is the install path README.md actually
       # publishes, and it is what is checked here; `tests/test_ci_workflow.py`
       # pins that this URL is one the README offers, so the two cannot drift apart
       # again.
@@ -58,7 +58,7 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: >
           ${{ matrix.package-manager == 'uv' && 'uv pip install --system' || 'pip install' }}
-          https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+          https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 
       - name: Import and smoke-test the installed package
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

@@ -1,0 +1,17 @@
+{
+  "_what": "What the published v0.2.0 release asset actually contains. Recorded by downloading the asset from the GitHub release and reading the archive; re-record it only from a real release asset, never by hand.",
+  "release_tag": "v0.2.0",
+  "asset": "openai_agents_nano-0.2.0-py3-none-any.whl",
+  "asset_sha256": "fa72f91c8bdc34dd563c32e3166b654f2ecf440dc932b8ff9b860076ac8677ac",
+  "recorded_utc": "2026-11-01",
+  "modules": [
+    "__init__",
+    "mandate",
+    "tool",
+    "x402_sdk"
+  ],
+  "console_scripts": [
+    "mandate"
+  ],
+  "has_entry_points_txt": true
+}
