@@ -32,7 +32,7 @@ agent that buys a completion. A fresh Nano seed with ~0.00005 XNO is enough for
 dozens of calls.
 
 ```bash
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 # then follow docs/pay-x402-from-openai-agent.md step by step
 ```
 
@@ -43,34 +43,33 @@ gets real buyers that USDC-only rails cannot reach.
 
 ## Install
 
-The v0.1.0 GitHub release is the immutable, public install path (works today). Two equivalent ways,
+The v0.2.0 GitHub release is the immutable, public install path (works today). Two equivalent ways,
 all verified from a clean venv with no credentials:
 
 ```bash
 # single-file wheel from the release (no git, no build, cacheable):
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 
 # or straight from the tagged source:
-pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
-```
-
-The release also carries the sdist (`.../releases/download/v0.1.0/openai_agents_nano-0.1.0.tar.gz`).
-
-**What v0.1.0 does not include.** That release was cut before the operator mandate below, and the
-project version stayed `0.1.0` until `v0.2.0`, so a `pip install` of the v0.1.0 wheel cannot be told
-apart from the source it was cut from. The published wheel ships `__init__.py` and `tool.py` only — it does not
-carry `openai_agents_nano/mandate.py` and installs no `mandate` console script, so after the install
-above `mandate keygen` is not a command and `make_nano_x402_tool(mandate_path=...)` raises
-`TypeError: unexpected keyword argument 'mandate_path'`. v0.1.0 likewise predates
-`openai_agents_nano/x402_sdk.py`, so the official-SDK section below is source-only on that wheel:
-`from openai_agents_nano import ExactNanoClientScheme` raises `ImportError` after the pinned install. Its `_apply_cap` also predates the checks
-that refuse a non-finite or negative cap, so on that wheel `X402_MAX_XNO="nan"` yields a NaN cap and
-`X402_MAX_XNO="abc"` raises `decimal.InvalidOperation` past the caller's `except ValueError`. For the
-mandate guard and those cap checks, install `v0.2.0` or later:
-
-```bash
 pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
 ```
+
+The release also carries the sdist (`.../releases/download/v0.2.0/openai_agents_nano-0.2.0.tar.gz`).
+The v0.2.0 wheel includes the operator mandate (`mandate.py` + the `mandate` console script), the
+`x402_sdk.py` module, and the cap-refusal checks — everything the sections below use. The earlier
+v0.1.0 release is still served (backward compatible) but is the *partial* wheel: it shipped
+`__init__.py` and `tool.py` only.
+
+**What v0.2.0 fixes over v0.1.0.** The v0.1.0 release was cut before the operator mandate, so a
+`pip install` of the v0.1.0 wheel cannot be told apart from the source it was cut from; it carried `__init__.py`
+and `tool.py` only — it did not carry `openai_agents_nano/mandate.py` and installed no `mandate` console script,
+so `mandate keygen` was not a command and `make_nano_x402_tool(mandate_path=...)` raised
+`TypeError: unexpected keyword argument 'mandate_path'`. v0.1.0 likewise predated
+`openai_agents_nano/x402_sdk.py`, so the official-SDK section was source-only on that wheel:
+`from openai_agents_nano import ExactNanoClientScheme` raised `ImportError` after the pinned install. Its `_apply_cap` also predated the checks
+that refuse a non-finite or negative cap, so on that wheel `X402_MAX_XNO="nan"` yielded a NaN cap and
+`X402_MAX_XNO="abc"` raised `decimal.InvalidOperation` past the caller's `except ValueError`. All of
+those are present in the v0.2.0 wheel above.
 
 A PyPI release is prepared but not uploaded yet — a PyPI project can only be created by a human with a
 PyPI login. `.github/workflows/publish.yml` performs the upload with no stored secret once a *pending
@@ -257,7 +256,8 @@ resource-server half is already published as
 facilitator does the verifying and settling.
 
 ```bash
-# Source, with the x402 extra: this module is not in the v0.1.0 wheel, and the
+# Source, with the x402 extra: this module is in the v0.2.0 wheel, but the
+# x402-dependent symbols still install cleanest from source; the
 # bare name `openai-agents-nano` is not on PyPI (see Install above).
 pip install "openai_agents_nano[x402] @ git+https://github.com/dhyabi2/openai-agents-nano-x402"
 ```
@@ -387,7 +387,7 @@ python tests/release_install_offline.py          # L21/L22: a built wheel instal
 ## Building and verifying the distribution
 
 ```bash
-uv build                                # builds dist/openai_agents_nano-0.1.0.tar.gz + .whl
+uv build                                # builds dist/openai_agents_nano-0.2.0.tar.gz + .whl
 python tests/release_install_offline.py # builds the wheel, installs it into a brand-new venv,
                                         # and asserts the installed tool is a real nano_x402_fetch
                                         # FunctionTool that dry-runs (QUOTE, nothing spent) and
