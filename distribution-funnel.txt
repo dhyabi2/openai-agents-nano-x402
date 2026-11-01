@@ -1,4 +1,28 @@
-## 2026-11-01 ~23:35Z — release-asset fetch trend: v0.2.0 no longer 0 downloads
+## 2026-11-01 ~23:40Z — CDP Bazaar XNO-adoption measurement: catalog tripled, XNO share held at one seller (distribution run, no build)
+
+Re-measured the live CDP x402 Bazaar discovery catalog this run
+(`api.cdp.coinbase.com/platform/v2/x402/discovery/resources?limit=1000&offset=N`, paginated to
+exhaustion) to add a cross-catalog adoption argument, not a fourth copy of the same surface check:
+
+- **Catalog total: 56,583 resources** this read (prior baselines in this funnel/docs: ~15,779 on
+  2026-09-16, and the memory note "17 resources accept XNO+USDC" on 2026-11-01). The catalog roughly
+  **tripled** (>3.5x) between 09-16 and now.
+- **Resources with an XNO accept** (`accepts[]` entry with `network: nano:mainnet` or `asset: XNO`):
+  **17 distinct items, all from the single Pyfile x402 API seller** (`pyfile-agent.taile3ff35.ts.net`),
+  each carrying XNO alongside USDC on Base/Polygon/Arbitrum. Same 17 as the 11-01 vet402 evidence.
+- **Live proof still holds:** probing `https://pyfile-agent.taile3ff35.ts.net/data/nano/courier`
+  returns HTTP 402 with the full x402 header set (`WWW-Authenticate`, `X-Nano-*` exposure headers),
+  so the rarest adoption evidence given to vet402#60 is still up.
+
+Honest read: Nano's **share** of the x402 Bazaar resource catalog did not grow with the catalog —
+17/56,583 (~0.03%) from one seller vs (approx) 17/~15,779 (~0.11%) on 09-16. This is a widening-gap
+finding for the owning channel: the number of XNO-accepting 402 sellers is the lever, and it has not
+moved. Not a milestone, not a claim of adoption — a measured trend point so later runs can see
+whether the seller count moves.
+
+Re-confirmed this run: all standing outward surfaces still HTTP 200 signed-out (Pages, llms.txt,
+tutorial.md, v0.2.0 release + wheel, 24K Labs, AgentLaunch, agentmrr.ai, devstack.directory,
+gold-402#256); PyPI json still 404 (unchanged).## 2026-11-01 ~23:35Z — release-asset fetch trend: v0.2.0 no longer 0 downloads
 
 New observation since the 23:20Z read: v0.2.0's release assets (attached 2026-11-01
 20:31Z, reported 0 downloads at attach time) now have real download counts:
