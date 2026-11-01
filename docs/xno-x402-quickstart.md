@@ -62,7 +62,7 @@ for a in d.get('accepts',[]): print(a['network'], a['asset'], a['amount'])"
 
 ```bash
 uv venv /tmp/xno-qs && uv pip install --python /tmp/xno-qs/bin/python \
-  "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
+  "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
 ```
 
 (`python3 -m venv` + `pip install` is equivalent where `ensurepip` is available; on a minimal Debian/Ubuntu

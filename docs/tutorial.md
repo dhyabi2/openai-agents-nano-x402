@@ -22,17 +22,22 @@ Full numbers and sources in `docs/fee-finality-comparison.md`.
 
 ## 1. Install
 
-The v0.1.0 release is the immutable public install path (works today, no credentials):
+The v0.2.0 release is the current immutable public install path (works today, no credentials):
 
 ```bash
 # one wheel file, no git and no build:
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 
 # or the tagged source:
-pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.1.0"
+pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
 ```
 
-The sdist is at `.../releases/download/v0.1.0/openai_agents_nano-0.1.0.tar.gz`.
+The sdist is at `.../releases/download/v0.2.0/openai_agents_nano-0.2.0.tar.gz`.
+
+The v0.2.0 wheel includes the operator mandate (`mandate.py` + the `mandate` console
+script), the `openai_agents_nano/x402_sdk.py` module and the cap-check fixes. The
+v0.1.0 release is still served for backward compatibility, but it is the *partial*
+wheel and is not the path this tutorial uses.
 
 (PyPI is prepared but not uploaded: creating a PyPI project needs a human with a PyPI login to register
 the pending trusted publisher. Once that exists, `pip install openai-agents-nano` is enough.)

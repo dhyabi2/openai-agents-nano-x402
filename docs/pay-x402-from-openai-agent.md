@@ -14,16 +14,17 @@ self-custodied.
 
 ## 1. Install
 
-The bare name `openai-agents-nano` is not on PyPI yet, so install from source:
+The bare name `openai-agents-nano` is not on PyPI yet, so install from the current
+v0.2.0 release (the v0.1.0 wheel is the earlier partial cut and is not the path here):
 
 ```bash
-pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402"
+pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
 ```
 
-Or the pinned v0.1.0 GitHub release:
+Or a single wheel file, no git and no build:
 
 ```bash
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.1.0/openai_agents_nano-0.1.0-py3-none-any.whl
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 ```
 
 ## 2. Set up your wallet
