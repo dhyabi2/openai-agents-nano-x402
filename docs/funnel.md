@@ -1,3 +1,29 @@
+# Distribution funnel — 2026-11-01 22:30 UTC (run update)
+
+## New this run: answered a waiting external maintainer on an x402-verification thread
+vet402 (kzmttkc/vet402, "independent verification of the x402 agent-payment
+economy") — issue #60 "Consider verifying Nano (XNO) settlements alongside
+x402" was opened by us (dhyabi2, 10-11); maintainer kzmttkc replied 10-23:
+"if x402 sellers start offering an XNO payment option in [CDP Bazaar / MPP]
+catalog, I will look at it again. A link to such a listing posted here is the
+quickest way for me to see it." This run we found and supplied exactly that.
+- Verified LIVE in the CDP Bazaar discovery catalog (via
+  api.cdp.coinbase.com/platform/v2/x402/discovery/resources): **Pyfile x402
+  API** (serviceName; origin pyfile-agent.taile3ff35.ts.net) lists 17 x402-v2
+  resources each carrying an `accepts` entry for scheme=exact /
+  network=nano:mainnet / asset=XNO (nano_ payTo, work required) alongside USDC
+  on Base/Polygon/Arbitrum.
+- Live probe of /data/nano/courier on 2026-11-01: HTTP 402, WWW-Authenticate
+  x402 (v2), body `acceptedCurrencies: ["USDC","USDC","USDC","XNO"]`,
+  `X-Nano-Block-Status: no_payment_presented`, X-Nano-Note -> pursekeeper/api#1.
+- Posted reply with the listing links and an honest caveat (XNO leg settles
+  directly to the seller nano_ payTo; CDP facilitator's validate still rejects
+  a Nano-ONLY accept, so the observatory settlement applies to the USDC leg).
+  Comment #6564816424; disclosed AI. Logged distribution kind=outreach.
+- This is genuine adoption-adjacent distribution (an independent outside
+  verifier now has a live XNO x402 listing to fold into its observatory), not
+  a fabricated milestone: no rai-scope adopted milestone recorded.
+
 # Distribution funnel — 2026-11-01 22:00 UTC (run update)
 
 ## FLAG — scope DB `package` milestone is a false positive (2026-11-01)
