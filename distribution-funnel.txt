@@ -115,3 +115,20 @@ fresh-venv pip install of the v0.2.0 wheel imports make_nano_x402_tool (tool nam
 nano_x402_fetch), openai_agents_nano.x402_sdk.ExactNanoClientScheme and
 openai_agents_nano.mandate.MandateGuard. All three docs answer 200 signed-out on raw
 after the push (tutorial.md serves 5x '0.2.0').
+
+## 2026-11-01 ~22:45Z — outward surfaces all bumped to v0.2.0; tests/CI synced (distribution run, no build)
+
+After the README/landing page went to v0.2.0 (earlier run), four outward-facing surfaces
+still named the v0.1.0 partial wheel: llms.txt, docs/registry.html, docs/simple/
+openai-agents-nano/index.html (self-hosted PEP 503 simple index), and the CI weekly
+install check. Bumped all to v0.2.0 (sha256 recorded from the live release assets;
+dist hashes == release hashes). Cmmit bfeb3d6 pushed to main.
+
+This also made the repo's own checks explain their pre-existing failures: the suite had
+6 failures, of which 4 were the tests/CI still pinning v0.1.0 after the README moved to
+v0.2.0. Re-recorded the fixture from the real v0.2.0 wheel (tests/data/
+release-v0.2.0-contents.json: modules __init__/mandate/tool/x402_sdk, console script
+mandate), repointed test_readme_release_claims.py at it, and bumped ci.yml's weekly
+install URL to v0.2.0. Suite now 409 passed, 55 skipped, 2 failed -- the two remaining
+are the chronic feeless402 0.2.8 sub-raw cap divergence, unchanged on committed HEAD
+(source fix = tier-5 building, already documented in funnel.md).
