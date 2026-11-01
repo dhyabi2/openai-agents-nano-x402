@@ -1,3 +1,28 @@
+## 2026-11-01 ~20:15Z — v0.2.0 verified install + full-suite status (distribution run, no build)
+
+**Verified (v0.2.0 install path, real for an outside user):** `pip install
+"git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"` succeeds in a fresh
+venv (no credentials) -> dist version 0.2.0; `from openai_agents_nano import
+make_nano_x402_tool, NanoX402ToolError` imports; mandate classes (MandateGuard,
+MandateRefused) are present. This is the install path the README recommends for the
+operator mandate and was NOT previously verified. Logged via rai-distribution as
+`starter_path` (v0.2.0 tag).
+
+**Full-suite status — 2 chronic failures, PRE-EXISTING (not v0.2.0 regressions, not this
+run).** Ran the full suite with the pinned lock (.venv): `409 passed, 2 failed, 55
+skipped`. The two failures (`test_tool.py::test_sub_raw_cap_is_refused_as_text_not_an_sdk_error`,
+`test_sub_raw_default_cap_is_refused_as_text`) are a guard-vs-dependency divergence:
+tool.py expects `xno_to_raw` to RAISE `AmountError` on a cap finer than one raw (10^-30
+XNO) so it can return "REFUSED: ..." before any network call, but the pinned
+`feeless402 0.2.8` (unchanged in uv.lock since 2026-09-17) RETURNS `0` for
+`xno_to_raw("0.0000000000000000000000000000005")` instead of raising. So the sub-raw cap
+silently becomes cap_raw=0 and the tool proceeds to read the quote, which is why the
+failing assertion saw a DNS error on `example.invalid` rather than "REFUSED". Releasing
+v0.2.0 a few weeks ago did not touch this path. Fixing it is a source-code change =
+TIER-5 building, out of scope for DISTRIBUTION FIRST runs; recorded here so a build run or
+the cloud worker picks it up. Earlier close-outs reporting "tests green" used a smaller
+test subset and did not include these two.
+
 ## Distribution run Sep 20 14:16-14:30
 
 ### Traffic (14-day GitHub)
