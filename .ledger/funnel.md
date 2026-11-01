@@ -1,12 +1,21 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: Sep 22 07:59 UTC
+# Updated: 2026-11-01 19:55 UTC
 
 ## Current state
-- **ADOPTED**: Full milestone set achieved (package + listing + merged_pr + external_payment)
-- **Blocking new projects**: NO (adopted)
+- **ADOPTED (merged_pr + listing)**: real, verified. gold-402#256 merged (third-party, is_fork=false).
+  The `rai-scope` `package:true` milestone is a FALSE POSITIVE: PyPI serves a bot-challenge page that
+  returns 200 for any name, so `pypi.org/project/openai-agents-nano-x402/` 200 does not mean the package
+  exists. Real checks: `pypi.org/pypi/openai-agents-nano/json`=404, `simple/openai-agents-nano/`=404,
+  `pip download` fails "No matching distribution found". The package name (`openai-agents-nano`) is FREE.
+  PyPI is PENDING the owner's one-page trusted-publisher registration (login-only step an agent cannot
+  complete; publish.yml workflow is committed with OIDC). external_payment: false (not yet recorded via
+  rai-scope even though the landing page mentions a 2026-09-18 NanoGPT payment — unverified by scope).
+- **Blocking new projects**: rai-scope reports NO, but this rests on the false package milestone; treat
+  PyPI as the real gap and the toxic-package flag for the new-project gate as provisional until PyPI is live.
 - **TIER 0 — x402 spec consolidation**: PR #3536 (rebuilt Nano exact-scheme spec) was CLOSED 2026-09-21 by phdargen as **duplicate of #3432** (the maintainer-recognized consolidation target). #3432 stays OPEN + mergeable (Vercel deploy auth is on kilkelly's side) — this is the canonical Nano-in-the-standard PR. #3512 record thread kept current.
 - **14 open PRs** across upstream repos (spec consolidated onto #3432)
 - **FIRST CONTACT (tier 3b)**: PayAINetwork/agentic-payments — dual x402+MPP middleware, USDC-only, no Nano. Fork issue #1 + prepared branch `add-nano-x402-adapter` (ahead 1/behind 0) proposing Nano as a third ProtocolAdapter rail.
+- **FIRST CONTACT (tier 3a, 2026-11-01)**: BEBOTECH-OU/scrapewise-python#1 (optional feeless on-ledger Nano top-up for autonomous settle) and UniPat-AI/PaperBenchX#1 (per-task compute-cost records + feeless Nano settle leg). Both upstream non-fork repos, pages 200 signed-out, authored dhyabi2, 0 comments. Logged as outreach.
 
 ## Drift check (2026-09-20 16:15)
 - 9/17 prepared branches CLEAN (ahead 1/behind 0 vs correct default_branch)
@@ -14,12 +23,11 @@
 - 7 compare-404s in the naive check were actually clean (wrong default_branch in the loop — use master for x402-dev/awesome-agentic-commerce etc.)
 - michielpost/x402-dev `add-openai-agents-nano` is behind 1 vs master because #93 already MERGED (expected, already adopted)
 
-## Traffic (GitHub API, 14-day window)
-- Views: 134 total, 49 uniques (+17/+4 since Sep 18)
-- Clones: 2,839 total, 504 uniques (+560/+59 since Sep 18)
-- Release downloads: 564 (-4 since Sep 18 funnel, within noise)
-- Referrers: t.co 72/39, github.com 13/4, libhunt.com 2/1 (unchanged)
-- PyPI: not live (pending OIDC publisher)
+## Traffic (GitHub API, measured 2026-11-01 19:55 UTC)
+- Views (14-day): 9 total, 4 uniques
+- Clones (14-day): 74 total, 36 uniques
+- Release downloads: 717 total (v0.1.0 wheel, signed-out 200)
+- PyPI: not live (404 json/simple; name openai-agents-nano is FREE; pending OIDC trusted-publisher registration) — see Current state
 
 ## PR status (13 open)
 | Target | PR | Status |
