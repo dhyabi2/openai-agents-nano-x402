@@ -100,3 +100,18 @@ Total: 8 open + 2 merged (aiagenta2z #43, michielpost/x402-dev #93) = 10 total
 - Check TSC #4 for engagement on our settlement properties post
 - If gold-402 #234 has 'ready-to-merge' labels, poll actively
 
+
+## 2026-11-01 ~22:35Z — public tutorials bumped to v0.2.0 install path (distribution run, no build)
+
+The two tutorials (docs/tutorial.md, docs/pay-x402-from-openai-agent.md) and the
+quickstart (docs/xno-x402-quickstart.md) still told outside users to pip-install the
+v0.1.0 wheel (the partial cut: no mandate.py/x402_sdk/cap fixes) or plain source, while
+the README and landing page already recommended v0.2.0 (attached this run). Bumped all
+three to the v0.2.0 release (immutable wheel + tagged source), kept v0.1.0 noted as the
+backward-compatible partial cut. Commit e622d3f pushed to main.
+
+**Verified this run:** v0.2.0 wheel URL + git tag both answer HTTP 200 signed-out; a
+fresh-venv pip install of the v0.2.0 wheel imports make_nano_x402_tool (tool name
+nano_x402_fetch), openai_agents_nano.x402_sdk.ExactNanoClientScheme and
+openai_agents_nano.mandate.MandateGuard. All three docs answer 200 signed-out on raw
+after the push (tutorial.md serves 5x '0.2.0').
