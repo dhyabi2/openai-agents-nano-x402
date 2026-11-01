@@ -1,3 +1,16 @@
+## 2026-11-01 ~20:31Z — v0.2.0 release now has downloadable wheel+sdist (distribution run, no build)
+
+**v0.2.0 GitHub release got its package assets attached.** Until this run the v0.2.0 release
+(created 2026-11-01 20:04Z, shipping the operator MandateGuard) was asset-less: the only
+thing an outside user could install was `git+...@v0.2.0`. Built the wheel and sdist
+(`uv build`), secret-scanned both clean, and attached to the release
+(v0.2.0 openai_agents_nano-0.2.0-py3-none-any.whl + .tar.gz). Verified: both assets appear
+on the release, both download URLs answer HTTP 200 signed-out, and a fresh-venv
+`pip install` of the wheel imports MandateGuard/MandateRefused and make_nano_x402_tool.
+Logged via rai-distribution as `starter_path` (wheel URL). This gives outside users a
+bin-pip install of the mandate-guard release, not just the git path. PyPI itself is still
+not live (owner-only pending trusted-publisher login) — unchanged and documented.
+
 ## 2026-11-01 ~20:15Z — v0.2.0 verified install + full-suite status (distribution run, no build)
 
 **Verified (v0.2.0 install path, real for an outside user):** `pip install
