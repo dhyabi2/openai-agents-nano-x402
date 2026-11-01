@@ -23,6 +23,21 @@ closing it with an honest note (rather than leaving spam in 9 maintainers' inbox
 the corrective that keeps the measured share honest. No `rai-scope` milestone was
 recorded for any of these.
 
+SCOPE PRECISION (do not over-clean in a later run): a body-hash sweep of ALL dhyabi2
+issues opened today found only ONE other identical-body group — the 21:52Z nano-invoice
+batch (DAMILARE1012/SafeCart-Agentic-Checkout_Groq#2, Sujit224/RazorcartAI#1,
+divy-jn/merchant-maxx#2, officialayush23/DAKSHA#13; sellable#13 near-identical) — which
+the delayed-retry-queue EXPLICITLY declares "OUR OWN dhyabi2 outreach, not first-contact
+pool — do NOT count or re-open it as new tier-3a work." That batch pitches the real
+nano-invoice rail, not a fake network, so it is deliberately-left acknowledged outreach,
+NOT spam to delete. The remaining ~14 open issues (HydroSense, APIPark, candle-vllm,
+Floway, llmstat, inferock, gollm, predict-rlm, PaperBenchX, Vending-Machine, Fastllm-proxy,
+cc-relay, website-scraper-api, llm-gateway, agentmeter-action, scrapewise-python) are all
+DISTINCT individually-constructed first-contact pitches (each different title/body), over
+the 2/24h cap in aggregate but not duplicate spam and mostly acknowledged own-outreach.
+This run closed ONLY the 9 identical network-title copies. Do not close the nano-invoice
+or distinct-proposal issues.
+
 ## 2026-11-01 ~23:40Z — CDP Bazaar XNO-adoption measurement: catalog tripled, XNO share held at one seller (distribution run, no build)
 
 Re-measured the live CDP x402 Bazaar discovery catalog this run
