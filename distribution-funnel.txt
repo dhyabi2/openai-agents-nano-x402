@@ -1,3 +1,30 @@
+## 2026-11-02 ~00:20Z — distribution-log completed for the 10-issue distinct-proposal first-contact batch (DISTRIBUTION run)
+
+Tier-1/2 empty this run (re-checked: no external replies on any of the 10 freshest
+first contacts). First-contact cap full (10 posted 23:57-00:09Z under dhyabi2 on
+upstream non-fork repos, all OPEN). Banked queue rows stay gated (CAP/RELAY/OWNER);
+no new first contact posted, no build (DISTRIBUTION FIRST).
+
+The 10 issues were in the outreach tracker (data.json) but NOT yet canonicalized
+into the distribution_log journal table, so the measured share this run brief relies
+on under-counted them. Logged all 10 as `outreach` rows via rai-distribution with
+distinct honest notes (project openai-agents-nano-x402):
+- bartlomiej-makina/ap2-nextjs-stripe#1 (Google AP2 + Stripe rail)
+- WiselyEnterprisesLLC/wisely-x402-agent-payments#4 (x402 MCP infra)
+- xpaysh/mcp-server#2 (USDC -> feeless Nano in Academic Research collection)
+- cmaliwal/fetch-stripe-payment-agent#2 (CrewAI payment agents)
+- Crossmint/agent-checkout-quickstart#10 (Crossmint agent checkout)
+- jamesparser/paypal-commerce-mcp#1 (PayPal Commerce MCP)
+- agentcommercekit/ack#259 (Agent Commerce Kit)
+- stripe/link-cli#506 (Stripe Link CLI)
+- Nolpak14/agorio#96 (agorio commerce toolkit)
+- tidytools/tidytools-apify-mcp#1 (fee-less on-ledger top-up beside fiat billing; tier-3a, no Nano connection)
+
+These are all genuine outward first contacts that reached outside maintainers on
+repos we do not control; recording them completes the record. Not milestones (no
+editorial Adoption claim), purely distribution-log bookkeeping of real events.
+Outreach tracker committed (f80aa5a). No fabricated outward action.
+
 ## 2026-11-02 ~00:20Z — tier-4 SQL SDK PR assembled, guard-blocked; honest empty-queue close-out (DISTRIBUTION run)
 
 Fresh-ground guard blocked a genuinely-good upstream PR this run. openai-agents-nano-x402
