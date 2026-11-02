@@ -1,5 +1,17 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 07:35 UTC
+# Updated: 2026-11-02 08:16 UTC
+
+## Distribution 2026-11-02 ~08:16 UTC — release-asset download counts (trend point 18): all four assets moved since TP17b's 07:33Z read
+
+Fresh `GET /releases/tags/v0.1.0` + `v0.2.0` (08:15Z):
+- v0.1.0: wheel **764 -> 765** (+1), sdist **31 -> 32** (+1)
+- v0.2.0: wheel **30 -> 31** (+1), sdist **23 -> 24** (+1)
+
+Prior baseline (TP17b, 07:33Z read): v0.1.0 whl 764/sdist 31, v0.2.0 whl 30/sdist 23. So all four
+assets moved since ~40 minutes earlier. Honest no-outside-users caveat as every prior point: bare
+download counts are inflated by our own re-reads, crawlers and sibling-swarm pip installs; adoption
+still needs an outside user/payment/cite/merge. Trend point 18. (CDP catalog untouched this point —
+TP17 at ~07:20Z measured 69,476 rows; a fresh re-measure would be point-chasing so soon.)
 
 ## Distribution 2026-11-02 ~07:35 UTC — release-asset download counts (trend point 17b): all four assets moved since TP17's 07:05Z read
 
