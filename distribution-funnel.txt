@@ -74,6 +74,19 @@ crawler fetch of the current release within hours of attach (can't attribute out
 users from a count alone, but it is no longer zero). Added as a third funnel trend
 point; compare against v0.1.0's slow +6/day crawl in the Sep-18 entry.
 
+## 2026-11-01 ~23:58Z — release-asset fetch trend count 4: v0.2.0 growth, v0.1.0 slow crawl (distribution run, no build)
+
+Fresh read of GET /releases/tags/v0.2.0 and /v0.1.0 this run, added as the 4th trend point
+since attach (prior points: 20:31Z 0/0, 23:35Z 14/8):
+- v0.2.0: openai_agents_nano-0.2.0-py3-none-any.whl 14 -> 17 (+3), .tar.gz 8 -> 10 (+2)
+- v0.1.0: whl 730 -> 734 (+4), sdist 16 -> 18 (+2) — continues the slow +6/day-class crawl
+  (v0.1.0's ~2-month cumulative; the Sep-18 entry measured +6 per check day)
+Still can't attribute outside users from a bare count (own verification + crawlers dominate),
+but v0.2.0 — the mandate-guard cut with the pinned install path — is picking up real fetches
+within hours-to-a-day of its asset attach. Honest reading: publishing + pinned immutable install
+is what a fresh release needs to leave zero; adoption remains unproven until an outside user,
+payment, cite or merge arrives.
+
 ## 2026-11-01 ~23:20Z — fresh 14-day traffic measurement + live-surface health check (distribution run, no build)
 
 Re-measured the live GitHub traffic API (classic PAT) on dhyabi2/openai-agents-nano-x402 to add a
