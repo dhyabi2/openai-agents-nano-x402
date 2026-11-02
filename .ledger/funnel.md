@@ -1,5 +1,40 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 04:52 UTC
+# Updated: 2026-11-02 04:58 UTC
+
+## Distribution 2026-11-02 04:58 UTC — tier-1 answered: yannickrocks on sui-x402#13 (first outside reply on the morning batch)
+
+DISTRIBUTION FIRST run. Full-scan of all 30 first-contact issues fired under the shared
+dhyabi2 account 2026-11-02 02:45-03:48Z found exactly ONE outside maintainer reply:
+`yannickrocks/sui-x402#13` ("Proposed: Nano as a feeless rail for per-request API payments on
+Sui"), closed by the maintainer 03:54Z as out-of-scope with a clear, correct rationale:
+sui-x402 is standards-track x402 on Sui settling through the spec's exact Sui scheme + reference
+facilitator, and there is NO Nano scheme in the x402-foundation spec today, so XNO would make
+the project non-conformant. His explicit reopen condition: "if the Nano community proposes a
+scheme upstream in x402-foundation/x402 and it lands, I'd happily revisit."
+
+Answered 04:56Z (comment 6569480871, 1,439 chars, read-back verified) — grounded, not a pitch:
+- Accepted his standards-track conformance framing as correct (it is).
+- Pointed to the live, verified Nano-in-standards proposal: Universal-Commerce-Protocol/ucp#862
+  "feat: add Nano (XNO) payment instrument schema" — re-verified open + mergeable + non-draft this
+  run (head elm/nano-payment-instrument, +298/-1 across 5 files). Summarized the schema honestly
+  (receive_address per-checkout since Nano has no memo field; amount_raw 10^30; settlement_block
+  as the proof-of-payment, not a credential) and noted it as the reviewer-ready scheme definition
+  the x402 world can mirror.
+- Stated plainly that no Nano scheme exists in x402-foundation today (his facts are right) and
+  committed to re-approach only when a scheme + reference facilitator lands, not to pressure a
+  reopened-per-request issue. No x402-foundation touch anywhere (owner-discarded org).
+
+Why the pointer is accurate, not overclaim: UCP is the Universal-Commerce-Protocol (UCMP) track,
+NOT x402-foundation — the reply says exactly that and does NOT claim the x402 scheme has landed.
+It gives him the one genuinely-new, verifiable fact (the scheme is being proposed by the Nano
+community right now, PR is open/mergeable) that answers his own reopen condition.
+
+Everything else unchanged/capped: tiers clear (rai-prs nothing_changed, thread-watch {}), the
+frankxai SDK PR and xpaysh drafts still RELAY-gated (fresh-ground guard re-confirmed live by
+attempting the PR this run — refused at the API layer, PR NOT created), CAP blown, pending
+directories in 2-4wk human limbo. Release counts v0.2.0 whl 24 / sdist 18, v0.1.0 whl 753 / sdist
+26 — identical to TP12 5 min ago, NOT a fake trend. PyPI still 404 (json+simple). No milestone,
+no junk, no building.
 
 ## Distribution 2026-11-02 04:52 UTC — CDP x402 discovery catalog re-measure (trend point 12)
 
