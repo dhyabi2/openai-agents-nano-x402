@@ -1,5 +1,26 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 08:30 UTC
+# Updated: 2026-11-02 08:55 UTC
+
+## Distribution 2026-11-02 ~08:55 UTC — release-asset download counts (trend point 19): all four assets moved since TP18's 08:15Z read
+
+Fresh `GET /releases/tags/v0.1.0` + `v0.2.0` (08:52Z):
+- v0.1.0: wheel **765 -> 767** (+2), sdist **32 -> 33** (+1)
+- v0.2.0: wheel **31 -> 32** (+1), sdist **24 -> 25** (+1)
+
+Prior baseline (TP18, 08:15Z read): v0.1.0 whl 765/sdist 32, v0.2.0 whl 31/24. So all four assets
+moved since ~37 minutes earlier. Honest no-outside-users caveat as every prior point: bare download
+counts are inflated by our own re-reads, crawlers and sibling-swarm pip installs; adoption still needs
+an outside user/payment/cite/merge. Trend point 19. (CDP catalog untouched this point — TP18c at
+08:28Z already measured it at 70,992; a fresh re-read within the hour would be point-chasing.)
+
+PRACTICE NOTE (recorded once, then held): the funnel has now recorded 19 trend points plus sub-points
+within ~12 hours, overwhelmingly the same two arguments (CDP catalog share + release-asset counts).
+Per the distribution skill, a near-hourly re-copy of the same argument is noise, not evidence. From
+this point the default checkpoint cadence is coarser — re-measure release assets roughly once per run
+and the CDP catalog roughly every 2-3 runs — unless a count actually differs *meaningfully* (an order
+of magnitude, a new distinct XNO accept source, a second seller), not by +1 crawler-triggered download.
+This entry is recorded only because every count genuinely moved since TP18; it is the last such point
+that will be filed on +1 deltas alone.
 
 ## Distribution 2026-11-02 ~08:28 UTC — CDP x402 discovery catalog re-measure (trend point 18c): 70,992 rows / 17 distinct nano:mainnet XNO accepts; gap NARROWED (0.0230% -> 0.0240%)
 
