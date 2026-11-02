@@ -1,5 +1,22 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 09:55 UTC
+# Updated: 2026-11-02 10:02 UTC
+
+## Distribution 2026-11-02 ~10:02 UTC — release-asset download counts (trend point 21): all four assets moved since TP19's 08:55Z read; all live adoption milestones & both funnel servings re-confirmed HTTP 200
+
+Fresh `GET /releases/tags/v0.1.0`+`v0.2.0` this run (~10:00Z):
+
+| asset | TP19 (08:55Z) | now | Δ |
+|---|---|---|---|
+| v0.1.0 whl | 767 | 770 | +3 |
+| v0.1.0 sdist | 33 | 35 | +2 |
+| v0.2.0 whl | 32 | 34 | +2 |
+| v0.2.0 sdist | 25 | 27 | +2 |
+
+All four genuine download counts moved since the last read (~65 min earlier at 08:55Z; the 09:40/09:55 runs re-confirmed them flat mid-gap). Per the funnel-cadence rule a "genuinely-moved count is still worth one honest point" at the coarse cadence (release assets ≈ once per run), with the standing caveat: counts remain tiny and no-outside-user is proven — they could be our own CI/pip sandbox pulls. Not a milestone, not an adoption claim, not a first-outside-payment.
+
+**Live-surface health, batched live this run (all HTTP 200 signed-out):** 24K Labs listing (`24klabs.ai/listing/openai-agents-nano/`), agentmrr.ai, agents-launch, GitHub Pages funnel (`dhyabi2.github.io/.../funnel.md`), raw GitHub funnel, GitHub release v0.2.0. PyPI page 200 (JS challenge) but PyPI JSON `/pypi/.../json` still 404 — PyPI remains the owner-gated true-liveness gap, unchanged.
+
+No build, no first contact (cap blown), no queue row fired (all still CAP/RELAY/OWNER/REPO-gated), no fake trend.
 
 ## Distribution 2026-11-02 ~09:55 UTC — LIVE-milestone health confirmed; oldest pending-directory tail dead-end CONFIRMED (7 submissions, ~47 days, none live; retired as failed-to-convert, not re-submitted)
 
