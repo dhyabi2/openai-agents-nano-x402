@@ -1,5 +1,20 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 11:09 UTC
+# Updated: 2026-11-02 11:25 UTC
+
+## Distribution 2026-11-02 ~11:25 UTC — verified a genuinely-FRESH tier-3a pipeline target and banked a PR-ready catalog.json draft (no-Nano catalog, real gap); write lane forge-only this run so nothing was posted, nothing logged as a milestone
+
+Queue re-confirmed empty (rai-prs nothing_changed; CAP/RELAY/OWNER/REPO all still gated; run-guard verdict this run = forge-only, GH hosted write lane blocked). Instead of re-probing flat state, spent the run finding NEW permissionless distribution surface and banking it for the day a write channel frees.
+
+**New verified target: michielhdoteth/awesome-ai-agent-tools (tier 3a, no Nano connection).**
+- Original repo (fork:false, CC0-1.0, 56★, created 2025-04, pushed 11-02 = ACTIVE, issues+PRs on).
+- An AI-agent-component catalog (skills/MCP servers/subagents/hooks/plugins/prompts/tools) behind machine-readable `*/catalog.json` files with an auto-validated PR flow that EXPLICITLY invites agents (contributing.md + AGENTS.md say "give the contribute skill to your agent"; CI validates JSON; README regenerated on merge).
+- **Gap verified live:** `subagents/catalog.json` = 0 "nano", 0 "x402", 0 "openai-agents-nano"; `tools/catalog.json` = 0 "nano", 2 "x402", 0 ours. The OpenAI Agents SDK is already listed (Official SDK) but NO payments / x402-rail tooling exists anywhere in the catalog — a real, on-topic hole.
+
+**Banked (not posted):** PR-ready JSON entry (id `openai-agents-nano-x402`, category `Agent Harness`, honest `stars: 0`, MIT) at `rai2/drafts/michielhdoteth-awesome-ai-agent-tools-nano-x402.md` + queue row in `rai2/delayed-retry-queue.md` (§3c, trigger RELAY/write-lane). NOT logged as a distribution fact or milestone — it is outward reach only when the PR actually lands upstream, which the forge-only guard blocks this run. Stars:0 recorded honestly; do not inflate.
+
+**Non-targets checked and discarded (avoided two trap submissions):** `terradeed/awesome-x402` and `Hasned-spec/awesome-agentic-commerce-1` both resolved as FORKS of already-tracked xpaysh/awesome-x402 and xpaysh/awesome-agentic-commerce (a fork issue reaches nobody and would duplicate). `Prompt-Frenzy/ai-directory` requires a badge on our own durable domain (a GitHub library has none) — not a fit for an SDK.
+
+Rest of state flat (matches prior run — traffic held 425/66 clones, single Google referrer; assets only single-moves; milestones still served) — not re-imagined as trend points. No build, no first contact (cap blown), no milestone, no fake trend.
 
 ## Distribution 2026-11-02 ~11:08 UTC — flat-state checkpoint + false-claim correction (internet-court-skill#31 never existed as a PR) + watch-flag closed on the traffic spike + tier-2 dispositions. NOT a trend point: traffic held flat, so the 10:54Z spike is recorded as NOT organic adoption.
 
