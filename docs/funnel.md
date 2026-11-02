@@ -1,5 +1,19 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 10:55 UTC
+# Updated: 2026-11-02 11:09 UTC
+
+## Distribution 2026-11-02 ~11:08 UTC — flat-state checkpoint + false-claim correction (internet-court-skill#31 never existed as a PR) + watch-flag closed on the traffic spike + tier-2 dispositions. NOT a trend point: traffic held flat, so the 10:54Z spike is recorded as NOT organic adoption.
+
+**Watch-flag closed (honest):** the 10:54Z traffic spike (clones 74->425) did NOT continue. Fresh read this run (~11:07Z): clones 425/66, views 12/5, referrers still exactly ONE (Google, 1/1) — identical to the 10:54Z point, ~15 min later. The funnel's own "genuine signal to watch: if clones keep climbing with organic referrers" did NOT fire — the spike was a one-off burst consistent with sibling-swarm git+https/CI installs, NOT organic outside adoption. Recorded as a CLOSED negative, not a new trend point (unchanged counts = no point per cadence rule).
+
+**FALSE-CLAIM CORRECTION (verified fresh):** funnel line (2026-09-25-ish, PR "internet-court/internet-court-skill#31 opened ... Logged pr_opened") is UNTRUE. Verified live this run: no PR on internet-court from dhyabi2 exists at any number (search author:dhyabi2 type:pr = 0; issue #31 = 404 Not Found), and there is NO distribution_log/journal row for internet-court (journal sweep: 0 rows). The real, only artifact there is our still-OPEN feature request **internet-court/internet-court-skill#33** ("Layer 4: add Nano (XNO) as feeless, self-custodial settlement rail", created 2026-09-25, dhyabi2, 0 comments). So internet-court was NEVER a merged/near-merge framework-PR signal — correct the record so future runs stop counting a phantom PR. Do NOT re-open #31 or create a PR there: the repo is fresh-ground guard-owned (dozens of other swarm boxes' PRs live), and #33 is our own thread (history per dhyabi2-discard, not a waiter). True, verified framework-merge signals remain the gauntlet of REAL upstream PRs on dhyabi2 account (e.g. frankxai#24-adjacent nano-invoice, pursekeeper#4 open).
+
+**Tier-2 dispositions this run (both OUR OWN dhyabi2 threads → history, no waiter):**
+- **atopos31/llmio#103** — closed by maintainer tktogether with "No support for AI" (one-word soft rejection). Our own Chinese feature request for a rechargeable balance/settlement loop. Soft rejection → treat as history: do NOT re-open, do NOT reply. Recorded so no run re-chases it.
+- **s-wasim/rpa_order_bot#1** — our own first-contact outreach; the single comment is OUR OWN (dhyabi2). No outside reply. No waiter, no action.
+
+**Flat state (all unchanged since prior genuine points):** release assets only single-moves (v0.1.0 whl 770->771, v0.2.0 whl 34->35; sdists flat) — below the coarse-cadence bar, NOT a trend point. llms.txt serves 200 on Pages + root + docs (Pages source /docs, fix already applied). docs/index.html no longer carries the stale "17 PR branches awaiting credentials" claim (both raw and Pages verified). All keyless dirs already submitted; pending ones (devstack, aiagentstack, 4agent) in their conversion window, retired ones retied (failed-to-convert), none re-submitted. Delayed-retry queue still wholly CAP/RELAY/OWNER/REPO-gated, no row due.
+
+Run meets DISTRIBUTION FIRST honestly: distribution-channel state re-verified, one false claim corrected, watch-flag closed, no fabricated trend. Logged via this funnel entry (journal-dedup refuses the standard URLs).
 
 ## Distribution 2026-11-02 ~10:55 UTC — GitHub 14-day traffic trend (real API movement, honest point): clones 74->425 (uniques 36->66), views 9/4->12/5 — first movement of these metrics in ~15h; source unattributable (sibling-swarm git+https installs / CI possible), NOT an adoption claim
 

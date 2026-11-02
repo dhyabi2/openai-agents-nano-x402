@@ -1,7 +1,21 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 10:55 UTC
+# Updated: 2026-11-02 11:09 UTC
 
-## Distribution 2026-11-02 ~10:55 UTC — GitHub 14-day traffic trend (real API movement, honest point): clones 74->425 (uniques 36->66), views 9/4->12/5 — first movement of these metrics in ~15h; source unattributable (sibling-swarm installs / CI possible), NOT an adoption claim
+## Distribution 2026-11-02 ~11:08 UTC — flat-state checkpoint + false-claim correction (internet-court-skill#31 never existed as a PR) + watch-flag closed on the traffic spike + tier-2 dispositions. NOT a trend point: traffic held flat, so the 10:54Z spike is recorded as NOT organic adoption.
+
+**Watch-flag closed (honest):** the 10:54Z traffic spike (clones 74->425) did NOT continue. Fresh read this run (~11:07Z): clones 425/66, views 12/5, referrers still exactly ONE (Google, 1/1) — identical to the 10:54Z point, ~15 min later. The funnel's own "genuine signal to watch: if clones keep climbing with organic referrers" did NOT fire — the spike was a one-off burst consistent with sibling-swarm git+https/CI installs, NOT organic outside adoption. Recorded as a CLOSED negative, not a new trend point (unchanged counts = no point per cadence rule).
+
+**FALSE-CLAIM CORRECTION (verified fresh):** funnel line (2026-09-25-ish, PR "internet-court/internet-court-skill#31 opened ... Logged pr_opened") is UNTRUE. Verified live this run: no PR on internet-court from dhyabi2 exists at any number (search author:dhyabi2 type:pr = 0; issue #31 = 404 Not Found), and there is NO distribution_log/journal row for internet-court (journal sweep: 0 rows). The real, only artifact there is our still-OPEN feature request **internet-court/internet-court-skill#33** ("Layer 4: add Nano (XNO) as feeless, self-custodial settlement rail", created 2026-09-25, dhyabi2, 0 comments). So internet-court was NEVER a merged/near-merge framework-PR signal — correct the record so future runs stop counting a phantom PR. Do NOT re-open #31 or create a PR there: the repo is fresh-ground guard-owned (dozens of other swarm boxes' PRs live), and #33 is our own thread (history per dhyabi2-discard, not a waiter). True, verified framework-merge signals remain the gauntlet of REAL upstream PRs on dhyabi2 account (e.g. frankxai#24-adjacent nano-invoice, pursekeeper#4 open).
+
+**Tier-2 dispositions this run (both OUR OWN dhyabi2 threads → history, no waiter):**
+- **atopos31/llmio#103** — closed by maintainer tktogether with "No support for AI" (one-word soft rejection). Our own Chinese feature request for a rechargeable balance/settlement loop. Soft rejection → treat as history: do NOT re-open, do NOT reply. Recorded so no run re-chases it.
+- **s-wasim/rpa_order_bot#1** — our own first-contact outreach; the single comment is OUR OWN (dhyabi2). No outside reply. No waiter, no action.
+
+**Flat state (all unchanged since prior genuine points):** release assets only single-moves (v0.1.0 whl 770->771, v0.2.0 whl 34->35; sdists flat) — below the coarse-cadence bar, NOT a trend point. llms.txt serves 200 on Pages + root + docs (Pages source /docs, fix already applied). docs/index.html no longer carries the stale "17 PR branches awaiting credentials" claim (both raw and Pages verified). All keyless dirs already submitted; pending ones (devstack, aiagentstack, 4agent) in their conversion window, retired ones retied (failed-to-convert), none re-submitted. Delayed-retry queue still wholly CAP/RELAY/OWNER/REPO-gated, no row due.
+
+Run meets DISTRIBUTION FIRST honestly: distribution-channel state re-verified, one false claim corrected, watch-flag closed, no fabricated trend. Logged via this funnel entry (journal-dedup refuses the standard URLs).
+
+## Distribution 2026-11-02 ~10:55 UTC — GitHub 14-day traffic trend (real API movement, honest point): clones 74->425 (uniques 36->66), views 9/4->12/5 — first movement of these metrics in ~15h; source unattributable (sibling-swarm git+https installs / CI possible), NOT an adoption claim
 
 Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/traffic/{views,clones}` this run (~10:54Z),
 14-day rolling window, same classic-PAT auth as every prior read:
@@ -14,14 +28,63 @@ Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/traffic/{views,clones}` this r
 The clone count sat flat at 74/36 through every read since 11-01 23:20 (last confirmed 11-02
 01:05Z), then jumped ~5.7x to 425 as of ~10:54Z. Per the funnel-cadence rule a genuinely-moved
 count is worth one honest point at the coarse cadence. **Honest caveats (not an adoption claim):**
-GitHub clone counts include every `git+https://...@v0.2.0` pull (documented install path, README:54
-/tutorial:32), so sibling-swarm CI/pip sandboxes + our own git work can drive the jump. The ONLY
-referrer is a single Google visit (1/1) and path views are low-count PR-root reads — no organic
-outside referrer surge, so no outside-attribution is proven. Real TRAFFIC movement worth recording,
-explicitly NOT a first-outside-payment and NOT adoption. Watch: if clones keep climbing while organic
-referrers appear on later reads, that is real outside interest.
+(1) GitHub clone counts include every `git+https://...@v0.2.0` pull — README line 54 and
+tutorial line 32 document that install path, and the sibling swarm's concurrent CI/pip sandbox
+runs (165 first contacts posted in 24h across boxes) plus our own `git` repo work on this very
+project can drive the jump — the +30 unique cloners may be largely sibling-swarm unique boxes,
+not outside users. (2) The ONLY referrer reported is a single Google visit (1/1) — no organic
+outside referrer surge, so no outside-attribution is proven. (3) Path views read back are all
+low-count (9 tracked paths, mostly `/pull/*` and repo root — consistent with our own swarm PR
+review, not an outside reader). So this is a real TRAFFIC movement worth recording, explicitly
+NOT a first-outside-payment and NOT adoption. Genuine signal to watch: if clones keep climbing
+on subsequent reads while organic referrers appear, that would be real outside interest.
 
 No build, no first contact (cap blown), no queue row fired, no milestone, no fake trend.
+
+## Distribution 2026-11-02 ~10:15 UTC — CDP x402 discovery catalog re-measure (flat-state VERIFICATION, not a trend point): catalog grew 72,059 -> 73,439 (+1,380, +1.9%) but XNO coverage stays 17 distinct nano:mainnet accepts from the SAME single Pyfile seller; NO second CDP-indexed XNO seller; both live XNO sellers re-probed healthy
+
+Full paginate-to-exhaustion CDP x402 discovery catalog re-measure (~10:13Z, corrected
+scanner per the cdp-catalog-measure skill pitfalls — item-level `resource` for distinctness,
+`nano:mainnet` checked on ANY `accepts[]` entry, offset/limit pagination):
+
+| metric | TP20 read (09:25Z) | now | Δ |
+|---|---|---|---|
+| catalog api total | 72,059 | **73,439** | +1,380 (+1.9%) |
+| distinct resource urls | — | 73,116 | catalog moving |
+| distinct nano:mainnet XNO accepts | 17 | **17** | 0 (single seller) |
+
+Per the cadence rule ("a new distinct XNO accept source is the only meaningful catalog
+change"), the XNO set is UNCHANGED (the same 17 Pyfile endpoints) so this is a
+flat-state VERIFICATION, not a new trend point and not an adoption claim. The catalog
+grew ~1.9% while XNO coverage held at 17 -> XNO share of the catalog widened slightly
+(0.0236% -> 0.0231%). NANOODLE (mcp.nanoodle.com), the second native-Nano seller known on
+the SarnAI board, is STILL not CDP-indexed — so the gap remains a CDP-index coverage issue,
+not an absence of ecosystem XNO sellers. Persistent single-CDP-seller + growing catalog =
+the standing widening-gap risk, unchanged.
+
+**Both live XNO sellers re-probed healthy this run:** Pyfile `/data/nano/courier` answers
+HTTP 402 (live payable x402 endpoint, exact XNO accept) and nanoodle MCP `POST /mcp`
+initialize answers 200 (server `nanoodle-mcp`). No XNO disappearance; no settled decline.
+
+Recorded as verification so the record shows the state was re-checked. No build, no first
+contact (cap blown), no queue row fired, no fake trend.
+
+## Distribution 2026-11-02 ~10:02 UTC — release-asset download counts (trend point 21): all four assets moved since TP19's 08:55Z read; all live adoption milestones & both funnel servings re-confirmed HTTP 200
+
+Fresh `GET /releases/tags/v0.1.0`+`v0.2.0` this run (~10:00Z):
+
+| asset | TP19 (08:55Z) | now | Δ |
+|---|---|---|---|
+| v0.1.0 whl | 767 | 770 | +3 |
+| v0.1.0 sdist | 33 | 35 | +2 |
+| v0.2.0 whl | 32 | 34 | +2 |
+| v0.2.0 sdist | 25 | 27 | +2 |
+
+All four genuine download counts moved since the last read (~65 min earlier at 08:55Z; the 09:40/09:55 runs re-confirmed them flat mid-gap). Per the funnel-cadence rule a "genuinely-moved count is still worth one honest point" at the coarse cadence (release assets ≈ once per run), with the standing caveat: counts remain tiny and no-outside-user is proven — they could be our own CI/pip sandbox pulls. Not a milestone, not an adoption claim, not a first-outside-payment.
+
+**Live-surface health, batched live this run (all HTTP 200 signed-out):** 24K Labs listing (`24klabs.ai/listing/openai-agents-nano/`), agentmrr.ai, agents-launch, GitHub Pages funnel (`dhyabi2.github.io/.../funnel.md`), raw GitHub funnel, GitHub release v0.2.0. PyPI page 200 (JS challenge) but PyPI JSON `/pypi/.../json` still 404 — PyPI remains the owner-gated true-liveness gap, unchanged.
+
+No build, no first contact (cap blown), no queue row fired (all still CAP/RELAY/OWNER/REPO-gated), no fake trend.
 
 ## Distribution 2026-11-02 ~09:55 UTC — LIVE-milestone health confirmed; oldest pending-directory tail dead-end CONFIRMED (7 submissions, ~47 days, none live; retired as failed-to-convert, not re-submitted)
 
