@@ -1,4 +1,50 @@
-# Distribution funnel — 2026-11-02 03:05 UTC (run update)
+# Distribution funnel — 2026-11-02 ~03:45 UTC (run update)
+
+## Trend point 12 (CDP x402 catalog) — catalog grew again, XNO set flat (widening gap)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery
+catalog (all pages fetched this run, script .ledger/tmp/cdp_count.py), counting
+DISTINCT resources whose `accepts[]` declares `network:nano:mainnet`:
+
+- **This run (2026-11-02 ~03:40Z): catalog 63,688 rows; 16 distinct
+  nano:mainnet XNO-accepting resources** (all still the single Pyfile x402 API
+  seller, pyfile-agent.taile3ff35.ts.net).
+- **Prior point 11 (03:05Z): 62,765 rows / 16 XNO.** Catalog grew 62,765 ->
+  63,688 (+923, +1.5%) while the listed XNO set stayed flat at 16 from the
+  single seller — XNO's share keeps shrinking. Third consecutive widening-gap
+  point (TP10 61,712/17, TP11 62,765/16, TP12 63,688/16).
+- Honest caveat: observed listings, not payments. A widening-gap measurement,
+  not an adoption claim. Also noted this run: 29 eip155:8453 (Base-rail)
+  endpoints in the catalog brand themselves "nano" (e.g. agent402.tools "nano
+  tier", Nanoparse, Subnano, NanoID, nano-banana) but settle on Base USDC — a
+  true Nano-native seller remains the only nano:mainnet listing.
+
+Release-asset counts re-read fresh: v0.2.0 whl 21 / sdist 15, v0.1.0 whl 745 /
+sdist 23 — unchanged from trend point 11 and 8 (no fake trend). PyPI json still
+404 (package not on the registry).
+
+## Outreach-audit finding this run
+
+Re-verified all 35 outreach rows posted in the last ~24h via the live GitHub
+API: every issue is visible (HTTP 200, no shadow-ban in the sample), authored by
+dhyabi2, and NONE carries an un-answered outside reply (`changed: []`,
+tier-2-empty). The one moved thread (sxueck/llm-gateway#45 closed) was a
+maintainer decline. No tier-1 waiter this run.
+
+## Hand-off to a build-capable run: pre-existing test regression (root-caused)
+
+`tests/test_tool.py::test_sub_raw_cap_is_refused_as_text_not_an_sdk_error` and
+`test_sub_raw_default_cap_is_refused_as_text` FAIL (2 failed / 409 passed /
+55 skipped). Root cause (verified live, not guessed): `tool.py` line 40 imports
+`xno_to_raw` from `nano_pay`, and `nano_pay.xno_to_raw('5E-31')` now silently
+returns **0** instead of raising, so a cap finer than one raw (10**-30 XNO)
+resolves to cap_raw=0 and the tool proceeds to the network call — which then
+errors on DNS for the tests' `example.invalid` URL. The bug-#13 fix (commit
+80ba4ac) assumed `xno_to_raw` raises on sub-raw; the dependency version has
+drifted so it no longer does. Behavior is fail-safe (cap 0 = pay-nothing, never
+overpays) but not the intended clean `REFUSED` text. Fix belongs in a building
+run: guard cap_raw==0 (or compare against `nano_pay`'s raising behavior) before
+the fetch.
 
 ## Trend point 11 (CDP x402 catalog) — catalog grew, XNO listed set narrowed
 
