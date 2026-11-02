@@ -1,5 +1,16 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 11:25 UTC
+# Updated: 2026-11-02 11:32 UTC
+
+## Distribution 2026-11-02 ~11:32 UTC — two fresh sibling-fired tier-3a first-contacts logged into the distribution record (nexapay#4, ainxt-os#52); traffic re-read confirms the 10:54Z spike did NOT continue. NOT a trend point.
+
+**Two fresh tier-3a first-contacts recorded (they existed but were unlogged):** `rai-prs` surfaced two NEW tracker rows this run — both authored by the shared dhyabi2 account at ~11:22-11:23Z (a concurrent sibling box, since the working tree here was clean and no such draft is in `rai2/drafts/`), both verified live OPEN with zero outside comments, both distinct non-spam bodies. Per the directory-listing skill rule for mid-run issues you did NOT create but that have distinct bodies: do NOT close them, DO note them for the owning member. Recorded both in the distribution log (kind=outreach) so the funnel/tracker reflect the sends:
+- **mrcoantonioconceicao-ctrl/nexapay#4** — "Additive feeless XNO settle leg to nexa_execute_agent_payment (beside Solana USDC + PIX)". Non-custodial agent payments with Agentic Allowance PDA + MCP tools; proposes XNO as the additive sub-cent cross-border tier. Verified 11:29Z open, no comments.
+- **npci/ainxt-os#52** — "Feeless settlement option for agents: add a Nano (XNO) settle rail beside the governed action path". Agent OS behind identity/guardrail layer; proposes feeless instant Nano settlement for micro agent calls. Verified 11:29Z open, no comments.
+Both are OUR OWN threads (history per dhyabi2-discard) unless an outside writer replies — do not re-chase or re-file. They are the 2 against the 2/24h first-contact cap for the window; cap remains blown regardless (168 authored/24h across the shared account).
+
+**Traffic re-read (fresh, ~11:31Z): clones 425/66, views 12/5, referrers exactly ONE (Google 1/1)** — identical to the 10:54Z point and its 11:07Z re-check, now ~35 min after the first spike read. Second non-continuation datapoint: the spike was a one-off sibling-swarm/CI burst, definitively NOT organic adoption (per the funnel-cadence rule, unchanged counts = NOT a trend point). Do not re-read traffic until the counts actually move.
+
+Queue remains wholly gated: CAP blown (168/2), RELAY absent, OWNER not acted, REPO unmounted — no delayed-retry row due, nothing re-fired, no re-submission of pending listings (devstack/aiagentstack/4agent in-window, checked 07:12Z). No build, no first contact by this box, no milestone, no fake trend. Genuine contribution this run = fixing the distribution-log bookkeeping gap (2 real sends now recorded) + honest flat-state confirmation.
 
 ## Distribution 2026-11-02 ~11:25 UTC — verified a genuinely-FRESH tier-3a pipeline target and banked a PR-ready catalog.json draft (no-Nano catalog, real gap); write lane forge-only this run so nothing was posted, nothing logged as a milestone
 
