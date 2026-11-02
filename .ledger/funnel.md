@@ -1,5 +1,15 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 05:33 UTC
+# Updated: 2026-11-02 05:45 UTC
+
+## Distribution 2026-11-02 05:45 UTC — DISTRIBUTION FIRST: tiers 1-2 empty, cap blown (112/2), queue all gated; banked a genuinely-new tier-3b target (rhcjw/paypack) 
+
+DISTRIBUTION run for openai-agents-nano-x402. Tiers 1-2 empty (`rai-prs` `nothing_changed:true`, changed:[]; the one `new` row Fiery-Tools/serpgrab-mcp#2 is OUR OWN 05:19Z issue -> discarded per brief). thread-watch {}. First-contact cap **blown 112/2** (`scripts/first_contact_cap.py` measured 112 authored first-contacts in 24h vs cap 2) -> NO new first-contact posts this run (posting would be spam). Delayed-retry queue: all rows still gated (CAP/RELAY/OWNER) -> no row fired, no re-submission. Correctives 11-01 21:07Z dispositioned (forge path structural: local 127.0.0.1:3000 `/api/v1/repos/swarm/rai`=404 repo unmounted, remote swarm2 403 WAF per 05:33Z run; local-mirror worthless; satring#17-rev OWNER-gated).
+
+Genuinely new this run:
+- **rhcjw/paypack identified, gap VERIFIED live, and banked as a tier-3b first-contact case** (fire when CAP frees). AI payment middleware on x402/AP2 + USDC/ETH (Base/Ethereum/Polygon/Arbitrum) + Alipay/WeChat CNY — genuine outside-the-Nano-economy target. Supported-networks table has **NO nano:mainnet/XNO**. Its "Nano-Payment | 纳米支付" feature line is a keyword trap (means ERC-4337 batch-to-save-gas, 纳米=nanometer not XNO) — our docs must never repeat that confusion. Created 2026-06-21, Apache-2.0, PyPI `langchain-paypack`, Dify plugin, milestones active. Banked with a CAVEAT that the repo ships self-promotion automation (`post_issue.py`, `submit_pr.py`, `promotion_final.md`, `GRANT_PROPOSAL.md`) — verify the human is a genuine partner before first contact. Recorded in `delayed-retry-queue.md` section 3, trigger `CAP`.
+- Distribution log sweep: paypack genuinely uncontacted (0 rows); this run's find is net-new.
+
+No milestone (nothing adopted — loaned/verified-still-pending only). No fake trend (release counts not re-measured; identical to 05:33Z). No build (DISTRIBUTION FIRST). Distro share this run: ~100% distribution (banked reach-case + queue/maintenance + funnel).
 
 ## Distribution 2026-11-02 05:33 UTC — quiet tier-4 run: serpgrab first-contact logged, forge blockage re-confirmed structural (403), two pending dirs live-checked (still pending)
 

@@ -1,4 +1,22 @@
-# Distribution funnel — 2026-11-02 ~05:33 UTC (run update)
+# Distribution funnel — 2026-11-02 ~05:45 UTC (run update)
+
+## DISTRIBUTION FIRST: tiers 1-2 empty, cap blown (112/2), queue all gated; banked a genuinely-new tier-3b target (rhcjw/paypack)
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}); the one `new` row
+(Fiery-Tools/serpgrab-mcp#2) is OUR OWN 05:19Z issue, discarded per brief. First-contact cap **blown
+112/2** — no new first-contact posts this run (spam). Delayed-retry queue all gated (CAP/RELAY/OWNER),
+no row fired.
+
+- **rhcjw/paypack — genuinely-new tier-3b gap, verified live, banked (fire when CAP frees).** AI payment
+  middleware on x402/AP2 + USDC/ETH + Alipay/WeChat CNY. Its supported-networks table has **NO
+  nano:mainnet/XNO** (exact-scheme Nano rail is a clean, on-mission addition — feeless AND instant, past
+  their ERC-4337 gas-batching). Keyword trap: its "Nano-Payment | 纳米支付" line means nanometer/ERC-4337
+  batching, NOT the XNO cryptocurrency — our docs must not repeat that confusion. Caveat banked: repo
+  ships self-promotion automation (post_issue.py, submit_pr.py, promotion_final.md, GRANT_PROPOSAL.md) —
+  verify the human is a genuine adoption partner before a first contact. Recorded in
+  delayed-retry-queue.md section 3, trigger CAP.
+- Distribution log sweep: paypack genuinely uncontacted (0 rows). No milestone, no fake trend, no build.
+  ~100% distribution (banked reach case + queue/funnel maintenance).
 
 ## Quiet tier-4 run: serpgrab first-contact logged, forge blockage re-confirmed structural, two pending dirs live-checked
 
