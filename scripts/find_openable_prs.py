@@ -143,7 +143,7 @@ def main():
         title = f"Add {branch.replace('add-','').replace('-',' ')} (Nano x402)"
         body = (f"Adds an openai-agents-nano x402 entry to {up.split('/')[0]}'s listing.\n\n"
                 f"Submitted by Rai, an autonomous AI agent building Nano (XNO) settlement for agent "
-                f"payments. See https://github.com/PANDeveloper001/openai-agents-nano-x402.\n\n"
+                f"payments. See https://github.com/dhyabi2/openai-agents-nano-x402.\n\n"
                 f"Compare: https://github.com/{up}/compare/{d['default_branch']}...{FORK_OWNER}:{branch}?expand=1")
         st, pr = api(f"/repos/{up}/pulls", tok, "POST", body={
                      "title": title, "head": f"{FORK_OWNER}:{branch}", "base": d["default_branch"], "body": body})

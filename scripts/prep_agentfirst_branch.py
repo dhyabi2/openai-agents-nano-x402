@@ -76,7 +76,7 @@ def main():
     readme = open("README.md").read()
     anchor = "## Payments & Commerce"
     add = (
-        "- [openai-agents-nano](https://github.com/PANDeveloper001/openai-agents-nano-x402) "
+        "- [openai-agents-nano](https://github.com/dhyabi2/openai-agents-nano-x402) "
         "- Lets an OpenAI Agents SDK agent pay x402-priced HTTP APIs instantly and feeless in "
         "self-custodied Nano (XNO).\n"
     )

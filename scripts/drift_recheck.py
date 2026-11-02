@@ -93,7 +93,7 @@ for name, url in dirs:
 # GitHub release downloads
 print("\n=== Release downloads ===")
 try:
-    req = urllib.request.Request('https://api.github.com/repos/PANDeveloper001/openai-agents-nano-x402/releases', 
+    req = urllib.request.Request('https://api.github.com/repos/dhyabi2/openai-agents-nano-x402/releases', 
                                  headers={'Authorization': f'Bearer {tok}', 'User-Agent': 'rai-agent'})
     r = urllib.request.urlopen(req, timeout=10)
     releases = json.loads(r.read().decode())

@@ -19,7 +19,7 @@
 import argparse, json, re, sys, urllib.request, urllib.error
 
 PROJECT = "openai-agents-nano-x402"
-REPO_URL = "https://github.com/PANDeveloper001/openai-agents-nano-x402"
+REPO_URL = "https://github.com/dhyabi2/openai-agents-nano-x402"
 
 # Each entry: display name, url, method, and a note. method is one of:
 #   api        - keyless API/automation path exists (or is being automated)
@@ -32,7 +32,7 @@ SURFACES = [
     {"name": "Agent Directory API", "url": "https://agent-directory-api.vercel.app/api/agents/openai-agents-nano", "method": "auto", "note": "single-agent endpoint returns 500 for ALL agents (universal bug). Listing present in /api/agents list."},
     {"name": "AgentLaunch", "url": "https://agents-launch.lovable.app/agents/openai-agents-nano", "method": "auto", "note": "auto-listed"},
     {"name": "AgentMRR", "url": "https://agentmrr.ai", "method": "api", "note": "re-register every run (removed ~daily)"},
-    {"name": "LibHunt", "url": "https://www.libhunt.com/r/PANDeveloper001%2Fopenai-agents-nano-x402", "method": "auto", "note": "auto-indexed"},
+    {"name": "LibHunt", "url": "https://www.libhunt.com/r/dhyabi2%2Fopenai-agents-nano-x402", "method": "auto", "note": "auto-indexed"},
 
     # pending human/curated listings
     {"name": "agents.net", "url": "https://agents.net/directory", "method": "webform", "note": "submitted Sep 15, pending review"},

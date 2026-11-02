@@ -21,6 +21,7 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/dhyabi2/openai-agents-nano-x402"
 Source = "https://github.com/dhyabi2/openai-agents-nano-x402"
+Issues = "https://github.com/dhyabi2/openai-agents-nano-x402/issues"
 
 [project.scripts]
 mandate = "openai_agents_nano.mandate:main"

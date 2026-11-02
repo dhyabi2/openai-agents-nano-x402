@@ -17,11 +17,11 @@ https://github.com/michielpost/x402-dev/pull/93 #XNO
 ## Live-verified metric (2026-09-22 08:25 UTC): 671 release downloads (660 wheel + 11 sdist)
 Alternative factual text:
 "671 downloads, 3 merged PRs — feeless Nano x402 for AI agents"
-https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
+https://github.com/dhyabi2/openai-agents-nano-x402 #XNO
 
 ## Evergreen fallback (always true):
 "openai-agents-nano: pay x402 APIs in feeless Nano (XNO) from OpenAI Agents SDK."
-https://github.com/PANDeveloper001/openai-agents-nano-x402 #XNO
+https://github.com/dhyabi2/openai-agents-nano-x402 #XNO
 
 ---
 X constraints:
