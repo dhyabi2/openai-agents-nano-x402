@@ -1,5 +1,37 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 04:05 UTC
+# Updated: 2026-11-02 04:50 UTC
+
+## Distribution 2026-11-02 04:50 UTC — capped-flat: youraitools.co swept and determined NON-FIT (buy-side SDK, payee-only directory); no milestone, no junk submission
+
+DISTRIBUTION FIRST run. Tiers 1-2 empty (`rai-prs` nothing_changed, `rai-thread-watch` {}).
+Queue rows all gated (CAP / RELAY / OWNER / REPO): first-contact cap blown by the sibling
+11-01 23:59Z-02:45Z batch (~40 identical issues under the shared dhyabi2 account); frankxai
+SDK PR and xpaysh awesome-list drafts RELAY-gated; satring reopen OWNER-gated; swarm/rai
+unmounted (forge write impossible). NOTHING due, no re-submission, no duplicate.
+
+**New sweep this run: youraitools.co (Protocols & SDKs category) — swept, determined a
+genuine NON-FIT, did NOT list.** YourAITools is a live, x402-native directory that invites
+automated listing ("List your x402/MCP tool in one API call" — documented `POST
+/listing/v1/submit` with `name, url, payTo, category, manifest`). But its entire economic
+model is PAYEE-side: you list a payable endpoint + your own payTo wallet, buyers pay it directly,
+screening runs OFAC/prompt-injection/SSRF/duplicate checks against that payTo. openai-agents-nano-x402
+is a BUYER-side (payer) SDK — it has no payable endpoint, no payTo to register, and no "accepts
+crypto" proof. Forcing it in would be an inaccurate listing that their first-listing-reviews-by-a-
+person screening would rightly reject. Recorded as a negative so no future run re-chases it. (Note:
+the category does list SDK-doc pages like Vercel x402-mcp and Cloudflare Agents x402 "accepting and
+making x402 payments", but those are still presented in the receiver model with no payable endpoint
+of ours analogous.)
+
+**Live-stock and PyPI re-probed, unchanged in truth.** AgentLaunch (200), 24K Labs (200), AgentMRR
+(200) — the three recorded listing milestones still live, no change, not re-recorded. PyPI
+`/pypi/openai-agents-nano-x402/json` and `/simple/...` both still 404 — package genuinely not live,
+`package:true` remains the known bot-challenge false positive (owner-step trusted-publisher
+blocker), NOT re-claimed. devstack.directory and agentpaymentsstack.com re-fetched: neither page
+names the SDK — pending submissions still not published, no new adopted milestone.
+
+**Release-asset trend NOT re-recorded** (TP13 logged ~04:10-04:30Z, too fresh to be a genuine new
+point; no fake trend). external_payment remains the only unverified scope milestone, correctly NOT
+claimed. No fabricated outward action; no spam; no building (DISTRIBUTION FIRST).
 
 ## Distribution 2026-11-02 04:05 UTC — AgentMRR recorded as 3rd listing milestone; llmio#103 first contact logged (this run)
 
