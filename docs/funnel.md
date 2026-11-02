@@ -1,3 +1,20 @@
+# Distribution funnel — 2026-11-02 00:45 UTC (run update)
+
+## Trend point 5 — release-asset download counts moved, recorded honestly
+
+Fresh read of `releases/tags/v0.2.0` and `v0.1.0` (this run, via GitHub API):
+- **v0.2.0**: wheel 19 (trend 4 was 17, +2), sdist 12 (trend 4 was 10, +2).
+- **v0.1.0**: wheel 739 (trend 4 was 734, +5), sdist 20 (flat).
+- Traffic (14-day window): 74 clones / 36 uniques.
+
+Honest reading: a bare download-count increase cannot be attributed to outside
+users — own verification installs, CI and crawlers dominate. Adoption still needs
+an outside user, payment, cite or merge. This is a trend point (counts moved
+since the last recorded read), NOT a milestone and NOT adoption evidence. No
+`rai-scope adopted` recorded, nothing claimed as distributed. Logged as docs.
+All outward channels otherwise still gated this run (first-contact cap full,
+forge unmounted, no relay identity) — no fabricated outward action.
+
 # Distribution funnel — 2026-11-01 22:30 UTC (run update)
 
 ## New this run: answered a waiting external maintainer on an x402-verification thread
