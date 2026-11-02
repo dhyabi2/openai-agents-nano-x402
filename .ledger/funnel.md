@@ -1,5 +1,36 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 07:05 UTC
+# Updated: 2026-11-02 07:20 UTC
+
+## Distribution 2026-11-02 ~07:20 UTC — CDP x402 discovery catalog re-measure (trend point 17): 69,476 rows / 16 distinct nano:mainnet XNO accepts; widening-gap deepens again (0.0232% -> 0.0230%)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (single combined
+count+xno scan, HTTP-429 backoff, full clean run this time per the skill's rate-limit lesson), counting
+DISTINCT resource URLs whose `accepts[]` declares `network:nano:mainnet`.
+
+- **This run (~07:20Z): api_total 69,476 rows; 16 distinct nano:mainnet XNO accepts**, all the one
+  Pyfile x402 API seller (pyfile-agent.taile3ff35.ts.net, 16 endpoints, calls30 1-15) — the XNO set
+  stayed single-seller (16).
+- **Prior (06:13Z / TP16): 69,029 rows / 16 XNO** — the catalog grew **+447 (+0.65%)** while the XNO
+  set stayed flat at 16. XNO's share of the index fell **0.0232% -> 0.0230%** (16/69,029 -> 16/69,476).
+  Widening-gap deepens again: the catalog outgrew Nano's footprint, consistent with every prior point.
+- Honest exhaustion note: rows_read 69,224 / unique_resources_seen 69,080. The server-side `total`
+  grew DURING the scan (69,243 early -> 69,476 at the end), so api_total is live-moving faster than
+  any single scan reads it; rows_read tracks the queryable set at scan time (ended on an empty page,
+  no ERR/GAVEUP(429) in the log). The gap rows_read < api_total is the catalog growing mid-scan, not
+  an abandoned scan.
+- **Keyword-trap (re-confirmed):** the raw `nano|xno` scan also matches 31 non-mainnet rows (eip155:8453
+  Base and other, e.g. nanoID, subnano, nano-banana image URLs) — NOT XNO. Honest count = the 16
+  nano:mainnet rows only; a raw scan would inflate ~2x.
+- Honest caveat (as every prior point): observed 402 accept declarations in a Coinbase catalogue, not
+  settled XNO revenue; no adoption claim — a widening-gap trend measurement.
+- Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), first-contact cap blown
+  (`scripts/first_contact_cap.py` measured 113/2), delayed-retry queue all gated, forge write path still
+  structurally blocked. Pending dirs agentpaymentsstack.com + devstack.directory live-re-checked in a
+  JS browser 07:12Z: 0 project slug occurrences, still pending in-window, no re-submit. Release assets
+  re-read 07:05Z: v0.1.0 whl 763/sdist 30, v0.2.0 whl 29/sdist 22 — unchanged from TP16b, so NO new
+  asset point (no fake trend). Only the catalog total moved, giving TP17.
+- Trigger honesty: TP16 (07:00Z) and TP17 (~07:20Z) are ~20 min apart because api_total genuinely moved
+  69,029 -> 69,476 on a fresh clean full scan; release assets did NOT move, so nothing else re-recorded.
 
 ## Distribution 2026-11-02 ~07:00 UTC — CDP x402 discovery catalog re-measure (trend point 16): 69,029 rows / 16 distinct nano:mainnet XNO accepts; widening-gap deepens again (0.0236% -> 0.0232%)
 
