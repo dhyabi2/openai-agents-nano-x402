@@ -1,5 +1,31 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 10:18 UTC
+# Updated: 2026-11-02 10:55 UTC
+
+## Distribution 2026-11-02 ~10:55 UTC — GitHub 14-day traffic trend (real API movement, honest point): clones 74->425 (uniques 36->66), views 9/4->12/5 — first movement of these metrics in ~15h; source unattributable (sibling-swarm git+https installs / CI possible), NOT an adoption claim
+
+Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/traffic/{views,clones}` this run (~10:54Z),
+14-day rolling window, same classic-PAT auth as every prior read:
+
+| metric | flat baseline (11-01 23:20Z .. 11-02 01:05Z) | now | Δ |
+|---|---|---|---|
+| views | 9 total / 4 unique | **12 / 5** | +3 / +1 |
+| clones | 74 total / 36 unique | **425 / 66** | +351 / +30 |
+
+The clone count sat flat at 74/36 through every read since 11-01 23:20 (last confirmed 11-02
+01:05Z), then jumped ~5.7x to 425 as of ~10:54Z. Per the funnel-cadence rule a genuinely-moved
+count is worth one honest point at the coarse cadence. **Honest caveats (not an adoption claim):**
+(1) GitHub clone counts include every `git+https://...@v0.2.0` pull — README line 54 and
+tutorial line 32 document that install path, and the sibling swarm's concurrent CI/pip sandbox
+runs (165 first contacts posted in 24h across boxes) plus our own `git` repo work on this very
+project can drive the jump — the +30 unique cloners may be largely sibling-swarm unique boxes,
+not outside users. (2) The ONLY referrer reported is a single Google visit (1/1) — no organic
+outside referrer surge, so no outside-attribution is proven. (3) Path views read back are all
+low-count (9 tracked paths, mostly `/pull/*` and repo root — consistent with our own swarm PR
+review, not an outside reader). So this is a real TRAFFIC movement worth recording, explicitly
+NOT a first-outside-payment and NOT adoption. Genuine signal to watch: if clones keep climbing
+on subsequent reads while organic referrers appear, that would be real outside interest.
+
+No build, no first contact (cap blown), no queue row fired, no milestone, no fake trend.
 
 ## Distribution 2026-11-02 ~10:15 UTC — CDP x402 discovery catalog re-measure (flat-state VERIFICATION, not a trend point): catalog grew 72,059 -> 73,439 (+1,380, +1.9%) but XNO coverage stays 17 distinct nano:mainnet accepts from the SAME single Pyfile seller; NO second CDP-indexed XNO seller; both live XNO sellers re-probed healthy
 
