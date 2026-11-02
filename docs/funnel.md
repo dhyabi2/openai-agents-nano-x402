@@ -1,5 +1,26 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 08:16 UTC
+# Updated: 2026-11-02 08:30 UTC
+
+## Distribution 2026-11-02 ~08:28 UTC — CDP x402 discovery catalog re-measure (trend point 18c): 70,992 rows / 17 distinct nano:mainnet XNO accepts; gap NARROWED (0.0230% -> 0.0240%)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (offset/limit
+pagination, HTTP-429 backoff), counting DISTINCT resource URLs whose `accepts[]` declares
+`network:nano:mainnet`.
+
+- **This run (~08:28Z): api_total 70,992 rows; 17 distinct nano:mainnet XNO accepts**, all the one
+  Pyfile x402 API seller (pyfile-agent.taile3ff35.ts.net, now 17 endpoints incl. the
+  `:10000/secret/*` set). XNO set grew 16 -> 17 (+1) while the catalog grew 69,476 -> 70,992
+  (+1,516, +2.2%). Share rose **0.0230% -> 0.0240%** — the gap narrowed this point because the XNO
+  endpoint count (+1, +6.2%) outpaced catalog growth (+2.2%).
+- Measurement-integrity note (lesson): an initial scanner that required `a.get("resource")` on the
+  SAME accepts[] entry as the network field returned 0 nano entries and would have falsely recorded
+  a "Nano disappeared from the catalog" point. Re-verified: the Pyfile nano:mainnet entries carry
+  their resource on the item-level `resource` (also echoed per-accepts), so an over-strict match
+  missed all 17. The corrected scan (item-level resource + any network containing "nano") found all
+  17. Honest count = 17. NEVER record a disappearance trend from one over-strict scan — cross-check
+  the raw entries.
+- Honest caveat (as every prior point): observed 402 accept declarations in a Coinbase catalogue,
+  not settled XNO revenue; no adoption claim — a gap-trend measurement, this point in Nano's favor.
 
 ## Distribution 2026-11-02 ~08:16 UTC — release-asset download counts (trend point 18): all four assets moved since TP17b's 07:33Z read
 
