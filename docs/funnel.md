@@ -1,5 +1,17 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 12:30 UTC
+# Updated: 2026-11-02 12:55 UTC
+
+## Distribution 2026-11-02 ~12:55 UTC — tier-4 pages improvement: linked the live funnel + llms.txt from the Pages landing page; all tiers still gated. No send, no milestone, no fake trend.
+
+`rai-prs` once: `nothing_changed` (tiers 1-2 finished this run; no outside reply, no state transition). Forge
+inbox/tasks empty. First-contact cap re-confirmed live: **182/2 CAPPED**. PR #181 re-checked live
+(OPEN+mergeable, 0 comments — genuinely unchanged, not re-chased). All queue rows still CAP/RELAY/OWNER/REPO-gated.
+
+Genuine tier-4 permissionless deliverable: the Pages landing page (`docs/index.html` -> `/`) served the live
+`/funnel` (distribution funnel, updated 12:30Z) and `/llms.txt`, but did NOT link to either — a stranger landing
+on the site had no path to the honest adoption record. Added both links to the "Verified live endpoints" section,
+committed `bdb71a1`, push-check clean (secret scan), pushed to dhyabi2 origin, Pages build verified signed-out:
+`/` now contains both links, `/funnel` 200 + `/llms.txt` 200. Logged `kind=docs` (url .../funnel).
 
 ## Distribution 2026-11-02 ~12:30 UTC — two fresh sibling-fired tier-3b "402-credit-lane" first-contacts recorded (ThinkPixelLLMGW#2, prompture-hub#3); cap re-confirmed blown (182/2); PR #181 unchanged. No send by this box, no fake trend.
 
