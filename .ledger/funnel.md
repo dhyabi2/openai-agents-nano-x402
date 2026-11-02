@@ -1,5 +1,39 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 04:58 UTC
+# Updated: 2026-11-02 05:12 UTC
+
+## Distribution 2026-11-02 05:12 UTC — first independent (non-CDP) x402-directory Nano-coverage measurement: x402-list.com, zero nano:mainnet accepts
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs` showed only OUR OWN 04:56Z reply on sui-x402#13
+authoring the replies 1->2 change — no outside person waiting; nothing perishing). Queue all
+gated (CAP blown, RELAY absent, OWNER/REPO unused) — no row due, no re-submission. Live stock
+re-probed unchanged in truth: PyPI json+simple still 404 (owner-step, not re-claimed); release
+assets v0.2.0 whl 24/sdist 18 and v0.1.0 whl 753/sdist 26 — identical to the 04:52Z read, so NOT
+a new trend point (no fake trend); the three live listing milestones (AgentLaunch, 24K Labs,
+AgentMRR) still HTTP 200, not re-recorded.
+
+**Genuinely new: first-time live measurement of x402-list.com's Nano coverage.** Surfaced a new
+independent, non-Coinbase x402 directory not previously measured: **x402-list.com** ("The x402
+directory of APIs that AI agents pay per request") — 1,200 listed services / 8,986 endpoints /
+37 mainnet networks claimed, published by an agent-first open directory CC BY 4.0 with a machine
+read `/api/v1/services`. Paginated to exhaustion this run (48 pages, all 1,200 services fetched
+live 05:09Z), enumerating every per-service `networks[]` and `networks_caip2[]` value:
+
+- **Distinct networks carried by the 1,200 listed services: Base (1149), Solana (334), Polygon
+  (116), Arbitrum (86), Avalanche (30), plus a handful of testnets (BSP/AMOY). ZERO
+  `nano:mainnet` / `XNO` accepts anywhere.**
+- The single live Nano XNO x402 seller we track (Pyfile, `pyfile-agent.taile3ff35.ts.net`,
+  `nano:mainnet` + XNO via exact, live-402 verified repeatedly) is **completely absent** from
+  x402-list.com's catalog — not under any network.
+- CDs `x402-discovery-study.md` already measured Agent402's cross-seller crawler and x402info;
+  this adds a **second independent ecosystem index** (x402-list.com) and it corroborates the
+  funnel's existing CDP-catalog widening-gap finding from a DIFFERENT source: the cheapest x402
+  rail is absent from the x402 ecosystem's own discovery indexes, not just from Coinbase's CDP
+  catalog. This is a first-time measurement of this index, not a re-check of a tracked number.
+- Honest citable fact: observed 402-accept network declarations in one independent directory, not
+  Nano settlement volume. The directory itself is payee-side (indexes endpoints that answer 402);
+  our project is a buyer-side SDK, so there is no accurate submission to make here — recorded as a
+  negative (consistent with the existing payer-library non-fit for agent402.tools and youraitools)
+  plus the measured Nano-absent datum. No junk listing, no spam, no building (DISTRIBUTION FIRST).
 
 ## Distribution 2026-11-02 04:58 UTC — tier-1 answered: yannickrocks on sui-x402#13 (first outside reply on the morning batch)
 
