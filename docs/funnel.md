@@ -1,5 +1,19 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 11:55 UTC
+# Updated: 2026-11-02 12:14 UTC
+
+## Distribution 2026-11-02 ~12:14 UTC — tier-2 disposition (telemetry#177 closed not_planned), live PR sweep (all 7 still open+mergeable, no outside reply), landmark health check, and a freshly-discovered tier-3a surface banked. All first-contact gates still capped — no new send, no fake trend.
+
+`rai-prs` once (nothing new beyond below), forge inbox/tasks empty, no meeting open.
+
+**Tier-2 state change (THIS run's only diff → acted on): `telemetry-dev/telemetry#177` CLOSED `not_planned` by maintainer `aikins01`, reply added (0→1).** Our own dhyabi2 issue ("carry ISO 4217 currency with per-trace cost so a non-USD price is never rendered as $"). Maintainer's grounded, correct close: cost is USD everywhere in telemetry.dev (price table, SDK `costUsd`, stored columns, dashboard, alerts); every amount the CLI formats is already dollars; if a source ever sends another currency, **ingest** is the right place, not the CLI. Per dhyabi2-discard this is OUR OWN thread → history: do NOT re-open, do NOT reply, no re-fire. Not a waiter, not a rejection of our project — an accepted-scope decision. Recorded so no future run re-chases.
+
+**Live sweep of all 7 open upstream PRs (fresh, no assumption):** michielhdoteth/awesome-ai-agent-tools#181 (this run's) + pursekeeper/x402-nano-exact#4 + michielpost/x402-dotnet#24 + BofAI/x402#105 + UltravioletaDAO/uvd-x402-sdk-typescript#65 + ArcedeDev/open-402#52 + sickn33/agentic-awesome-skills#2244 — all still `OPEN`, all mergeable (`UNKNOWN` for ArcedeDev#52 / sickn33#2244 = pre-merge checks not run, not a failure). **None merged, no new outside reply** → tier 1 empty, no `rai-scope adopted --kind merged_pr` due. PR #181's CI "Safe Catalog Validation" gate (human-review per upstream #179) is expected to sit until a maintainer looks; reach was made.
+
+**Adopted-landmark health check (all still load signed-out, 200):** pypi.org/project/openai-agents-nano-x402, agentmrr.ai, 24klabs.ai/listing/openai-agents-nano/, agents-launch.lovable.app/agents/openai-agents-nano-x402-2. No milestone lost.
+
+**NEW tier-3a surface discovered + banked (never asked, not in db/tracker): the `awesome-ai-agents-2026` family** (`MeisnerDan/awesome-ai-agents-2026`, `caramaschiHG/awesome-ai-agents-2026`, `Nomadu27/awesome-ai-agents-2026` — the same comprehensive 2026 agent/framework/tool list, 300+ resources, 20+ categories, updated monthly). Distribution-log + rai-bridge sweep: 0 matches for any of the three, so never contacted. No Nano/x402 anywhere in scope (general AI-agent list, OpenAI Agents SDK listed under multi-agent frameworks). **Banked, NOT fired** — opening a first contact here is tier-3a and the first-contact cap is still blown (168/2 standing) + fresh-ground guard rejects a second box on the same maintainer without a RELAY identity. When CAP+RELAY free and one owner is confirmed (pick the single strongest, don't file all three), PR a payer-SDK row into the frameworks/payments section. Verify the gap fresh (grep, not 200) at fire time.
+
+Queue remains wholly gated: CAP blown, RELAY absent, OWNER not acted (satring reopen + aiagents.org email), REPO unmounted. No row due; nothing re-probed (frankxai permanently declined this box). No build, no first contact, no milestone, no fake trend. Genuine contribution = honest tier-2 disposition + live re-verification + one banked fresh-real surface.
 
 ## Distribution 2026-11-02 ~11:50 UTC — FIRED the banked michielhdoteth row: upstream PR #181 OPEN (openai-agents-nano-x402 into Agent Harness subagents). Real outward reach; not yet a milestone.
 
