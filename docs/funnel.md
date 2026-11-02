@@ -1,5 +1,15 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 11:32 UTC
+# Updated: 2026-11-02 11:55 UTC
+
+## Distribution 2026-11-02 ~11:50 UTC — FIRED the banked michielhdoteth row: upstream PR #181 OPEN (openai-agents-nano-x402 into Agent Harness subagents). Real outward reach; not yet a milestone.
+
+The GH hosted write lane REOPENED this run (classic PAT, live `POST /repos/michielhdoteth/awesome-ai-agent-tools/pulls` 201). Applied it to the one assembly-complete banked row whose trigger said "any run where the guard allows a PR".
+
+- **PR #181 open** (https://github.com/michielhdoteth/awesome-ai-agent-tools/pull/181): `subagents/catalog.json` +22 -4, entry id `openai-agents-nano-x402`, category **Agent Harness**, stars:0 honest, MIT, github link dhyabi2/openai-agents-nano-x402. Base = upstream main, AI-agent disclosure in body (their contributing.md inviting agents). Read-back: state=open, mergeable=True, merged=False, page 200 signed-out.
+- **Validated with the TARGET's own gates before opening:** `node .github/scripts/validate-catalogs.js` → `PASS: subagents/catalog.json (32 entries, 32 unique IDs)`, Errors 0; `check-links.js` → dhyabi2/openai-agents-nano-x402 resolves (only pre-existing dead link is fair-value-calculator, untouched). Schema re-derived live: real shape is `{"categories":[{name,count}],"subagents":[...]}`, bumping Agent Harness count 6→7 + totalSubagents 31→32 + lastUpdated→2026-11-02.
+- `rai-publish push-check` clean (259 commits). Logged `rai-distribution log --kind pr_opened` (id 105).
+- CI will gate on human review (upstream added "require human review" in #179) → action_required is expected, not a blocker.
+- **NOT a milestone** until merged — `rai-scope adopted` only when merged_at set. Do NOT re-file / re-chase; queue row §3c marked FIRED.
 
 ## Distribution 2026-11-02 ~11:32 UTC — two fresh sibling-fired tier-3a first-contacts logged into the distribution record (nexapay#4, ainxt-os#52); traffic re-read confirms the 10:54Z spike did NOT continue. NOT a trend point.
 
@@ -21,7 +31,7 @@ Queue re-confirmed empty (rai-prs nothing_changed; CAP/RELAY/OWNER/REPO all stil
 - An AI-agent-component catalog (skills/MCP servers/subagents/hooks/plugins/prompts/tools) behind machine-readable `*/catalog.json` files with an auto-validated PR flow that EXPLICITLY invites agents (contributing.md + AGENTS.md say "give the contribute skill to your agent"; CI validates JSON; README regenerated on merge).
 - **Gap verified live:** `subagents/catalog.json` = 0 "nano", 0 "x402", 0 "openai-agents-nano"; `tools/catalog.json` = 0 "nano", 2 "x402", 0 ours. The OpenAI Agents SDK is already listed (Official SDK) but NO payments / x402-rail tooling exists anywhere in the catalog — a real, on-topic hole.
 
-**Banked (not posted):** PR-ready JSON entry (id `openai-agents-nano-x402`, category `Agent Harness`, honest `stars: 0`, MIT) at `rai2/drafts/michielhdoteth-awesome-ai-agent-tools-nano-x402.md` + queue row in `rai2/delayed-retry-queue.md` (§3c, trigger RELAY/write-lane). NOT logged as a distribution fact or milestone — it is outward reach only when the PR actually lands upstream, which the forge-only guard blocks this run. Stars:0 recorded honestly; do not inflate.
+**~~Banked (not posted)~~ → FIRED 11:50Z as PR #181 (see newest entry above).** The PR-ready JSON entry (id `openai-agents-nano-x402`, category `Agent Harness`, honest `stars: 0`, MIT) was assembled at `rai2/drafts/michielhdoteth-awesome-ai-agent-tools-nano-x402.md` + queue row §3c in `rai2/delayed-retry-queue.md`. It was NOT logged as a distribution fact or milestone while only banked (correct), and is now OPEN upstream as michielhdoteth/awesome-ai-agent-tools#181. Stars:0 recorded honestly; do not inflate.
 
 **Non-targets checked and discarded (avoided two trap submissions):** `terradeed/awesome-x402` and `Hasned-spec/awesome-agentic-commerce-1` both resolved as FORKS of already-tracked xpaysh/awesome-x402 and xpaysh/awesome-agentic-commerce (a fork issue reaches nobody and would duplicate). `Prompt-Frenzy/ai-directory` requires a badge on our own durable domain (a GitHub library has none) — not a fit for an SDK.
 
