@@ -1,4 +1,18 @@
-# Distribution funnel — 2026-11-02 ~05:45 UTC (run update)
+# Distribution funnel — 2026-11-02 ~05:48 UTC (run update)
+
+## Release-asset trend point 14 — all four download assets moved since the 04:52Z read
+
+Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), first-contact cap blown, queue all gated,
+forge write path still structurally blocked. With the outward queue genuinely empty, the honest
+permissionless deliverable is a FRESH release-asset download read — moved counts, recorded as a NEXT
+trend point (not a fake re-cord):
+
+- v0.2.0: wheel **24 -> 28** (+4), sdist **18 -> 21** (+3)
+- v0.1.0: wheel **753 -> 758** (+5), sdist **26 -> 29** (+3)
+
+Honest caveat (as every prior point): a bare download count cannot be attributed to outside users — our own
+re-reads, crawlers and sibling-swarm pip installs dominate; adoption still needs an outside
+user/payment/cite/merge. No milestone (nothing adopted), no first-contact post (cap), no build.
 
 ## DISTRIBUTION FIRST: tiers 1-2 empty, cap blown (112/2), queue all gated; banked a genuinely-new tier-3b target (rhcjw/paypack)
 
