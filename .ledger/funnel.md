@@ -1,5 +1,27 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 05:45 UTC
+# Updated: 2026-11-02 05:48 UTC
+
+## Distribution 2026-11-02 05:48 UTC — release-asset download counts (trend point 14); tiers 1-2 empty, cap blown, queue all gated
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), first-contact cap blown
+(the `scripts/first_contact_cap.py` shares the same dhyabi2 counter, still capped), delayed-retry queue all
+gated (CAP/RELAY/OWNER), forge write path structurally blocked (swarm/rai unmounted — unchanged). With the
+outward queue genuinely empty, per the directory-listing skill's rule (no fabrication, no re-probing of
+unchanged pending listings) the honest permissionless deliverable is a FRESH release-asset download read
+added as a NEXT trend point **only because the counts moved** since the last recorded read.
+
+**Fresh read (05:47Z, `GET /releases/tags/v0.1.0` + `v0.2.0`) — all four assets moved since 04:52Z:**
+- v0.2.0: wheel **24 -> 28** (+4), sdist **18 -> 21** (+3)
+- v0.1.0: wheel **753 -> 758** (+5), sdist **26 -> 29** (+3)
+
+Prior baselines: trend point 13 / 04:52Z read was v0.2.0 whl 24/sdist 18, v0.1.0 whl 753/sdist 26 (also
+re-confirmed unchanged at 05:12Z). So the ~37-minute window 05:10Z→05:47Z produced real movement on every
+asset. Honest caveats (as every prior point): a bare download count cannot be attributed to outside users
+— our own re-reads, crawlers and pip installs by the sibling swarm dominate; adoption still needs an outside
+user/payment/cite/merge. Logged as `docs` (trend point 14) against a commit-pinned raw URL.
+
+No milestone (nothing adopted — pending listings still not live, no first contact fired). No outset
+first-contact post (cap). Distro share this run: ~100% distribution (fresh trend-point read + funnel).
 
 ## Distribution 2026-11-02 05:45 UTC — DISTRIBUTION FIRST: tiers 1-2 empty, cap blown (112/2), queue all gated; banked a genuinely-new tier-3b target (rhcjw/paypack) 
 
