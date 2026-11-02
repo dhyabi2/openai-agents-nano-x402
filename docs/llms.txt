@@ -1,0 +1,91 @@
+# openai-agents-nano
+
+> Pay any x402-priced HTTP endpoint in self-custodied Nano (XNO) from an OpenAI Agents SDK agent.
+> A thin MIT-licensed adapter over the feeless402 client: it rebuilds no Nano payment logic and
+> exposes `request_with_payment`, `Wallet` and `RPC` as one OpenAI Agents SDK tool.
+
+Built by an AI agent (Rai). Scope approved with `rai-scope` (`scope-manifest.json` in this repo).
+
+## Install
+
+Immutable release asset (no git, no build, cacheable):
+
+    pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
+
+Or straight from the tag:
+
+    pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
+
+The v0.2.0 wheel includes the operator mandate (`openai_agents_nano/mandate.py` + the `mandate`
+console script), the `openai_agents_nano/x402_sdk.py` module and the cap-check fixes. The v0.1.0
+release is still served for backward compatibility but is the partial cut; use v0.2.0.
+
+PyPI: NOT published. `pip install openai-agents-nano` fails with "No matching distribution found";
+the name is unregistered. `.github/workflows/publish.yml` performs the upload with no stored secret
+through PyPI trusted publishing, and its only remaining failure is PyPI's `invalid-publisher`
+("no corresponding publisher") — i.e. the pending-publisher registration is the one missing step.
+
+## Use
+
+```python
+from agents import Agent, Runner
+from openai_agents_nano import make_nano_x402_tool
+
+tool = make_nano_x402_tool()  # wallet path + cap are bound here, never exposed to the model
+
+agent = Agent(
+    name="Paying agent",
+    instructions=(
+        "You can buy from paid x402 APIs. Always call nano_x402_fetch with dry_run=true "
+        "first to see the price and get its quote_token; only call with dry_run=false, "
+        "passing that quote_token back, if the price is acceptable."
+    ),
+    tools=[tool],
+)
+
+Runner.run_sync(agent, "Fetch https://api.example.com/report")
+```
+
+## Tool surface
+
+- `make_nano_x402_tool(wallet_path=None, rpc_url=None, max_xno=None) -> FunctionTool`
+- The tool is `nano_x402_fetch(url, method="GET", json_body="", max_xno=None, dry_run=False, quote_token=None)`.
+- `dry_run=true` is spendless: it reads the server's HTTP 402 quote and returns price, `pay_to` and cap
+  as agent-readable text plus a single-use `quote_token` binding that exact offer. Never signs, never broadcasts.
+- `dry_run=false` re-reads the quote, refuses (as a plain string, not an exception) unless the unspent
+  `quote_token` still matches the current offer, then consumes it, enforces the per-call cap in
+  deterministic code, signs locally and retries with the payment header.
+- Only a ledger-confirmed settlement is reported as PAID. An unconfirmed block is returned as
+  NOT PAID / UNCONFIRMED with its block hash, so an agent never re-pays blind.
+- Wallet path and RPC are construction-bound; the model sees neither. Your seed stays on disk.
+
+## Docs
+
+- [Status and install (public landing page)](https://dhyabi2.github.io/openai-agents-nano-x402/): status badges, every install method, verified live endpoints, plain what-it-does. Served signed-out via GitHub Pages.
+- [Tutorial](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/tutorial.md): install, two-phase spendless usage, safety, verify commands.
+- [Fee and finality comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/fee-finality-comparison.md): measured Nano vs USDC-on-Base x402.
+- [Agent payment rails comparison](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/agent-payment-rails-comparison.md): Nano x402 vs x402/USDC, Stripe+Tempo MPP, Google AP2, card-network agent rails.
+- [vs the incumbent OpenAI x402 client](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/comparison-vs-x402-openai-python.md): custody rail, fee model, framework fit.
+- [Live mainnet proof](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/live-proof.md): a real capped redeem that settled a confirmed XNO block.
+- [x402 seller discovery study](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/x402-discovery-study.md): measured audit of the CDP Bazaar index.
+- [XNO x402 quickstart](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/xno-x402-quickstart.md): runnable commands against live XNO-priced endpoints.
+- [Source](https://github.com/dhyabi2/openai-agents-nano-x402) · [Release v0.2.0](https://github.com/dhyabi2/openai-agents-nano-x402/releases/tag/v0.2.0)
+
+## Verification
+
+Ledger record for this repo: 9 laws, 23 verifies, probe 100/100, no ungrounded laws, receipt chain
+intact (`.ledger/`, committed). Offline tests: `python -m pytest -q` plus the fail-closed,
+two-phase, receipt-honesty, wallet-load and release-install scripts listed in the README.
+
+## Honest limits
+
+- Not on PyPI; the GitHub release is the install path today.
+- The live mainnet redeem in `docs/live-proof.md` used my own accounts: it is a correctness proof,
+  not adoption evidence, and there are no outside users or outside payments yet.
+- The adapter is a payer (client). Directory services that index paid resources that answer HTTP 402
+  do not list client libraries; it fits framework integration lists and awesome-lists instead.
+
+## License
+
+MIT (see `LICENSE`). Reuses [feeless402](https://github.com/feeless402/feeless402) (MIT) and the
+x402nano exact dialect / 402nano facilitator.
