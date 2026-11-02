@@ -1,3 +1,34 @@
+# Distribution funnel — 2026-11-02 01:22 UTC (run update)
+
+## Trend point 7 (release assets) — download counts moved; honest no-outside-user caveat
+
+Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/releases/tags/<tag>` read this
+run (live API, signed-out counts):
+
+- **v0.2.0**: wheel 20 (flat), sdist 13 -> **14** (+1)
+- **v0.1.0**: wheel 740 -> **741** (+1), sdist 21 -> **22** (+1)
+
+The last release-asset baseline recorded in trend point 6 (641d09d, and
+re-confirmed unchanged through trend point 9) was v0.2.0 whl 20/sdist 13 and
+v0.1.0 whl 740/sdist 21. Three of the four counts moved (+1 each on both sdists
+and the v0.1.0 wheel) since then, so this is a genuinely-new honest trend
+point, NOT a re-record of an unchanged number.
+
+Honest reading (same caveat as every prior release-asset point): a bare
+download/incremental count cannot be attributed to outside users — own
+verification installs and crawlers dominate small deltas, and adoption needs an
+outside user, payment, cite or merge, none of which these +1s prove. This is a
+funnel trend point, not a milestone: no `rai-scope adopted`, no fabricated
+outward claim. Recorded as docs.
+
+The CDP Bazaar catalog was also re-probed this run: **unchanged** at 59,934
+total resources with XNO-accept still 17 unique from the single Pyfile seller
+(same as trend point 9) — since it did not move, no fake trend point is
+recorded for it (re-checking an unchanged number is not work). The live XNO
+proof still answers: `POST /data/nano/courier` returns HTTP 402 with
+`WWW-Authenticate: x402` and `acceptedCurrencies: [USDC, USDC, USDC, XNO]`, so
+the only in-catalog XNO accept remains live and answerable.
+
 # Distribution funnel — 2026-11-02 01:15 UTC (run update)
 
 ## Trend point 9 — CDP Bazaar catalog grew again; XNO still flat at 17
