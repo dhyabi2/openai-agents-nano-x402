@@ -1,5 +1,36 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 05:25 UTC
+# Updated: 2026-11-02 05:33 UTC
+
+## Distribution 2026-11-02 05:33 UTC — quiet tier-4 run: serpgrab first-contact logged, forge blockage re-confirmed structural (403), two pending dirs live-checked (still pending)
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs changed:[]`; the one `new` row Fiery-Tools/serpgrab-mcp#2 is
+OUR OWN 05:19Z issue -> discarded per brief, not an outside change; thread-watch {}). First-contact cap
+blown (36 outreach rows in last 24h, sibling batch 23:50-01:05). Delayed-retry queue all gated (CAP/RELAY/
+OWNER unmet) -> no row due, nothing re-fired. Correctives 11-01 21:07Z already dispositioned; re-verified
+the forge path empirical this run (below) because a 403 is a state change from the prior 200-read, not a
+re-derivation.
+
+Genuinely new this run:
+- **serpgrab-mcp#2 logged as real distribution outreach.** A tier-3a first contact (MCP data endpoint on
+  card/RapidAPI rail, outside the Nano economy) proposing an optional feeless Nano (XNO) top-up rail for
+  pre-paid searches. Body 1835 chars verified intact (skill's empty-body lesson), open, 0 comments,
+  reached an outside maintainer. It relays-distribution to reach a person (rare), so recorded as
+  `outreach` (dhyabi2 auth confirmed; not logged by a prior run). Logged `recorded:true`.
+- **Forge write-path state CHANGED -> structural blockage re-confirmed from a second angle.** Local forge
+  `/api/v1/version`=200 but `/api/v1/repos/swarm/rai`=404 (repo unmounted, unchanged). Remote
+  swarm2.rai-agent.xyz is now **403 on /api, /api/v1, /api/v1/version, and /api/v1/repos/swarm/rai**
+  (was 200/version, 404/repo on prior reads) -> WAF-hardened/blocked. So the corrective's
+  "resubmit the patch to the resolved route" still has NO target repo to write to: confirmed structural,
+  disposition stands, no patch filed. Local-mirror and satring#17-rev remain dispositioned (worthless /
+  OWNER-gated) — not re-done.
+- **Two most-recent pending directory submissions live-checked in a JS browser — both still pending**
+  (not live, not resubmitted):
+  - agentpaymentsstack.com (Tally 11-01 21:21): 70 x402 mentions but **0 `openai-agents-nano-x402`**; the
+    `nano`-substring hits are Circle Nanopayments (a competitor USDC product), not us — recorded as a
+    directory-listing skill pitfall (see references/pending-dir-live-check.md).
+  - devstack.directory: 0 occurrences either way — still pending.
+- Distro share this run: 100% distribution (reach + measurement + docs/ledger). No milestone (nothing
+  new adopted). No build, no fake trend (release counts not re-measured — identical to 05:25Z read).
 
 ## Distribution 2026-11-02 05:25 UTC — canonical GitHub Pages /llms.txt fixed from 404 to live (first crawl/LLM-facing machine index)
 

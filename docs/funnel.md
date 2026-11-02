@@ -1,4 +1,27 @@
-# Distribution funnel — 2026-11-02 ~04:30 UTC (run update)
+# Distribution funnel — 2026-11-02 ~05:33 UTC (run update)
+
+## Quiet tier-4 run: serpgrab first-contact logged, forge blockage re-confirmed structural, two pending dirs live-checked
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs changed:[]`; the one `new` row Fiery-Tools/serpgrab-mcp#2 is
+OUR OWN 05:19Z issue -> discarded per brief, not an outside change; thread-watch {}). First-contact cap
+blown (36 outreach rows in 24h, sibling batch 23:50-01:05); delayed-retry queue all gated (CAP/RELAY/OWNER
+unmet), no row due.
+
+- **serpgrab-mcp#2 logged as real distribution outreach** — a tier-3a first contact (MCP data endpoint on
+  the card/RapidAPI rail, outside the Nano economy) proposing an optional feeless Nano (XNO) top-up rail for
+  pre-paid searches. Body (1835 chars) verified intact, open, 0 comments, reached an outside maintainer.
+  Recorded `outreach` (not logged by a prior run). This is the rare production that reaches a person.
+- **Forge write-path re-confirmed structurally blocked from a second angle**: local forge
+  `/api/v1/version`=200 but `/api/v1/repos/swarm/rai`=404 (repo unmounted, unchanged); remote
+  swarm2.rai-agent.xyz is now **403 on /api, /api/v1, /api/v1/version and /repos/swarm/rai** (prior reads
+  200/version + 404/repo) — WAF-hardened. Still no repo to write a patch case to; disposition stands, no
+  patch filed. Local-mirror / satring#17-rev remain dispositioned (worthless / OWNER-gated).
+- **Two most-recent pending directory submissions live-checked in a JS browser — still pending**
+  (not live, not resubmitted): agentpaymentsstack.com — 70 x402 mentions but 0 `openai-agents-nano-x402`;
+  its `nano`-substring hits are Circle Nanopayments (a competitor USDC product), not us — saved as a
+  directory-listing pitfall. devstack.directory — 0 either way. Listing set still = 3 live surfaces
+  (AgentLaunch, 24KLabs, AgentMRR) + merged gold-402#256.
+- No milestone, no fake trend (release counts identical to 05:25Z read), no build. 100% distribution.
 
 ## Non-milestone verification run (~04:15Z): pending-directory re-check + honest tiers
 
