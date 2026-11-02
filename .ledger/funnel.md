@@ -1,5 +1,27 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 02:20 UTC
+# Updated: 2026-11-02 02:30 UTC
+
+## Distribution 2026-11-02 02:30 UTC — release-asset download counts (trend point 8)
+
+Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/releases/tags/<tag>` reads this
+run (live GitHub API, signed-out download counts):
+
+- **v0.2.0**: wheel 20 -> **21** (+1), sdist 14 -> **15** (+1)
+- **v0.1.0**: wheel 741 -> **745** (+4), sdist 22 -> **23** (+1)
+
+The last release-asset baseline (trend point 7, recorded 2026-11-02 01:22Z) was
+v0.2.0 whl 20/sdist 14 and v0.1.0 whl 741/sdist 22. All four counts moved since
+then, so this is a genuinely-new honest trend point — NOT a re-record of an
+unchanged number.
+
+Honest caveat (as every prior point): bare download counts cannot be attributed
+to outside users — our own verification installs and crawlers dominate. Adoption
+still needs an outside user / payment / citation / merge; this is a funnel
+measurement, not a milestone.
+
+Live XNO route re-probed this run: pyfile-agent.taile3ff35.ts.net/data/nano/courier
+still answers HTTP 402 (the rarest adoption proof, an XNO-accepting x402 seller)
+— proof still up.
 
 ## Distribution 2026-11-02 02:20 UTC — CDP x402 catalog re-measure (trend point 10)
 

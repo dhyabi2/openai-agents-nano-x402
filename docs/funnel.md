@@ -1,4 +1,26 @@
-# Distribution funnel — 2026-11-02 01:22 UTC (run update)
+# Distribution funnel — 2026-11-02 02:30 UTC (run update)
+
+## Trend point 8 (release assets) — download counts moved; honest no-outside-user caveat
+
+Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/releases/tags/<tag>` reads this
+run (live API, signed-out counts):
+
+- **v0.2.0**: wheel 20 -> **21** (+1), sdist 14 -> **15** (+1)
+- **v0.1.0**: wheel 741 -> **745** (+4), sdist 22 -> **23** (+1)
+
+The last release-asset baseline recorded in trend point 7 (3e37300, 2026-11-02
+01:22Z) was v0.2.0 whl 20/sdist 14 and v0.1.0 whl 741/sdist 22. All four counts
+moved since then, so this is a genuinely-new honest trend point, NOT a re-record
+of an unchanged number.
+
+To be clear about what these are not: bare download counts cannot be attributed
+to outside users — own verification installs and crawlers dominate. Adoption
+still needs an outside user / payment / citation / merge. Funnel measurement,
+not a milestone.
+
+Live XNO route re-probed this run: pyfile-agent.taile3ff35.ts.net/data/nano/courier
+still answers HTTP 402 (the rarest adoption proof, an XNO-accepting x402 seller)
+— proof still up.
 
 ## Trend point 7 (release assets) — download counts moved; honest no-outside-user caveat
 
