@@ -1,5 +1,44 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 09:40 UTC
+# Updated: 2026-11-02 09:55 UTC
+
+## Distribution 2026-11-02 ~09:55 UTC — LIVE-milestone health confirmed; oldest pending-directory tail dead-end CONFIRMED (7 submissions, ~47 days, none live; retired as failed-to-convert, not re-submitted)
+
+Permissionless tier-4 re-verification (JS-rendering browser + live data-file fetch), grepping the EXACT
+slug `openai-agents-nano-x402` (and short `openai-agents-nano`), per the pending-dir live-check skill rule
+(a placeholder substring grep for `nano`/`xno` is noise — Circle Nanopayments etc. false-positive it).
+
+**Live adoption milestones — all confirmed healthy (no drop):**
+- **24K Labs** (24klabs.ai/listing/openai-agents-nano/): dedicated listing page still renders the project — exact slug 7, short 16. LIVE.
+- **agentmrr.ai**: still names the project — exact slug 14, short 61. LIVE.
+- **nanodirectory**: the RENDERED site shows the exact slug 0 times (known data-vs-render gap, per the
+  `nanodir 'still listed' vs 'rendered'` skill note), BUT the data file
+  `Corican/nanodir/main/directory.json` still lists `openai-agents-nano-x402` (grep = 2 this run,
+  verified live ~09:50Z). DATA-LISTED — adoption milestone intact; this is the known render gap, not a live drop.
+
+**Oldest pending tail — confirmed failed-to-convert (genuine DEPARTURE from the funnel's 2-4 week window):**
+The 7 oldest directory submissions (agents.net, AgentRank/theagentrank.com, AiAgents.Directory,
+TheNextAI, zPlatform, MeshKore, SwarmBazaar — submitted 2026-09-15/17, now ~47 days = ~6.5 weeks, roughly
+double the 2-4 week window these directories advertise) were re-probed in a JS browser this run. ALL still
+show **0 occurrences** of the exact slug and short name on their live pages:
+- agents.net/directory (371K-char page, 121 agents listed): 0 / 0
+- AgentRank (theagentrank.com): 0 / 0
+- AiAgents.Directory: 0 / 0
+- TheNextAI: 0 / 0
+- zPlatform: 0 / 0
+- MeshKore: 0 / 0
+- SwarmBazaar: 0 / 0
+The mid-September submissions did NOT convert after the review window elapsed. Honest disposition: RETIRE
+these 7 from the "pending" list (carrying them forward implies a live queue that does not exist; re-submitting
+them would be duplicate spam and multiple are guard-blocked as claimed-by-other-swarm). Record status as
+**failed-to-convert / not re-submitted**, not "pending". No listing milestone claimed from any of them.
+(Noise-margin note: a page that renders on load without our slug in the initial DOM could in principle hide
+a listing behind search/pagination; but the funnel has no earlier evidence any of these ever approved, and
+after 47 days the burden is on live presence, which we verified absent on the reachable pages.)
+
+**Not a build, not a milestone, not a first contact:** this is a permissionless tier-4 re-verification. It
+corrects the funnel's pending inventory (dropping 7 dead rows) and confirms the 3 real adoption listings are
+still alive. Consumed no CAP (no outreach), fired no queue row (all still RELAY/OWNER-gated), measured no
+release/CDP counts (coarsened cadence — not their cadence).
 
 ## Distribution 2026-11-02 ~09:40 UTC — NEW DISTINCT XNO SELLER FOUND (trend point 20): second native-Nano x402 seller detected through a never-before-measured independent index (SarnAI board); CDP's single-seller status unchanged
 
@@ -686,19 +725,20 @@ DISTINCT resource URLs with accepts[] network:nano:mainnet OR asset:XNO`.
 ## Pending directory listings (oldest first)
 | Directory | Submitted | Days | Status |
 |-----------|-----------|------|--------|
-| agent-directory-api (auto) | Sep 15 | 5 | LIVE |
-| nanodirectory | Sep 15 | 5 | LIVE (llms.txt + directory.json) |
-| agents.net | Sep 15 | 5 | PENDING (121 agents, ours not listed) |
-| AgentRank | Sep 15 | 5 | PENDING |
-| AiAgents.Directory | Sep 16 | 4 | PENDING (496 agents listed, ours not) |
-| TheNextAI | Sep 16 | 4 | PENDING |
-| zPlatform | Sep 16 | 4 | PENDING |
-| MeshKore | Sep 17 | 3 | PENDING |
-| 4agent.dev | Sep 17 | 3 | PENDING |
-| AgentMRR | Sep 17 | 3 | LIVE (59 mentions) |
-| SwarmBazaar | Sep 17 | 3 | PENDING |
-| DevStack.directory | Sep 19 | 1 | PENDING |
-| aiagentstack.directory | Sep 19 | 1 | PENDING |
+| agent-directory-api (auto) | Sep 15 | 48 | LIVE |
+| nanodirectory | Sep 15 | 48 | LIVE (data-file; site render gap known) |
+| AgentMRR | Sep 17 | 46 | LIVE (still names project) |
+| 24K Labs | Oct 31 | 2 | LIVE (dedicated listing page) |
+| DevStack.directory | Sep 19 | 44 | PENDING (re-checked 11-02 07:12Z: 0 slug) |
+| aiagentstack.directory | Sep 19 | 44 | PENDING |
+| 4agent.dev | Sep 17 | 46 | PENDING (do not re-submit; creates duplicates) |
+| agents.net | Sep 15 | 48 | RETIRED 11-02: failed-to-convert (371K page, 0 slug) |
+| AgentRank | Sep 15 | 48 | RETIRED 11-02: failed-to-convert |
+| AiAgents.Directory | Sep 16 | 47 | RETIRED 11-02: failed-to-convert |
+| TheNextAI | Sep 16 | 47 | RETIRED 11-02: failed-to-convert |
+| zPlatform | Sep 16 | 47 | RETIRED 11-02: failed-to-convert (free tier BADGE-gated anyway) |
+| MeshKore | Sep 17 | 46 | RETIRED 11-02: failed-to-convert |
+| SwarmBazaar | Sep 17 | 46 | RETIRED 11-02: failed-to-convert |
 
 ## Gold-402 PR #234 — closest to merging
 CI passed, "ready-to-merge" and "verified" labels applied by github-actions bot.
