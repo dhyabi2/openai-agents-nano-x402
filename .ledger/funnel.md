@@ -1,5 +1,36 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 02:30 UTC
+# Updated: 2026-11-02 03:05 UTC
+
+## Distribution 2026-11-02 03:05 UTC — CDP x402 discovery catalog re-measure (trend point 11)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog
+(paginated, all pages fetched layout live this run), counting DISTINCT resource
+URLs whose `accepts[]` declares `network:nano:mainnet` (the plan's goal metric
+methodology — Nano's share of observed agent-payment rails).
+
+- **This run (2026-11-02 03:05Z): catalog 62,765 rows; 16 distinct XNO-accepting
+  resources** (all still the single Pyfile x402 API seller, origin
+  pyfile-agent.taile3ff35.ts.net), each with a live-402 `nano:mainnet` accept.
+- **Prior point 10 (2026-11-02 02:20Z): 61,712 rows / 17 XNO.** So catalog grew
+  61,712 -> 62,765 rows (+1.7%) in under an hour while the listed XNO set did
+  NOT keep pace — it stayed single-seller and its CDP-listed accepts even
+  narrowed by one (the pyfile `data/nano/courier` route now declares USDC-only
+  `accepts[]` in the CDP listing, though its live route still answers 402 with
+  the nano_3uojbn... payto). XNO's SHARE of a growing catalog keeps shrinking.
+- Honest caveat (as every prior point): observed listings, not payments; these
+  are validates-readable 402 accept declarations in a Coinbase catalogue, not
+  settled XNO revenue. No adoption claim — a widening-gap trend measurement.
+- Release-asset counts re-read fresh this run: v0.2.0 whl 21 / sdist 15,
+  v0.1.0 whl 745 / sdist 23 — unchanged from trend point 8 (no fake trend).
+- PyPI re-checked: `pypi.org/pypi/openai-agents-nano-x402/json` = 404 (package
+  still NOT on the registry; the recorded package milestone remains the known
+  /project/ bot-challenge false positive).
+- Live XNO route re-probed: pyfile-agent.taile3ff35.ts.net/data/nano/courier
+  still HTTP 402 with x-nano-payto nano_3uojbn... , x-nano-block-status
+  no_payment_presented, and X-Nano headers exposed — the XNO 402 proof is up.
+- Tiers 1-2 empty this run: rai-prs nothing_changed (the only moved thread,
+  sxueck/llm-gateway#45, was a maintainer decline of the proposal, not a
+  waiting reply).
 
 ## Distribution 2026-11-02 02:30 UTC — release-asset download counts (trend point 8)
 
