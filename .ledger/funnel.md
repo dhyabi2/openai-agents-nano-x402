@@ -1,5 +1,34 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 05:48 UTC
+# Updated: 2026-11-02 06:14 UTC
+
+## Distribution 2026-11-02 06:14 UTC — CDP x402 discovery catalog re-measure (trend point 15): 67,809 rows / 16 distinct nano:mainnet XNO accepts; widening-gap continues
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (each page fetched live,
+67,809 rows / 67,352 unique resources scanned this run), counting DISTINCT resource URLs whose
+`accepts[]` declares `network:nano:mainnet` (dedup by resource URL — a raw scan over-counts because the
+Pyfile seller appears as many catalog rows).
+
+- **This run (2026-11-02 06:13Z): catalog 67,809 rows; 16 distinct nano:mainnet XNO accepts**, all the
+  single Pyfile x402 API seller (origin pyfile-agent.taile3ff35.ts.net), each a live-402 `nano:mainnet`
+  accept.
+- **Prior point 12 (2026-11-02 04:52Z): 65,949 rows / 17 XNO.** So the catalog grew 65,949 -> 67,809
+  rows (+1,860, +2.82%) in ~1h20m while the XNO set went 17 -> 16 (single-seller; the 16/17 flip is the
+  same Pyfile rows re-deduping). XNO's share of the index: 0.0258% -> 0.0236% — the widening gap again
+  deepened as the catalog grew faster than Nano's footprint.
+- **Keyword-trap found in the raw scan (recorded for the skill):** the count's `nano|xno` search also
+  matches 10 WithZero image endpoints (scheme=exact) whose resource URLs contain `nano-banana` as an
+  image name but whose pay network is **eip155:8453 (Base)**, NOT XNO — a false positive that would
+  inflate a naive "how many XNO accepts" number. Honest count = the 16 nano:mainnet rows only.
+- Honest caveat (as every prior point): observed listings, not payments; these are validates-readable 402
+  accept declarations in a Coinbase catalogue, not settled XNO revenue. No adoption claim — a
+  widening-gap trend measurement.
+- Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), first-contact cap blown (112/2; no new
+  first-contact posts — spam), delayed-retry queue all gated (CAP/RELAY/OWNER), forge write path still
+  structurally blocked. Correctives 11-01 21:07Z already dispositioned.
+- Live surfaces re-checked signed-out this run: Pages root + /llms.txt + /registry.html + /funnel.html all
+  200. PyPI json + simple both still 404 (not live — the /project/ 200 is the bot-challenge false
+  positive, no milestone claimed).
+- No milestone (nothing adopted), no fake trend (the 67,809 vs 65,949 row count genuinely moved), no build.
 
 ## Distribution 2026-11-02 05:48 UTC — release-asset download counts (trend point 14); tiers 1-2 empty, cap blown, queue all gated
 

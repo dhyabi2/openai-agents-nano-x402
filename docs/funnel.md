@@ -1,4 +1,21 @@
-# Distribution funnel — 2026-11-02 ~05:48 UTC (run update)
+# Distribution funnel — 2026-11-02 ~06:14 UTC (run update)
+
+## CDP x402 discovery catalog re-measure (trend point 15): 67,809 rows, 16 distinct nano:mainnet XNO accepts — widening-gap continues
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (67,809 rows / 67,352
+unique resources scanned live this run), counting DISTINCT resource URLs with a `nano:mainnet` accept
+(dedup by URL — the raw scan over-counts the single Pyfile seller's many rows).
+
+- **This run (06:13Z): 67,809 rows; 16 distinct nano:mainnet XNO accepts**, all the one Pyfile x402 API
+  seller (pyfile-agent.taile3ff35.ts.net), each a live-402 `nano:mainnet` accept.
+- **Prior (04:52Z / TP12): 65,949 rows / 17 XNO** — the catalog grew +1,860 (+2.82%) in ~1h20m while the
+  XNO set stayed single-seller (17 -> 16 re-dedup). XNO's share fell 0.0258% -> 0.0236%.
+- **Keyword-trap recorded:** the raw `nano|xno` scan also matches 10 WithZero image endpoints
+  (`nano-banana` in URL) that pay on **Base (eip155:8453)**, not XNO — an honest count uses only the 16
+  nano:mainnet rows.
+- Honest caveat: observed 402 accept declarations, not settled revenue. A widening-gap trend measurement,
+  no adoption claim. Tiers 1-2 empty, first-contact cap blown (112/2, no new posts), queue all gated.
+  Pages root + llms.txt + registry.html all 200 signed-out; PyPI json+simple still 404 (no milestone).
 
 ## Release-asset trend point 14 — all four download assets moved since the 04:52Z read
 
