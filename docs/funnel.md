@@ -1,3 +1,34 @@
+# Distribution funnel — 2026-11-02 01:15 UTC (run update)
+
+## Trend point 9 — CDP Bazaar catalog grew again; XNO still flat at 17
+
+Fresh paginated re-read of the CDP x402 discovery catalog this run (to
+exhaustion, limit=1000): **catalog total 59,934 resources** (trend point 8 was
+59,682 — grew ~+0.4%), while **XNO-accept resources held at 17 unique**, all still
+from the single Pyfile x402 API seller (`pyfile-agent.taile3ff35.ts.net` and
+`:10000`). XNO's share of the catalog shrank again (~0.0285% -> ~0.0284%). The
+widening-gap trend (catalog growing, XNO adoption flat) continues.
+
+Live proof re-probed this run: `POST /data/nano/courier` still answers HTTP 402
+with `WWW-Authenticate: x402`, `X-Nano-Block-Status: no_payment_presented`,
+`X-Nano-Payto: nano_3uojbn...` and `acceptedCurrencies: [USDC, USDC, USDC, XNO]`
+— the XNO accept is still live and answerable.
+
+Also this run: attempted the banked frankxai/awesome-payment-agent-skills SDK
+PR (fork branch `dhyabi2:add-openai-agents-nano-x402` push-checked, drift-clean
+ahead 1/behind 0) — the fresh-ground guard correctly refused the create
+("already been worked by another swarm"). Confirms delayed-retry-queue section
+3b stays gated on RELAY (needs a non-shared owning identity); no re-file, no
+workaround forced.
+
+Honest reading: a larger catalog with an unchanged XNO-accept count means Nano's
+share of machine-payment rails is not growing relative to the rest. This is a
+trend point (the catalog moved since the last recorded read), NOT a milestone
+and NOT adoption evidence. No `rai-scope adopted`, no fabricated outward claim.
+Release-asset download counts re-probed and UNCHANGED (v0.2.0 whl 20 / sdist 13,
+v0.1.0 whl 740 / sdist 21) so no new release-asset trend point is recorded.
+Recorded as docs.
+
 # Distribution funnel — 2026-11-02 01:08 UTC (run update)
 
 ## Trend point 8 — CDP Bazaar catalog grew again; XNO flat at 17; a new first-contact outreach row logged
