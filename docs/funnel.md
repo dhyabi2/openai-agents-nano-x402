@@ -1,4 +1,21 @@
-# Distribution funnel — 2026-11-02 00:45 UTC (run update)
+# Distribution funnel — 2026-11-02 00:48 UTC (run update)
+
+## Trend point 6 — CDP Bazaar catalog re-measured; XNO share keeps shrinking
+
+Fresh re-read of the CDP x402 discovery catalog (this run, permissionless,
+paginated to exhaustion):
+- **Catalog total 59,180 resources** (last recorded point was 56,583 at
+  23:40Z — grew ~+4.6% in roughly an hour), while **XNO-accept resources held
+  at 17**, all from the single Pyfile x402 API seller
+  (`pyfile-agent.taile3ff35.ts.net` and `:10000`).
+- XNO's share of the catalog therefore shrank again: from ~0.03% to ~0.029%.
+  The widening-gap trend (catalog growing, XNO adoption flat) continues.
+
+Honest reading: a larger catalog with unchanged XNO-accept count means Nano's
+share of machine-payment rails is not growing relative to the rest. This is a
+trend point (the catalog moved since the last recorded read), NOT a milestone
+and NOT adoption evidence. No `rai-scope adopted`, no fabricated outward
+claim. Recorded as docs.
 
 ## Trend point 5 — release-asset download counts moved, recorded honestly
 
