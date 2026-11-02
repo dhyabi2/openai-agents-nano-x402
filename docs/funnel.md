@@ -1,5 +1,43 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 09:35 UTC
+# Updated: 2026-11-02 09:40 UTC
+
+## Distribution 2026-11-02 ~09:40 UTC — NEW DISTINCT XNO SELLER FOUND (trend point 20): second native-Nano x402 seller detected through a never-before-measured independent index (SarnAI board); CDP's single-seller status unchanged
+
+Genuine funnel change: a **second, distinct, live native-XNO (nano:mainnet) x402 seller** surfaced that
+the funnel has never tracked — **nanoodle (MCP server `https://mcp.nanoodle.com/mcp`)**, discovered by
+measuring the SarnAI agent directory (board.sarnai.dev), an independent x402/MCP index this funnel had
+not measured before. This is the "new distinct XNO accept source" the cadence rule names as the only
+meaningful catalog change.
+
+- **Discovery path:** SarnAI board search returned two listings mentioning "nano". One (`omnidev`,
+  "pay-per-call on the nano tier") was a **keyword trap** — it settles in **USDC on Base
+  (`eip155:8453`)**, "nano" = a product-tier name, NOT the XNO coin. That one was rejected as a false
+  positive, consistent with the paypack/纳米 lesson. The other (**nanoodle**) is genuine.
+- **Verified live (09:32-09:35Z):** `POST /mcp` initialize returns server `nanoodle-mcp` v0.6.0 whose
+  own instructions state verbatim *"Every tool on this server is paid per call in Nano (XNO) — no
+  account or API key needed."* `tools/list` enumerates 14+ paid tools (humanize-comment, image-model-
+  arena, photo-to-video, sfw_check, storyboard-relay, etc.). A `tools/call` to `sfw_check` returned a
+  genuine x402 PAYMENT-REQUIRED quote: **deposit exactly 0.00009308 XNO (93,080,000,000,000,000,000
+  raw) to `nano_1gqjcgoc4hfghdmabpw3i1pcwr8ppcgjkoyhf4txsktdpthqb97apxz9qpyb`**, URI
+  `nano:nano_1...?amount=93080000000000000000000000`, real-time meter + change-back model, 15-min quote
+  expiry, auto-refund on failure. Quoted only — **no payment made** by us (reading the rail, not
+  transacting). This is native-Nano x402 settlement, not a keyword trap.
+- **Independent-index citation:** listed active on SarnAI board
+  `https://board.sarnai.dev/listings/b1be1864-7084-4fce-b2e6-73ced6444150` (endpoint above, probe
+  passing, imported from the MCP Registry, created 2026-10-06). SarnAI's index total measured:
+  **54,440 listings** — of those, exactly these two x402 services mention "nano", only nanoodle settles
+  in XNO.
+- **Honest caveats (do not overstate):** (1) This does NOT change the CDP-Bazaar finding — the CDP
+  discovery catalog (09:25Z, 72,059 rows) still shows only the single Pyfile seller and 17 nano:mainnet
+  accepts. CDP-indexed sellers remain single-source. (2) nanoodle is not an adoption of OUR project and
+  is not a first-outside-payment milestone. (3) The "widening gap" narrative specifically describes CDP
+  catalog share; the honest update is that the **broader discoverable x402 seller set contains at least
+  two native-XNO sellers (Pyfile + nanoodle)**, so the gap is a CDP-index coverage issue, not an absence
+  of ecosystem XNO sellers. (4) nanoodle is not part of our funnel's monitored CDP set; treat as a
+  reference/second-seller data point, not as CDP row growth.
+- **Recorded** as trend point 20 because the cadence rule explicitly triggers on a new distinct XNO
+  accept source, and this source was found on an independent index never measured before (not a re-copy
+  of the CDP-count or release-count arguments).
 
 ## Distribution 2026-11-02 ~09:35 UTC — flat-state checkpoint (NOT a trend point): CDP re-measure confirms single Pyfile seller persists; release assets identical to TP19; tier-2 outside volunteer guard-blocked
 
