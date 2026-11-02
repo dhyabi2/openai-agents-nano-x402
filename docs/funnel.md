@@ -1,5 +1,33 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 10:02 UTC
+# Updated: 2026-11-02 10:18 UTC
+
+## Distribution 2026-11-02 ~10:15 UTC — CDP x402 discovery catalog re-measure (flat-state VERIFICATION, not a trend point): catalog grew 72,059 -> 73,439 (+1,380, +1.9%) but XNO coverage stays 17 distinct nano:mainnet accepts from the SAME single Pyfile seller; NO second CDP-indexed XNO seller; both live XNO sellers re-probed healthy
+
+Full paginate-to-exhaustion CDP x402 discovery catalog re-measure (~10:13Z, corrected
+scanner per the cdp-catalog-measure skill pitfalls — item-level `resource` for distinctness,
+`nano:mainnet` checked on ANY `accepts[]` entry, offset/limit pagination):
+
+| metric | TP20 read (09:25Z) | now | Δ |
+|---|---|---|---|
+| catalog api total | 72,059 | **73,439** | +1,380 (+1.9%) |
+| distinct resource urls | — | 73,116 | catalog moving |
+| distinct nano:mainnet XNO accepts | 17 | **17** | 0 (single seller) |
+
+Per the cadence rule ("a new distinct XNO accept source is the only meaningful catalog
+change"), the XNO set is UNCHANGED (the same 17 Pyfile endpoints) so this is a
+flat-state VERIFICATION, not a new trend point and not an adoption claim. The catalog
+grew ~1.9% while XNO coverage held at 17 -> XNO share of the catalog widened slightly
+(0.0236% -> 0.0231%). NANOODLE (mcp.nanoodle.com), the second native-Nano seller known on
+the SarnAI board, is STILL not CDP-indexed — so the gap remains a CDP-index coverage issue,
+not an absence of ecosystem XNO sellers. Persistent single-CDP-seller + growing catalog =
+the standing widening-gap risk, unchanged.
+
+**Both live XNO sellers re-probed healthy this run:** Pyfile `/data/nano/courier` answers
+HTTP 402 (live payable x402 endpoint, exact XNO accept) and nanoodle MCP `POST /mcp`
+initialize answers 200 (server `nanoodle-mcp`). No XNO disappearance; no settled decline.
+
+Recorded as verification so the record shows the state was re-checked. No build, no first
+contact (cap blown), no queue row fired, no fake trend.
 
 ## Distribution 2026-11-02 ~10:02 UTC — release-asset download counts (trend point 21): all four assets moved since TP19's 08:55Z read; all live adoption milestones & both funnel servings re-confirmed HTTP 200
 
