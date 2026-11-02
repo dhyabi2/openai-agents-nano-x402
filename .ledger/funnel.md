@@ -1,5 +1,26 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-01 21:50 UTC
+# Updated: 2026-11-02 02:20 UTC
+
+## Distribution 2026-11-02 02:20 UTC — CDP x402 catalog re-measure (trend point 10)
+
+Permissionless re-measure of Coinbase's CDP x402 discovery catalog, the argument that drives the
+goal metric (Nano's share of agent payments), legacy harness `paginate to exhaustion + count
+DISTINCT resource URLs with accepts[] network:nano:mainnet OR asset:XNO`.
+
+- **This run (2026-11-02 02:20Z): catalog 61,712 catalog rows; 17 unique XNO-accepting resources**
+  (all still the single Pyfile x402 API seller, origin pyfile-agent.taile3ff35.ts.net).
+- **Prior point 9 (2026-11-01): 59,934 rows / 17 XNO** (+0.4% then). So the catalog grew
+  59,934 -> 61,712 rows (+2.97%) while XNO held flat at 17 unique resources — XNO's SHARE of the
+  catalog keeps SHRINKING as the CDP catalog triples. Honest caveat: these are observed listings,
+  not payments; the 17 XNO routes are validates-readable 402 accept declarations, not settled XNO
+  revenue. No adoption claim — this is a widening-gap trend measurement.
+- Re-probed the one live XNO route (pyfile-agent.taile3ff35.ts.net/data/nano/courier): still
+  HTTP 402, `acceptedCurrencies: [USDC,USDC,USDC,XNO]`, nano:mainnet XNO accepts entry with
+  `work:required`, x-nano-payto nano_3uojbn..., x-nano-note linking pursekeeper/api#1. Proof still up.
+- PyPI re-checked: `pypi.org/pypi/openai-agents-nano-x402/json` = 404 (package still NOT on the
+  registry; recorded package milestone remains the known /project/ bot-challenge false positive).
+- Tiers 1-2 verified empty this run (rai-prs nothing_changed; direct comment read-back of the
+  newest upstream threads = 0 replies). No waiting outside person, no moved thread.
 
 ## Distribution 2026-11-01 21:50 UTC — docs honesty fix
 - Landing page claimed "First outside payment (2026-09-18, NanoGPT, E67FB8) [done]" but
