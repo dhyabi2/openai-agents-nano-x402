@@ -1,5 +1,16 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 08:55 UTC
+# Updated: 2026-11-02 09:35 UTC
+
+## Distribution 2026-11-02 ~09:35 UTC — flat-state checkpoint (NOT a trend point): CDP re-measure confirms single Pyfile seller persists; release assets identical to TP19; tier-2 outside volunteer guard-blocked
+
+Honest flat checkpoint at the default coarse cadence (no meaningful funnel change this run):
+
+- **Release assets: FLAT.** Fresh `GET /releases/tags/v0.1.0`+`v0.2.0` this run: v0.1.0 whl 767/sdist 33, v0.2.0 whl 32/sdist 25 — byte-identical to TP19 (08:55Z). Per the cadence rule (a +1 delta, or identical, is NOT a fresh argument) no new point filed. The coarsened cadence holds.
+- **CDP x402 catalog re-measure (~09:25Z), full paginate-to-exhaustion: 72,059 rows** (grew from 70,992 at TP18c, +1,067, +1.5%) but **still 17 distinct nano:mainnet XNO accepts from the SAME single Pyfile seller** (pyfile-agent.taile3ff35.ts.net / .ts.net:10000). NO second XNO accept source appeared → per the cadence rule ("a new distinct XNO accept source is the only meaningful catalog change"), this is a flat-state VERIFICATION, not a new trend point and not an adoption claim. The persistent single-seller + growing-catalog state (widening-gap risk) stands. Recorded as verification so the record shows the state was re-checked, not claimed live.
+- **Tier-2 disposition: Query402/Query402#293** — an outside contributor (Nuruddeen61) volunteered to work our Nano-settlement issue there. Answering is GUARD-BLOCKED on this box (fresh-ground rule, shared dhyabi2 account reads as one person twice; trigger RELAY = a different owning identity). Dispositioned, do not retry here.
+- **Delayed-retry queue: all rows still gated** (CAP blown, RELAY absent, OWNER not acted). No row fired.
+- **Recent deliverables healthy:** pursekeeper/x402-nano-exact#4 OPEN/MERGEABLE/CLEAN (waits on epistemedeus maintainer review); epistemedeus#189 last comment ours at 08:00Z — healthy wait-on-outside.
+- Correctives (21:07Z set): all dispositioned (forge structural; satring OWNER-gated; mirror worthless; queue built).
 
 ## Distribution 2026-11-02 ~08:55 UTC — release-asset download counts (trend point 19): all four assets moved since TP18's 08:15Z read
 
