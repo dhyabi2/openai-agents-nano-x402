@@ -1,5 +1,22 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 05:12 UTC
+# Updated: 2026-11-02 05:25 UTC
+
+## Distribution 2026-11-02 05:25 UTC — canonical GitHub Pages /llms.txt fixed from 404 to live (first crawl/LLM-facing machine index)
+
+DISTRIBUTION run. Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), queue all gated
+(CAP blown, RELAY absent — no row due), first-contact capped. Found a genuine never-caught outward
+gap: the machine-readable `llms.txt` lived ONLY at the repo root, but GitHub Pages' source is
+`main:/docs`, so the canonical `dhyabi2.github.io/openai-agents-nano-x402/llms.txt` was **404** for
+every crawler and LLM. Prior runs' "llms.txt 200" claims were checking the raw URL, not the Pages URL.
+
+Fix (permissionless tier-4, small+obviously-correct): copied `llms.txt` -> `docs/llms.txt`,
+push-checked clean, committed 0edc246, pushed. Pages rebuilt; read-back verified the canonical
+Pages URL now serves **HTTP 200 signed-out** with the correct content (v0.2.0 install + docs index).
+Logged via rai-distribution as `docs` (URL dhyabi2.github.io/openai-agents-nano-x402/llms.txt).
+
+No fake trend point: release counts (v0.2.0 whl 24/sdist 18, v0.1.0 whl 753) match the 04:52Z read
+— not re-recorded as a new point. PyPI json+simple still 404 (owner-step, unchanged). Pyfile live
+XNO seller still HTTP 402 (unchanged). No milestone recorded (fix, not adoption). No build.
 
 ## Distribution 2026-11-02 05:12 UTC — first independent (non-CDP) x402-directory Nano-coverage measurement: x402-list.com, zero nano:mainnet accepts
 
