@@ -11,12 +11,15 @@ assets v0.2.0 whl 24/sdist 18 and v0.1.0 whl 753/sdist 26 — identical to the 0
 a new trend point (no fake trend); the three live listing milestones (AgentLaunch, 24K Labs,
 AgentMRR) still HTTP 200, not re-recorded.
 
-**Genuinely new: first-time live measurement of x402-list.com's Nano coverage.** Surfaced a new
-independent, non-Coinbase x402 directory not previously measured: **x402-list.com** ("The x402
-directory of APIs that AI agents pay per request") — 1,200 listed services / 8,986 endpoints /
-37 mainnet networks claimed, published by an agent-first open directory CC BY 4.0 with a machine
-read `/api/v1/services`. Paginated to exhaustion this run (48 pages, all 1,200 services fetched
-live 05:09Z), enumerating every per-service `networks[]` and `networks_caip2[]` value:
+**Genuinely new: first-time live measurement of x402-list.com's Nano coverage.** x402-list.com
+("The x402 directory of APIs that AI agents pay per request") is an independent, non-Coinbase
+x402 directory — **1,200 listed services / 8,986 endpoints / 37 mainnet networks claimed**,
+published by an agent-first open directory CC BY 4.0 with a machine-readable
+`/api/v1/services`. Its submission channel was already recorded as closed to a payer SDK
+(payee-only, probes a 402 `accepts[]` a client cannot answer — see directory-listing skill), but
+its live catalog's Nano coverage had never been measured. Paginated to exhaustion this run (48
+pages, all 1,200 services fetched live 05:09Z), enumerating every per-service `networks[]` and
+`networks_caip2[]` value:
 
 - **Distinct networks carried by the 1,200 listed services: Base (1149), Solana (334), Polygon
   (116), Arbitrum (86), Avalanche (30), plus a handful of testnets (BSP/AMOY). ZERO
