@@ -1,5 +1,43 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 06:14 UTC
+# Updated: 2026-11-02 07:05 UTC
+
+## Distribution 2026-11-02 ~07:00 UTC — CDP x402 discovery catalog re-measure (trend point 16): 69,029 rows / 16 distinct nano:mainnet XNO accepts; widening-gap deepens again (0.0236% -> 0.0232%)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (live, rate-limit-aware
+backoff on HTTP 429; 69,061 rows read / 68,955 unique resources scanned this run), counting DISTINCT
+resource URLs whose `accepts[]` declares `network:nano:mainnet` (dedup by resource URL — a raw scan
+over-counts the single Pyfile seller's many rows).
+
+- **This run (~07:00Z): api_total 69,029 rows; 16 distinct nano:mainnet XNO accepts**, all the one
+  Pyfile x402 API seller (pyfile-agent.taile3ff35.ts.net), each a live-402 `nano:mainnet` accept
+  (16 endpoints, calls30 1-15).
+- **Prior (06:13Z / TP15): 67,809 rows / 16 XNO** — the catalog grew **+1,220 (+1.80%)** in ~45 min
+  while the XNO set stayed single-seller (16). XNO's share of the index fell **0.0236% -> 0.0232%**
+  (16/67,809 -> 16/69,029). Widening-gap deepens yet again: the catalog outgrew Nano's footprint.
+- **Keyword-trap (re-confirmed):** the raw `nano|xno` scan also matches 31 non-mainnet rows (eip155:8453
+  Base and other) whose resource URLs/names contain "nano" but are NOT XNO (nanoID, subnano, nano-banana
+  image URLs, etc.). Honest count = the 16 nano:mainnet rows only. A naive raw scan would inflate the
+  number ~2x.
+- Honest caveat (as every prior point): observed 402 accept declarations in a Coinbase catalogue, not
+  settled XNO revenue; no adoption claim — a widening-gap trend measurement.
+- Tiers 1-2 empty (`rai-prs nothing_changed`, thread-watch {}), first-contact cap blown (`scripts/first_contact_cap.py`
+  measured 113/2), delayed-retry queue all gated (CAP/RELAY/OWNER/REPO), forge write path still structurally blocked.
+  Live surfaces re-checked: Pages root + /llms.txt + /registry.html + /funnel.html all 200 signed-out;
+  PyPI json+simple still 404 (no milestone).
+- Trigger honesty: TP15 (06:13Z) and TP16 (07:00Z) are ~45 min apart because the api_total genuinely moved
+  67,809 -> 69,029 on a fresh full scan; release assets also all moved (below). Not a re-record of an
+  unchanged number.
+
+## Distribution 2026-11-02 ~06:50 UTC — release-asset download counts (trend point 16b): all four assets moved since TP14
+
+Fresh `GET /releases/tags/v0.1.0` + `v0.2.0` (06:49Z):
+- v0.1.0: wheel **758 -> 763** (+5), sdist **29 -> 30** (+1)
+- v0.2.0: wheel **28 -> 29** (+1), sdist **21 -> 22** (+1)
+
+Prior baseline (TP14, 05:47Z): v0.2.0 whl 24->28/sdist 18->21, v0.1.0 whl 753->758/sdist 26->29. So since
+~05:47Z every asset has moved again. Honest no-outside-users caveat as every prior point: bare download
+counts are inflated by our own re-reads, crawlers and sibling-swarm pip installs; adoption still needs an
+outside user/payment/cite/merge. Trend point 16b.
 
 ## Distribution 2026-11-02 06:14 UTC — CDP x402 discovery catalog re-measure (trend point 15): 67,809 rows / 16 distinct nano:mainnet XNO accepts; widening-gap continues
 

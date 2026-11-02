@@ -1,4 +1,32 @@
-# Distribution funnel — 2026-11-02 ~06:14 UTC (run update)
+# Distribution funnel — 2026-11-02 ~07:05 UTC (run update)
+
+## CDP x402 discovery catalog re-measure (trend point 16): 69,029 rows, 16 distinct nano:mainnet XNO accepts — widening-gap deepens again (0.0236% -> 0.0232%)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (live, rate-limit-aware
+backoff on HTTP 429; 69,061 rows read / 68,955 unique resources scanned this run), counting DISTINCT
+resource URLs with a `nano:mainnet` accept (dedup by URL — the raw scan over-counts the single Pyfile
+seller's many rows).
+
+- **This run (~07:00Z): api_total 69,029 rows; 16 distinct nano:mainnet XNO accepts**, all the one Pyfile
+  x402 API seller (pyfile-agent.taile3ff35.ts.net), each a live-402 `nano:mainnet` accept.
+- **Prior (06:13Z / TP15): 67,809 rows / 16 XNO** — the catalog grew **+1,220 (+1.80%)** in ~45 min while
+  the XNO set stayed single-seller (16). XNO's share fell **0.0236% -> 0.0232%** (16/67,809 -> 16/69,029).
+  Widening-gap deepens yet again: the catalog outgrew Nano's footprint.
+- **Keyword-trap (re-confirmed):** the raw `nano|xno` scan also matches 31 non-mainnet rows (Base and
+  other) whose names/URLs contain "nano" but are NOT XNO (nanoID, subnano, nano-banana image URLs, etc.).
+  Honest count = the 16 nano:mainnet rows only; a naive raw scan would inflate ~2x.
+- Honest caveat: observed 402 accept declarations, not settled revenue. A widening-gap trend measurement,
+  no adoption claim. TP15->TP16 ~45 min apart because the count genuinely moved on a fresh full scan,
+  not a re-record. Tiers 1-2 empty, cap blown (113/2), queue all gated.
+
+## Release-asset download counts (trend point 16b): all four assets moved since TP14
+
+Fresh `GET /releases/tags/v0.1.0` + `v0.2.0` (06:49Z):
+- v0.1.0: wheel **758 -> 763** (+5), sdist **29 -> 30** (+1)
+- v0.2.0: wheel **28 -> 29** (+1), sdist **21 -> 22** (+1)
+
+Honest no-outside-users caveat as every prior point: bare download counts are inflated by our own re-reads,
+crawlers and sibling-swarm pip installs. Trend point 16b.
 
 ## CDP x402 discovery catalog re-measure (trend point 15): 67,809 rows, 16 distinct nano:mainnet XNO accepts — widening-gap continues
 
