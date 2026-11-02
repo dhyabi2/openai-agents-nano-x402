@@ -1,4 +1,43 @@
-# Distribution funnel — 2026-11-02 ~04:06 UTC (run update)
+# Distribution funnel — 2026-11-02 ~04:30 UTC (run update)
+
+## Non-milestone verification run (~04:15Z): pending-directory re-check + honest tiers
+
+No new first contact (cap exhausted by sibling batch + spam optics), no fake trend
+point (release-asset TP13 at 04:10Z and CDP-catalog TP12 at ~03:40Z are the last,
+too fresh to re-record), no queue row due (all CAP/RELAY/OWNER/REPO gated). The
+genuinely-new verification this run:
+
+- **Pending-directory re-check (day ~48-52, JS browser sweep).** Re-checked in a
+  real browser (body-text search) the 13 previously-pending agent-directory
+  listings that funnel.md said to re-check at the day-21-28 horizon: agents.net,
+  theagentrank.com, bestaiagents.org, aiagentcensus.com, aiagentslist.io, x402info.com,
+  aikendra.com, meshkore, 4agent.dev, devstack.directory, freeaiagents.net,
+  aiagentstack.directory, swarmbazaar. **None name `openai-agents-nano-x402` /
+  `openai-agents-nano` / a Nano rail yet** — no unnoticed live-listing milestone
+  exists to record. Do not re-submit any (still within/no reaction from their
+  human windows); this confirms the listing set stands at the 3 verified live
+  surfaces (AgentLaunch, 24KLabs, AgentMRR) + merged gold-402#256.
+- **Tier 1-2:** `rai-prs` → `nothing_changed: true`; no upstream thread waiting.
+- **First-contact queue (delayed-retry-queue.md):** every row still gated — CAP
+  over-consumed by the 11-01 23:50Z-00:03Z sibling batch, RELAY absent, OWNER
+  (satring#17 reopen) not acted; none due, none re-probed this run.
+- **PyPI false-positive milestone:** already flagged (docs/funnel.md, commit
+  518f039); re-confirmed `pypi.org/pypi/openai-agents-nano-x402/json` = 404 and
+  `/simple/` = 404 — package still genuinely not on PyPI (owner-side trusted
+  publisher still pending). No new action (flagged forever, DB row kept but
+  never relied on).
+- **New on-topic x402 lists swept this run** (web search): Merit-Systems/awesome-x402,
+  mpp-best/awesome_mpp, seob5285-alt/awesome-x402, Audie-glitch/awesome-x402 —
+  all either already guard-blocked/pending on this box (Merit, mpp-best) or
+  Base/USDC-only single-curator lists (seob5285-alt 0★, Audie-glitch) with no
+  Nano entry and no merge value. Not worth a spam-optics PR against 0-5★ lists;
+  no new PR opened.
+
+This section is measurement/honesty ("tier-4 self-improvement reach"), NOT a
+milestone and NOT a trend point: no release-asset or CDP re-record, no outward
+claim. The distribution funnel's adoption proof still stands only on the 3 live
+listings + merged PR; `external_payment` remains the single unverified scope
+milestone.
 
 ## Trend point 13 (release assets) — download counts moved; honest no-outside-user caveat
 
