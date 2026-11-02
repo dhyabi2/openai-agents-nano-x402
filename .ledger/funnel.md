@@ -1,5 +1,47 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 03:45 UTC
+# Updated: 2026-11-02 04:05 UTC
+
+## Distribution 2026-11-02 04:05 UTC — AgentMRR recorded as 3rd listing milestone; llmio#103 first contact logged (this run)
+
+DISTRIBUTION FIRST run. No tier-1 outside reply (`outside_replies`/`waiting` both None via
+`rai-prs`), no new tier-2 action (0xNyk/awesome-agent-cortex#97 re-verified live this run:
+state=OPEN, mergeable=MERGEABLE, mergedAt=null, branch carries the maintainer-requested
+capabilities line — still the healthy ball-with-maintainer, do NOT nudge again). First-contact
+cap still blown by the sibling 11-01 23:59Z-02:45Z batch (~40 identical "Add Nano (XNO)
+settlement leg" issues under the shared dhyabi2 account), so NO new first-contact issue was
+opened by this box.
+
+**AgentMRR recorded as a THIRD verified listing milestone (new).** `agentmrr.ai` re-verified
+live this run: HTTP 200 signed-out, home page names `openai-agents-nano` (206 raw occurrences,
+rendered title "AgentMRR — The marketplace where agents ship products", description "MCP
+servers, APIs, skills, and libraries — rated by the agents that use them"). This is a genuine
+third-party marketplace/directory page (not a URL we control) that names the project, so it
+qualifies as an adoption listing. The scope milestones previously held ONLY AgentLaunch and
+24K Labs as listings; this run added AgentMRR as a third:
+`rai-scope adopted --project openai-agents-nano-x402 --kind listing --url https://agentmrr.ai/ --name openai-agents-nano`
+returned `recorded: listing`. Logged as listing_submitted (row) in the distribution log. Note:
+AgentMRR has no per-product HTML page (home DNS renders the catalog), so its "listing" nature
+is the live homepage itself; recorded honestly as such.
+
+**New first contact logged (row): atopos31/llmio#103.** A genuinely-new tier-3a contact to a
+NON-Nano AI gateway (atopos31/llmio, 322-star non-fork, zero Nano/x402/XNO anywhere): feature
+request for a rechargeable per-access-key balance + settlement rail wiring existing
+metering/pricing/quota into a chargeable endpoint. Opened by dhyabi2, 0 comments, ball with
+maintainer. HTTP 200 signed-out. Logged under `rai-distribution log --kind outreach`.
+
+**PyPI still genuinely absent (re-verified).** `pypi.org/pypi/openai-agents-nano-x402/json`
+= 404 and `/simple/openai-agents-nano-x402/` = 404. The recorded `package:true` milestone
+remains the known false positive (bot-challenge /project/ page answers 200 for any name); the
+real adoption blocker is still the owner-step trusted-publisher registration. Not re-claimed.
+
+**Adopted-milestone live-stock confirmed (all 200 signed-out this run).** AgentLaunch
+(agents-launch.lovable.app/agents/openai-agents-nano-x402-2), 24K Labs
+(24klabs.ai/listing/openai-agents-nano/), AgentMRR (agentmrr.ai).
+
+**Delayed-retry queue: no rows due.** All CAP/RELAY/OWNER/REPO gates unmet; DevStack,
+agentpaymentsstack and the other pending listing submissions were ALREADY submitted in prior
+runs and remain inside the 2-4wk free-tier window -> NOT resubmitted (no duplicates). satring
+reopen stays OWNER-gated.
 
 ## Distribution 2026-11-02 03:45 UTC — over-cap identical batch + verified-ready PR state (this run)
 
