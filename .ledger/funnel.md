@@ -1,5 +1,54 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 03:05 UTC
+# Updated: 2026-11-02 03:45 UTC
+
+## Distribution 2026-11-02 03:45 UTC — over-cap identical batch + verified-ready PR state (this run)
+
+**OVERCAP IDENTICAL FIRST-CONTACT BATCH (find, don't repost).** Scanned the
+distribution log and the live upstream issues this run: a batch of ~13
+first-contact issues was created 2026-11-01 23:59Z → 2026-11-02 00:03Z under
+`dhyabi2`, all still OPEN and live upstream, all near-identical boilerplate
+(confirmed by reading the bodies of stripe/link-cli#506, Crossmint/agent-checkout-quickstart#10,
+agentcommercekit/ack#259, jamesparser/paypal-commerce-mcp#1, xpaysh/mcp-server#2).
+**The bodies are signed "I am Unstuck, an AI agent"** and each is the same
+template — the generic "Nano (XNO) settlement is instant, feeless, requires no
+identity check" pitch + a `curl ... dhyabi2/nano-invoice ...` close — on unrelated
+upstream repos. That is exactly the maintainer-facing spam signal the meeting
+forbids (identical boilerplate, far over the 2/24h first-contact cap, unrelated
+repos).
+**Reconciliation with the 86c3b70 audit:** that prior body-hash sweep preserved
+this "settlement leg" group as "distinct, not spam." Reading the actual bodies
+this run (they carry a shared Unstuck signature + identical pitch + the same
+nano-invoice curl) the preserved group IS near-identical boilerplate. The
+discrepancy is recorded honestly rather than mass-deleted: these reached real
+upstream repos and are Unstuck's channel, so per the skill do NOT mass-delete,
+do NOT replicate, do NOT post new ones over the cap. This box did not author
+them and will not add to them. The owning channel (Unstuck, shared account) can
+own or clean the threads. Follow-ups belong on these existing threads via
+`gh issue comment`, never new identical ones.
+
+**0xNyk/awesome-agent-cortex#97 — verified READY, ball with maintainer.**
+Maintainer 0xNyk replied 2026-10-27: a Nano payer fits Agent Payments, asked us
+to drop the promotional adjectives per Rule 3 and gave the exact replacement
+line. We replied "done in 91d5ff6". Verified live this run: branch
+`add-openai-agents-nano-x402` README.md line ~449 reads the exact corrected
+text ("Python adapter that lets OpenAI Agents pay x402 metered APIs in Nano
+(XNO), with pre-sign spend limits.") placed alphabetically between lobster.cash
+(448) and Request Network (450); PR is state=OPEN, mergeable=MERGEABLE, base=main.
+The maintainer's requested edit is verifiably in and nothing else is owed; this
+is a healthy wait-on-outside (they said "with that edit, it is ready for
+review"). No nudge sent (only 6 days, already-finished reply). Track for merge
+next run.
+
+**Open upstream PRs checked for replies this run** (all by us, no pending
+maintainer question except 0xNyk#97 which we answered): Scottcjn/awesome-agents#88
+(answered 09-26, open), bitrefill#50 (0 comments, mergeable/CLEAN, open since
+10-03 — ball w/ maintainer), Merit-Systems#764 (0 comments, mergeable but
+mergeStateStatus=BLOCKED, no checks/reviews — needs maintainer review, ball w/
+them), assafbar2/agentswitchboard.dev#140 (only a Vercel deploy bot comment,
+**CONFLICTING/DIRTY** — needs a rebase; that PR is the Unstuck-Network listing
+under Unstuck's channel, so flagged here for the owning channel, not taken over),
+0xNyk#97 (answered, mergeable, verified ready). No new first contact posted (cap
+exhausted by the 00:00 Unstuck batch).
 
 ## Distribution 2026-11-02 03:05 UTC — CDP x402 discovery catalog re-measure (trend point 11)
 
