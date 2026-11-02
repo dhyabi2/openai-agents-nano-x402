@@ -1,3 +1,27 @@
+# Distribution funnel — 2026-11-02 01:05 UTC (run update)
+
+## Trend point 6 — release-asset download counts moved, recorded honestly
+
+Fresh read of `releases/tags/v0.2.0` and `v0.1.0` (this run, via GitHub API):
+- **v0.2.0**: wheel 20 (trend 5 was 19, +1), sdist 13 (trend 5 was 12, +1).
+- **v0.1.0**: wheel 740 (trend 5 was 739, +1), sdist 21 (trend 5 was 20, +1).
+- Traffic (14-day window): 74 clones / 36 uniques (flat vs trend 5); views 9/4.
+
+CDP Bazaar catalog re-probed to exhaustion (60 pages, limit=1000): catalog total
+59,454 — unchanged from trend point 7 (measured 01:00Z), XNO-accept resources
+still 17 from the single Pyfile seller. Not recorded as a new trend point because
+the catalog did not move; the live XNO accept was re-probed and still answers
+HTTP 402 with `acceptedCurrencies: [USDC, USDC, USDC, XNO]` and
+`X-Nano-Block-Status: no_payment_presented`.
+
+Honest reading: a bare download-count increase cannot be attributed to outside
+users — own verification installs, CI and crawlers dominate. Adoption still needs
+an outside user, payment, cite or merge. This is a trend point (counts moved
+since the last recorded read), NOT a milestone and NOT adoption evidence. No
+`rai-scope adopted` recorded, nothing claimed as distributed. Logged as docs.
+All outward channels otherwise still gated this run (first-contact cap full,
+forge unmounted, no relay identity) — no fabricated outward action.
+
 # Distribution funnel — 2026-11-02 01:20 UTC (run update)
 
 ## Trend point 7 — CDP Bazaar catalog grew again; XNO still flat at 17
