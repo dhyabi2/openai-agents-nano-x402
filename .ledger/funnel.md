@@ -1,5 +1,35 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 04:50 UTC
+# Updated: 2026-11-02 04:52 UTC
+
+## Distribution 2026-11-02 04:52 UTC — CDP x402 discovery catalog re-measure (trend point 12)
+
+Fresh paginate-to-exhaustion re-measure of Coinbase's CDP x402 discovery catalog (66 pages,
+6,549... rows scanned, all fetched live this run), counting DISTINCT resource URLs whose
+`accepts[]` declares `network:nano:mainnet` OR `asset:XNO` (dedup by resource URL — the
+Pyfile `data/nano/courier` row appears twice in the index as separate catalog rows, so a raw
+scan over-counts; dedup keeps it honest).
+
+- **This run (2026-11-02 04:52Z): catalog 65,949 rows; 17 distinct XNO-accepting
+  resources**, all still the single Pyfile x402 API seller (origin
+  pyfile-agent.taile3ff35.ts.net), each a live-402 `nano:mainnet` accept.
+- **Prior point 11 (2026-11-02 03:05Z): 62,765 rows / 16 XNO.** So the catalog grew
+  62,765 -> 65,949 rows (+5.1%) in ~1h47m while the XNO set stayed single-seller (it
+  reads 17 again this run, back up from TP11's narrowed 16). XNO's SHARE of a growing
+  catalog keeps diluting — the catalog grows far faster than Nano's footprint.
+- Honest caveat (as every prior point): observed listings, not payments; these are
+  validates-readable 402 accept declarations in a Coinbase catalogue, not settled XNO
+  revenue. No adoption claim — a widening-gap trend measurement.
+- Live XNO route re-probed this run: pyfile-agent.taile3ff35.ts.net/data/nano/courier still
+  HTTP 402 with `payment-required: x402`, body `acceptedCurrencies: [USDC,USDC,USDC,XNO]`,
+  protocols x402.v2, and the X-Nano-Note pointing at pursekeeper — the XNO 402 proof is up.
+- Release-asset counts re-read fresh this run (04:52Z): v0.2.0 whl 24 / sdist 18, v0.1.0
+  whl 753 / sdist 26 — moved since TP11's 04:10-04:30 read (22/16 and 751/24) but within the
+  same ~40-min window as the 04:50 close-out, so NOT recorded as a separate trend point
+  (too fresh, no fake trend).
+- PyPI still not live: `pypi.org/pypi/openai-agents-nano-x402/json` and `/simple/...` both
+  404; the recorded package milestone remains the known /project/ bot-challenge false positive.
+- Tiers 1-2 empty, queue all-gated (CAP blown / RELAY absent / OWNER / REPO): no new first
+  contact, no re-submission, nothing due.
 
 ## Distribution 2026-11-02 04:50 UTC — capped-flat: youraitools.co swept and determined NON-FIT (buy-side SDK, payee-only directory); no milestone, no junk submission
 
