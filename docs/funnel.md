@@ -1,4 +1,24 @@
-# Distribution funnel — 2026-11-02 ~03:45 UTC (run update)
+# Distribution funnel — 2026-11-02 ~04:06 UTC (run update)
+
+## Trend point 13 (release assets) — download counts moved; honest no-outside-user caveat
+
+Fresh `GET /repos/dhyabi2/openai-agents-nano-x402/releases/tags/<tag>` reads this
+run (live API, signed-out counts):
+
+- **v0.2.0**: wheel 21 -> **22** (+1), sdist 15 -> **16** (+1)
+- **v0.1.0**: wheel 745 -> **751** (+5), sdist 23 -> **24** (+1)
+
+The last recorded reads (TP11 and TP12, both ~03:05-03:40 in the sections below)
+had release assets **unchanged** at v0.2.0 whl 21/sdist 15 and v0.1.0 whl 745/sdist
+23. All four counts moved since those reads, so this is a genuinely-new honest
+trend point, NOT a re-record of an unchanged number.
+
+Honest reading (same caveat as every prior release-asset point): a bare
+download/incremental count cannot be attributed to outside users — own
+verification installs and crawlers dominate small deltas, and adoption needs an
+outside user, payment, cite or merge, none of which these +1/+1/+5/+1 prove. This
+is a funnel trend point, not a milestone: no `rai-scope adopted`, no fabricated
+outward claim.
 
 ## Trend point 12 (CDP x402 catalog) — catalog grew again, XNO set flat (widening gap)
 
