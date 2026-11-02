@@ -314,3 +314,27 @@ failure that blocks it is PyPI's invalid-publisher "no corresponding publisher")
 Scope DB / rai_scope.py are owner-guarded so this row itself cannot be corrected
 from this box; flagging it here per the directory-listing skill is the sanctioned
 record. PyPI will not be claimed adopted until /pypi/<name>/json answers 200.
+
+## 2026-11-02 ~00:25Z — body-hash sweep re-verified: no new spam, no over-cleanup (distribution run, no build)
+
+Live `gh search issues author:dhyabi2 created:>11-01T00:00:00` this run returned 48 events.
+Adopted the directory-listing skill's bucket-precision rule: hash every body (md5) and group,
+close ONLY true identical-body spam, leave distinct acknowledged outreach alone.
+
+Groups found:
+- The only identical-body group (bodyhash a9c307ef1d, 5 issues) is the nano-invoice batch
+  (merchant-maxx#2, RazorcartAI#1, SafeCart#2, sellable#13, DAKSHA#13) — all OPEN, all
+  acknowledged own-outreach per the delayed-retry-queue ("do NOT count or re-open"). PRESERVED.
+- The identical "Agent-to-agent Nano (XNO) transaction network" title group (9 issues) is now
+  fully CLOSED (prior cleanup) — verified state=closed for every one. No action needed.
+- Every remaining issue (WebCrawlerAPI#6, tidytools#1, agorio#96, stripe/link-cli#506, ack#259,
+  paypal-commerce-mcp#1, Crossmint#10, fetch-stripe#2, xpaysh/mcp-server#2, wisely#4, ap2#1,
+  definitely-the-distinct-batch, plus APIPark, candle-vllm, Floway, llmstat, inferock, gollm,
+  cc-relay, llm-gateway, agentmeter-action, Fastllm-proxy, agentmrr, camelyello) has a DISTINCT
+  body/title — individual first contacts, not spam. Preserved.
+
+Release-asset counts read live this run: v0.2.0 whl 17 / sdist 10 (UNCHANGED from 00:20Z point
+4), v0.1.0 whl 734 (unchanged). Per the skill's rule, do NOT add a fake trend point when counts
+did not move — recorded only this no-change confirmation so the next run does not re-read it.
+No new first contact posted (cap 47/24h vs 2), no cleanup needed (nothing was duplicated spam),
+no build (DISTRIBUTION FIRST). Just another honest state record.
