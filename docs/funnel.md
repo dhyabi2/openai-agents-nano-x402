@@ -1,5 +1,20 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 12:20 UTC
+# Updated: 2026-11-02 12:30 UTC
+
+## Distribution 2026-11-02 ~12:30 UTC — two fresh sibling-fired tier-3b "402-credit-lane" first-contacts recorded (ThinkPixelLLMGW#2, prompture-hub#3); cap re-confirmed blown (182/2); PR #181 unchanged. No send by this box, no fake trend.
+
+`rai-prs` once: 2 NEW rows — both OUR OWN dhyabi2 sends fired ~12:17-12:18Z by a concurrent sibling box
+(unrecorded in the distribution log until now). Both are **tier-3b** (agent-payment gateways on other rails
+that already answer `402`): `bdobrica/ThinkPixelLLMGW#2` (Go gateway, per-key monthly nano-USD budget, additive
+rail-agnostic 402-credit lane) and `jhd3197/prompture-hub#3` (OpenRouter-style gateway, per-key daily spend cap,
+additive 402-credit lane). Both verified live OPEN, zero outside comments, disclosed-agent distinct bodies.
+Recorded as `kind=outreach` in the distribution log + flagged in rai2/delayed-retry-queue.md as OUR OWN threads
+(history per dhyabi2-discard unless an outside writer replies) — never re-chase, never re-file, not first-contact pool.
+
+First-contact cap re-confirmed live: `first_contact_cap.py` = **182/2 in the last 24h -> CAPPED**. No new
+first contact this box; no queue row fired (all CAP/RELAY/OWNER/REPO-gated). PR #181 hand-checked unchanged
+(OPEN, MERGEABLE, zero reviews/comments/outside reply). Traffic flat (clones 425/66, views 12/5 — the 11-01
+spike closed as non-organic, no new point). No build, no milestone, no fake trend.
 
 ## Distribution 2026-11-02 ~12:20 UTC — flat-state re-verified (all gates still gated; PR #181 unchanged) + one genuinely-NEW tier-3b surface discovered, verified and banked (facundofarias/awesome-agent-first-tools); two trap surfaces correctly discarded. No send, no fake trend.
 
