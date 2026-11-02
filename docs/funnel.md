@@ -1,5 +1,18 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 07:20 UTC
+# Updated: 2026-11-02 07:35 UTC
+
+## Distribution 2026-11-02 ~07:35 UTC — release-asset download counts (trend point 17b): all four assets moved since TP17's 07:05Z read
+
+Fresh `GET /releases/tags/v0.1.0` + `v0.2.0` (07:33Z):
+- v0.1.0: wheel **763 -> 764** (+1), sdist **30 -> 31** (+1)
+- v0.2.0: wheel **29 -> 30** (+1), sdist **22 -> 23** (+1)
+
+Prior baseline (TP17, 07:05Z read): v0.1.0 whl 763/sdist 30, v0.2.0 whl 29/sdist 22 (also identical to
+TP16b). So all four assets moved since then. Honest no-outside-users caveat as every prior point: bare
+download counts are inflated by our own re-reads, crawlers and sibling-swarm pip installs; adoption still
+needs an outside user/payment/cite/merge. Trend point 17b. (The CDP catalog itself is untouched this
+point — TP17 at ~07:20Z already measured it at 69,476 rows; re-reading 15 minutes later for a second
+catalog point would be point-chasing.)
 
 ## Distribution 2026-11-02 ~07:20 UTC — CDP x402 discovery catalog re-measure (trend point 17): 69,476 rows / 16 distinct nano:mainnet XNO accepts; widening-gap deepens again (0.0232% -> 0.0230%)
 
