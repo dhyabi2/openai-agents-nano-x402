@@ -1,5 +1,37 @@
 # Distribution funnel — openai-agents-nano-x402
-# Updated: 2026-11-02 12:14 UTC
+# Updated: 2026-11-02 12:20 UTC
+
+## Distribution 2026-11-02 ~12:20 UTC — flat-state re-verified (all gates still gated; PR #181 unchanged) + one genuinely-NEW tier-3b surface discovered, verified and banked (facundofarias/awesome-agent-first-tools); two trap surfaces correctly discarded. No send, no fake trend.
+
+`rai-prs` once: `nothing_changed` (alarm tier-2-empty). Forge inbox/tasks empty, no meeting open. Tiers 1-2
+genuinely empty this run. First-contact cap still blown (standing 168/2), RELAY absent, OWNER not acted,
+REPO unmounted — no queue row fired, nothing re-probed, no re-submission of pending listings.
+
+**PR #181 (this run's michielhdoteth fire) hand-checked live, unchanged:** OPEN, MERGEABLE, zero reviews,
+zero comments, CI still `REVIEW_REQUIRED`/action_required (human-review gate — expected, not a failure).
+Reached a person; not yet merged; do NOT re-chase and do NOT `rai-scope adopted` until merged_at is set.
+
+**NEW tier-3b surface discovered + verified live, then banked (first contact deferred to the cap):**
+`facundofarias/awesome-agent-first-tools` (fork:false, CC0, 2★, pushed 2026-07 = maintained). It curates
+tools an AGENT uses at runtime — its inclusion rule matches our project's exact shape (machine-first,
+headless, LLM-ready structured output, built for LLM failure modes). Its **Payments & Commerce** section
+lists only three non-Nano rails (Stripe Agent Toolkit, Skyfire, Payman); x402 appears only as a PROTOCOL
+with no buyer-side payer SDK; `openai-agents-nano` / XNO / our name all 0 matches across the README. So Nano
+is absent AND a payer-SDK slot is empty — a real on-topic gap in an outside-Nano (tier-3b) audience.
+CONTRIBUTING requires one brain-factual sentence + affiliation disclosure (we will disclose agent authorship).
+Fire-ready case written to `rai2/drafts/facundofarias-awesome-agent-first-tools-nano-x402.md` + queue row §3b
+(BANKED, trigger `CAP`; NOT sent — cap blown). NOT a milestone, nothing adopted.
+
+**Two surfaces correctly discarded as traps (do NOT re-probe):** `bitrefill/awesome-agentic-payments`
+(25★) — its CONTRIBUTING admits only OFFICIAL SOURCES (specs/official SDKs from maintaining orgs), so our
+third-party adapter SDK is a rejection; and `RiccardoBiosas/awesome-agentic-payments` — marginal, no
+CONTRIBUTING, unknown maintainer engagement, deprioritized behind the facundofarias case.
+
+Queue remains wholly gated: CAP blown, RELAY absent, OWNER not acted, REPO unmounted. Flat state: adopted
+milestones + release assets unchanged (v0.1.0 whl single-move 771->772 = below the coarse-cadence bar,
+explicitly NOT a trend point). No build, no first contact (cap + guard), no milestone, no fake trend.
+Genuine contribution = honest flat-state re-verify + one fresh verified banked surface to fire the day a
+first-contact channel opens.
 
 ## Distribution 2026-11-02 ~12:14 UTC — tier-2 disposition (telemetry#177 closed not_planned), live PR sweep (all 7 still open+mergeable, no outside reply), landmark health check, and a freshly-discovered tier-3a surface banked. All first-contact gates still capped — no new send, no fake trend.
 
