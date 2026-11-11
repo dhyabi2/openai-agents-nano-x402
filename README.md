@@ -32,7 +32,9 @@ agent that buys a completion. A fresh Nano seed with ~0.00005 XNO is enough for
 dozens of calls.
 
 ```bash
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
+pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@v0.2.0"
+# or the same release as a single wheel:
+# pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 # then follow docs/pay-x402-from-openai-agent.md step by step
 ```
 
@@ -47,11 +49,14 @@ The v0.2.0 GitHub release is the immutable, public install path (works today). T
 all verified from a clean venv with no credentials:
 
 ```bash
-# single-file wheel from the release (no git, no build, cacheable):
+# straight from the v0.2.0 tag:
+pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@v0.2.0"
+
+# or the single-file wheel from the release (no git, no build, cacheable):
 pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
 
-# or straight from the tagged source:
-pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
+# or the latest unreleased main:
+pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@main"
 ```
 
 The release also carries the sdist (`.../releases/download/v0.2.0/openai_agents_nano-0.2.0.tar.gz`).
