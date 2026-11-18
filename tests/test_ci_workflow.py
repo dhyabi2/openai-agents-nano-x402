@@ -115,9 +115,8 @@ def test_no_install_path_references_the_deleted_account():
 
     `ci.yml` installed `openai-agents-nano` from
     `https://pandeveloper001.github.io/openai-agents-nano-x402/simple/`. That
-    account is gone and the package is on no other index -- README.md says so
-    itself ("Until then `pip install openai-agents-nano` fails with 'No matching
-    distribution found'"). So the weekly step could only fail, the smoke test
+    account is gone and, at the time, the package was on no other index (0.2.1
+    is the first PyPI release). So the weekly step could only fail, the smoke test
     behind it could never run, and the signal this workflow exists to give about
     what is installable was permanently red rather than absent.
 
