@@ -1,0 +1,12 @@
+# The sdist carries what tests/ reads, so the suite runs from an unpacked sdist:
+# tests/data (release fixtures) and the offline proofs, docs/ (the offer JSON and
+# the pages whose install commands are checked), scripts/ (check_route.py and
+# tunnel_ua_probe.py, which tests import or run), and .github/ (test_ci_workflow.py
+# looks there; with no workflow present its workflow laws skip).
+# .ledger/ (operator notes) and audits/ are repo-only and are not shipped.
+graft tests
+graft docs
+graft scripts
+graft .github
+global-exclude __pycache__
+global-exclude *.py[cod]
