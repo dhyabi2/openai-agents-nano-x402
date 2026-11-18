@@ -1,7 +1,8 @@
 """The pinned install path the README offers must be able to satisfy what the README documents.
 
-`README.md` presents the **v0.2.0 GitHub release** as "the immutable, public install path
-(works today)", and it is the current published install path: there is no PyPI project yet. The
+`README.md` leads with `pip install openai-agents-nano` (0.2.1, the first PyPI release) and still
+offers the **v0.2.0 GitHub release** wheel as the previous release, so that pinned artifact is
+still an install path a reader is given. The
 v0.1.0 release is still served but is the partial cut; v0.2.0 carries the operator
 mandate, the x402_sdk module and the `mandate` console script. What matters is that the
 pinned artifact the README points at actually provides every feature the README documents.
@@ -143,9 +144,13 @@ def test_console_scripts_the_pinned_release_lacks_are_flagged():
 # `pypi_registered` below is flipped to True in the same commit that publishes,
 # and bare-name installs are legal again.
 
-PYPI_REGISTERED = False
+PYPI_REGISTERED = True
 """Whether `project.name` resolves on PyPI. Flip this in the commit that
-publishes, together with the README's install paragraph."""
+publishes, together with the README's install paragraph.
+
+Flipped for 0.2.1, the first PyPI release, together with the README's install
+section. It describes the state once 0.2.1 is uploaded; before that upload the
+name was free (https://pypi.org/pypi/openai-agents-nano/json returned 404)."""
 
 _FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n(.*?)^[ \t]*\1[ \t]*$", re.S | re.M)
 _CHAIN = {"&&", "||", ";", "|", "&", ";;", "(", ")"}
