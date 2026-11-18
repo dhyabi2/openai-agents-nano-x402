@@ -26,40 +26,42 @@ XNO** (block `E67FB89426F46E6AE4E0E5750B5F814A699965B8639DA89F38689EA1AFE57FC3`,
 confirmed on the Nano network) — the first known payment from an OpenAI Agents
 SDK agent to a third-party x402 seller settled in XNO.
 
-The fastest way to *be* that buyer: [the pay-NanoGPT tutorial](docs/pay-x402-from-openai-agent.md)
+The fastest way to *be* that buyer: [the pay-NanoGPT tutorial](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/pay-x402-from-openai-agent.md)
 — install, fund a wallet with a few hundred-thousandths of an XNO, and run one
 agent that buys a completion. A fresh Nano seed with ~0.00005 XNO is enough for
 dozens of calls.
 
 ```bash
-pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@v0.2.0"
-# or the same release as a single wheel:
-# pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
-# then follow docs/pay-x402-from-openai-agent.md step by step
+pip install openai-agents-nano
+# then follow the pay-NanoGPT tutorial linked above step by step
 ```
 
 If you operate a 402 endpoint (or want to), [add a Nano accept and join the
-buyer side](docs/xno-x402-quickstart.md#6-if-you-run-a-402-resource) — the
+buyer side](https://github.com/dhyabi2/openai-agents-nano-x402/blob/main/docs/xno-x402-quickstart.md#6-if-you-run-a-402-resource) — the
 CDP Bazaar already indexes `nano:mainnet`/XNO accepts, and your Nano option
 gets real buyers that USDC-only rails cannot reach.
 
 ## Install
 
-The v0.2.0 GitHub release is the immutable, public install path (works today). Two equivalent ways,
-all verified from a clean venv with no credentials:
-
 ```bash
-# straight from the v0.2.0 tag:
-pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@v0.2.0"
+pip install openai-agents-nano
 
-# or the single-file wheel from the release (no git, no build, cacheable):
-pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
-
-# or the latest unreleased main:
-pip install "openai-agents-nano @ git+https://github.com/dhyabi2/openai-agents-nano-x402@main"
+# with the official x402 SDK, for the section on paying from it below:
+pip install "openai-agents-nano[x402]"
 ```
 
-The release also carries the sdist (`.../releases/download/v0.2.0/openai_agents_nano-0.2.0.tar.gz`).
+0.2.1 is the first version of this project on PyPI. Earlier versions were published only as
+GitHub release assets, and the v0.2.0 one is still served:
+
+```bash
+# the previous release, as a single-file wheel from its GitHub release:
+pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl
+
+# or unreleased changes, from a clone of the repository:
+pip install -e .
+```
+
+That release also carries the sdist (`.../releases/download/v0.2.0/openai_agents_nano-0.2.0.tar.gz`).
 The v0.2.0 wheel includes the operator mandate (`mandate.py` + the `mandate` console script), the
 `x402_sdk.py` module, and the cap-refusal checks — everything the sections below use. The earlier
 v0.1.0 release is still served (backward compatible) but is the *partial* wheel: it shipped
@@ -75,13 +77,6 @@ so `mandate keygen` was not a command and `make_nano_x402_tool(mandate_path=...)
 that refuse a non-finite or negative cap, so on that wheel `X402_MAX_XNO="nan"` yielded a NaN cap and
 `X402_MAX_XNO="abc"` raised `decimal.InvalidOperation` past the caller's `except ValueError`. All of
 those are present in the v0.2.0 wheel above.
-
-A PyPI release is prepared but not uploaded yet — a PyPI project can only be created by a human with a
-PyPI login. `.github/workflows/publish.yml` performs the upload with no stored secret once a *pending
-trusted publisher* is registered for this project; the OIDC handshake itself is proven working, and the
-workflow's only remaining failure is PyPI's `invalid-publisher` ("no corresponding publisher"), i.e. that
-registration is the one missing step. Until then `pip install openai-agents-nano` fails with "No matching
-distribution found" — this project is not on PyPI, and the name is not registered.
 
 ## Usage
 
@@ -209,7 +204,7 @@ vendored byte-for-byte from
 (a test pins the bytes) and installs the `mandate` CLI.
 
 ```bash
-python3 -m venv .venv && . .venv/bin/activate && pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402"
+python3 -m venv .venv && . .venv/bin/activate && pip install openai-agents-nano
 mandate keygen --out operator.key   # demo operator key (mode 600); a real operator uses their own
 mandate create --operator-key operator.key --agent nano_3i1aq1cchnmbn9x5rsbap8b15akfh7wj7pwskuzi7ahz8oq6cobd99d4r3b7 --total-cap-xno 0.5 --per-payment-max-xno 0.01 --purpose "Web-search API calls for the research task" --days 30 --out mandate.json
 mandate verify mandate.json
@@ -261,10 +256,8 @@ resource-server half is already published as
 facilitator does the verifying and settling.
 
 ```bash
-# Source, with the x402 extra: this module is in the v0.2.0 wheel, but the
-# x402-dependent symbols still install cleanest from source; the
-# bare name `openai-agents-nano` is not on PyPI (see Install above).
-pip install "openai_agents_nano[x402] @ git+https://github.com/dhyabi2/openai-agents-nano-x402"
+# the x402 extra installs the official x402 SDK alongside this package
+pip install "openai-agents-nano[x402]"
 ```
 
 ```python
@@ -392,7 +385,7 @@ python tests/release_install_offline.py          # L21/L22: a built wheel instal
 ## Building and verifying the distribution
 
 ```bash
-uv build                                # builds dist/openai_agents_nano-0.2.0.tar.gz + .whl
+uv build                                # builds dist/openai_agents_nano-0.2.1.tar.gz + .whl
 python tests/release_install_offline.py # builds the wheel, installs it into a brand-new venv,
                                         # and asserts the installed tool is a real nano_x402_fetch
                                         # FunctionTool that dry-runs (QUOTE, nothing spent) and

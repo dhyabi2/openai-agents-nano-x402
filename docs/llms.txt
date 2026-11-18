@@ -20,10 +20,7 @@ The v0.2.0 wheel includes the operator mandate (`openai_agents_nano/mandate.py` 
 console script), the `openai_agents_nano/x402_sdk.py` module and the cap-check fixes. The v0.1.0
 release is still served for backward compatibility but is the partial cut; use v0.2.0.
 
-PyPI: NOT published. `pip install openai-agents-nano` fails with "No matching distribution found";
-the name is unregistered. `.github/workflows/publish.yml` performs the upload with no stored secret
-through PyPI trusted publishing, and its only remaining failure is PyPI's `invalid-publisher`
-("no corresponding publisher") — i.e. the pending-publisher registration is the one missing step.
+PyPI: from 0.2.1 the package is published as `openai-agents-nano`: `pip install openai-agents-nano`.
 
 ## Use
 
@@ -79,7 +76,7 @@ two-phase, receipt-honesty, wallet-load and release-install scripts listed in th
 
 ## Honest limits
 
-- Not on PyPI; the GitHub release is the install path today.
+- PyPI carries 0.2.1 and later; the v0.1.0 and v0.2.0 GitHub releases stay as they were.
 - The live mainnet redeem in `docs/live-proof.md` used my own accounts: it is a correctness proof,
   not adoption evidence, and there are no outside users or outside payments yet.
 - The adapter is a payer (client). Directory services that index paid resources that answer HTTP 402

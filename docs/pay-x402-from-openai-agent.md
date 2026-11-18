@@ -14,14 +14,16 @@ self-custodied.
 
 ## 1. Install
 
-The bare name `openai-agents-nano` is not on PyPI yet, so install from the current
-v0.2.0 release (the v0.1.0 wheel is the earlier partial cut and is not the path here):
+```bash
+pip install openai-agents-nano
+```
+
+Or the earlier v0.2.0 tag from git, or its single wheel file (no git, no build):
 
 ```bash
 pip install "git+https://github.com/dhyabi2/openai-agents-nano-x402.git@v0.2.0"
 ```
 
-Or a single wheel file, no git and no build:
 
 ```bash
 pip install https://github.com/dhyabi2/openai-agents-nano-x402/releases/download/v0.2.0/openai_agents_nano-0.2.0-py3-none-any.whl

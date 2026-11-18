@@ -6,7 +6,12 @@ artifacts (corrective action 2026-09-16 16:34 UTC).  The generator now fails lou
 script checks that with deliberate mutations - a law that cannot fail is a weak law, so each guard is
 shown failing on input built to trip it, and passing on the real input.
 
-Run:  python3 tests/prepared_pr_doc_offline.py     (exit 0 = all checks pass, no network)
+Run:  python3 scripts/prepared_pr_doc_offline.py   (exit 0 = all checks pass, no network)
+
+This lives in scripts/, beside the generator it checks, rather than in tests/: it checks outreach
+tooling, not the package, and it needs the operator's local scan report in the git-ignored
+`.ledger/tmp/` (the 2026-09-27 and 2026-09-30 audits record that it exits 1 anywhere that report is
+absent). The package's own tests are in tests/ and ship with the sdist.
 """
 from __future__ import annotations
 

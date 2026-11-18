@@ -17,6 +17,14 @@ This law pins the ordering and the gating that keep that from recurring. It
 reads the workflow as text rather than as YAML on purpose: the repository has no
 YAML parser among its dependencies, and adding one to assert a property this
 simple would cost more than it is worth.
+
+The workflow itself was removed (commits fc71baa and bcc81a8, owner rule: no
+GitHub Actions), so there is no CI job for the ordering and gating laws to
+judge. They skip, naming that reason, while `.github/workflows/ci.yml` is
+absent, and apply again unchanged the day a workflow is added back. The law
+that used to assert the file exists is gone with it: its absence is now the
+intended state, not a regression. The deleted-account law does not depend on
+the workflow and still runs everywhere.
 """
 
 import re
@@ -27,6 +35,12 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "ci.yml"
 README = ROOT / "README.md"
+
+needs_workflow = pytest.mark.skipif(
+    not WORKFLOW.is_file(),
+    reason="no .github/workflows/ci.yml: the GitHub Actions workflow was removed "
+    "(owner rule: no GitHub Actions), so there is no CI job to check",
+)
 
 SUITE_STEP = "Run project test suite"
 
@@ -64,10 +78,7 @@ def _test_job_steps():
     return [(c.split("\n", 1)[0].strip(), c) for c in chunks]
 
 
-def test_the_workflow_exists():
-    assert WORKFLOW.is_file(), WORKFLOW
-
-
+@needs_workflow
 def test_the_suite_runs_before_any_external_index_install():
     steps = _test_job_steps()
     names = [n for n, _ in steps]
@@ -85,6 +96,7 @@ def test_the_suite_runs_before_any_external_index_install():
             )
 
 
+@needs_workflow
 def test_an_external_index_install_cannot_gate_an_ordinary_push():
     """Whether a published mirror resolves is not a fact about this commit."""
     for name, body in _test_job_steps():
@@ -103,9 +115,8 @@ def test_no_install_path_references_the_deleted_account():
 
     `ci.yml` installed `openai-agents-nano` from
     `https://pandeveloper001.github.io/openai-agents-nano-x402/simple/`. That
-    account is gone and the package is on no other index -- README.md says so
-    itself ("Until then `pip install openai-agents-nano` fails with 'No matching
-    distribution found'"). So the weekly step could only fail, the smoke test
+    account is gone and, at the time, the package was on no other index (0.2.1
+    is the first PyPI release). So the weekly step could only fail, the smoke test
     behind it could never run, and the signal this workflow exists to give about
     what is installable was permanently red rather than absent.
 
@@ -133,6 +144,7 @@ def test_no_install_path_references_the_deleted_account():
     )
 
 
+@needs_workflow
 def test_the_published_install_the_weekly_check_uses_is_one_the_readme_offers():
     """The workflow and the README must name the same published artifact.
 
